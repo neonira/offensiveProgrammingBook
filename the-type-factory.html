@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> 4 The type factory | Offensive Programming Book</title>
+  <meta name="description" content="wyz.code.offensiveProgramming package related documentation">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content=" 4 The type factory | Offensive Programming Book" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:image" content="figures/op.png" />
+  <meta property="og:description" content="wyz.code.offensiveProgramming package related documentation" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content=" 4 The type factory | Offensive Programming Book" />
+  
+  <meta name="twitter:description" content="wyz.code.offensiveProgramming package related documentation" />
+  <meta name="twitter:image" content="figures/op.png" />
+
+<meta name="author" content="Fabien GELINEAU neonira@gmail.com">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="putting-in-action-wyz-code-offensiveprogramming.html">
+<link rel="next" href="semantic-names.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Offensive Programming Book</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a></li>
+<li class="chapter" data-level="" data-path="preamble.html"><a href="preamble.html"><i class="fa fa-check"></i>Preamble</a></li>
+<li class="chapter" data-level="1" data-path="programming-styles.html"><a href="programming-styles.html"><i class="fa fa-check"></i><b>1</b> Programming styles</a><ul>
+<li class="chapter" data-level="1.1" data-path="programming-styles.html"><a href="programming-styles.html#defensive-programming-style"><i class="fa fa-check"></i><b>1.1</b> Defensive programming style</a></li>
+<li class="chapter" data-level="1.2" data-path="programming-styles.html"><a href="programming-styles.html#offensive-programming-style"><i class="fa fa-check"></i><b>1.2</b> Offensive programming style</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="application-in-r-language.html"><a href="application-in-r-language.html"><i class="fa fa-check"></i><b>2</b> Application in R language</a><ul>
+<li class="chapter" data-level="2.1" data-path="application-in-r-language.html"><a href="application-in-r-language.html#a-simple-case"><i class="fa fa-check"></i><b>2.1</b> A simple case</a></li>
+<li class="chapter" data-level="2.2" data-path="application-in-r-language.html"><a href="application-in-r-language.html#defensive-programming"><i class="fa fa-check"></i><b>2.2</b> Defensive programming</a></li>
+<li class="chapter" data-level="2.3" data-path="application-in-r-language.html"><a href="application-in-r-language.html#offensive-programming"><i class="fa fa-check"></i><b>2.3</b> Offensive programming</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="application-in-r-language.html"><a href="application-in-r-language.html#what-is-different"><i class="fa fa-check"></i><b>2.3.1</b> What is different?</a></li>
+<li class="chapter" data-level="2.3.2" data-path="application-in-r-language.html"><a href="application-in-r-language.html#semantic-argument-naming"><i class="fa fa-check"></i><b>2.3.2</b> Semantic argument naming</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="application-in-r-language.html"><a href="application-in-r-language.html#back-to-definition"><i class="fa fa-check"></i><b>2.4</b> Back to definition</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="putting-in-action-wyz-code-offensiveprogramming.html"><a href="putting-in-action-wyz-code-offensiveprogramming.html"><i class="fa fa-check"></i><b>3</b> Putting in action wyz.code.offensiveProgramming</a><ul>
+<li class="chapter" data-level="3.1" data-path="putting-in-action-wyz-code-offensiveprogramming.html"><a href="putting-in-action-wyz-code-offensiveprogramming.html#package-overview"><i class="fa fa-check"></i><b>3.1</b> Package overview</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="the-type-factory.html"><a href="the-type-factory.html"><i class="fa fa-check"></i><b>4</b> The type factory</a><ul>
+<li class="chapter" data-level="4.1" data-path="the-type-factory.html"><a href="the-type-factory.html#get-recorded-types-inventory"><i class="fa fa-check"></i><b>4.1</b> Get recorded types inventory</a></li>
+<li class="chapter" data-level="4.2" data-path="the-type-factory.html"><a href="the-type-factory.html#register-your-own-type"><i class="fa fa-check"></i><b>4.2</b> Register your own type</a></li>
+<li class="chapter" data-level="4.3" data-path="the-type-factory.html"><a href="the-type-factory.html#get-access-to-verification-functions"><i class="fa fa-check"></i><b>4.3</b> Get access to verification functions</a></li>
+<li class="chapter" data-level="4.4" data-path="the-type-factory.html"><a href="the-type-factory.html#some-hints"><i class="fa fa-check"></i><b>4.4</b> Some hints</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="semantic-names.html"><a href="semantic-names.html"><i class="fa fa-check"></i><b>5</b> Semantic names</a><ul>
+<li class="chapter" data-level="5.1" data-path="semantic-names.html"><a href="semantic-names.html#what-is-semantic-naming"><i class="fa fa-check"></i><b>5.1</b> What is semantic naming?</a></li>
+<li class="chapter" data-level="5.2" data-path="semantic-names.html"><a href="semantic-names.html#verifying-a-function-parameter-or-return-type-declaration"><i class="fa fa-check"></i><b>5.2</b> Verifying a function parameter or return type declaration</a></li>
+<li class="chapter" data-level="5.3" data-path="semantic-names.html"><a href="semantic-names.html#verifying-a-class-name"><i class="fa fa-check"></i><b>5.3</b> Verifying a class name</a></li>
+<li class="chapter" data-level="5.4" data-path="semantic-names.html"><a href="semantic-names.html#verifying-a-function-name"><i class="fa fa-check"></i><b>5.4</b> Verifying a function name</a></li>
+<li class="chapter" data-level="5.5" data-path="semantic-names.html"><a href="semantic-names.html#get-naming-balance-from-an-r-object"><i class="fa fa-check"></i><b>5.5</b> Get naming balance from an R object</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="evaluation-modes.html"><a href="evaluation-modes.html"><i class="fa fa-check"></i><b>6</b> Evaluation modes</a><ul>
+<li class="chapter" data-level="6.1" data-path="evaluation-modes.html"><a href="evaluation-modes.html#understanding-evaluation-modes"><i class="fa fa-check"></i><b>6.1</b> Understanding evaluation modes</a></li>
+<li class="chapter" data-level="6.2" data-path="evaluation-modes.html"><a href="evaluation-modes.html#instantiating-evaluation-mode"><i class="fa fa-check"></i><b>6.2</b> Instantiating evaluation mode</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="running-functions.html"><a href="running-functions.html"><i class="fa fa-check"></i><b>7</b> Running functions</a><ul>
+<li class="chapter" data-level="7.1" data-path="running-functions.html"><a href="running-functions.html#prerequisites"><i class="fa fa-check"></i><b>7.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="7.2" data-path="running-functions.html"><a href="running-functions.html#function-return-types-definition-verification"><i class="fa fa-check"></i><b>7.2</b> Function return types definition verification</a></li>
+<li class="chapter" data-level="7.3" data-path="running-functions.html"><a href="running-functions.html#transient-invocations"><i class="fa fa-check"></i><b>7.3</b> Transient invocations</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="running-functions.html"><a href="running-functions.html#nominal-case"><i class="fa fa-check"></i><b>7.3.1</b> Nominal case</a></li>
+<li class="chapter" data-level="7.3.2" data-path="running-functions.html"><a href="running-functions.html#prerequisite-mismatch"><i class="fa fa-check"></i><b>7.3.2</b> Prerequisite mismatch</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="running-functions.html"><a href="running-functions.html#persistent-invocations"><i class="fa fa-check"></i><b>7.4</b> Persistent invocations</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="running-functions.html"><a href="running-functions.html#nominal-persistent-case"><i class="fa fa-check"></i><b>7.4.1</b> Nominal persistent case</a></li>
+<li class="chapter" data-level="7.4.2" data-path="running-functions.html"><a href="running-functions.html#subtile-change"><i class="fa fa-check"></i><b>7.4.2</b> Subtile change</a></li>
+<li class="chapter" data-level="7.4.3" data-path="running-functions.html"><a href="running-functions.html#call-case-with-named-and-positional-parameters"><i class="fa fa-check"></i><b>7.4.3</b> Call case with named and positional parameters</a></li>
+<li class="chapter" data-level="7.4.4" data-path="running-functions.html"><a href="running-functions.html#call-case-with-ellipsis"><i class="fa fa-check"></i><b>7.4.4</b> Call case with ellipsis</a></li>
+<li class="chapter" data-level="7.4.5" data-path="running-functions.html"><a href="running-functions.html#second-call-case-with-ellipsis"><i class="fa fa-check"></i><b>7.4.5</b> Second call case with ellipsis</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="running-test-cases.html"><a href="running-test-cases.html"><i class="fa fa-check"></i><b>8</b> Running test cases</a><ul>
+<li class="chapter" data-level="8.1" data-path="running-test-cases.html"><a href="running-test-cases.html#embedding-test-cases-in-class-definition"><i class="fa fa-check"></i><b>8.1</b> Embedding test cases in class definition</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="running-test-cases.html"><a href="running-test-cases.html#a-simple-case-1"><i class="fa fa-check"></i><b>8.1.1</b> A simple case</a></li>
+<li class="chapter" data-level="8.1.2" data-path="running-test-cases.html"><a href="running-test-cases.html#a-more-complex-case"><i class="fa fa-check"></i><b>8.1.2</b> A more complex case</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="running-test-cases.html"><a href="running-test-cases.html#test-case-definitions-verification"><i class="fa fa-check"></i><b>8.2</b> Test case definitions verification</a></li>
+<li class="chapter" data-level="8.3" data-path="running-test-cases.html"><a href="running-test-cases.html#run-a-test-case"><i class="fa fa-check"></i><b>8.3</b> Run a test case</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>9</b> Conclusion</a><ul>
+<li class="chapter" data-level="9.1" data-path="conclusion.html"><a href="conclusion.html#benefits-of-offensive-programming"><i class="fa fa-check"></i><b>9.1</b> Benefits of offensive programming</a></li>
+<li class="chapter" data-level="9.2" data-path="conclusion.html"><a href="conclusion.html#concerns-of-offensive-programming"><i class="fa fa-check"></i><b>9.2</b> Concerns of offensive programming</a></li>
+<li class="chapter" data-level="9.3" data-path="conclusion.html"><a href="conclusion.html#two-extensions"><i class="fa fa-check"></i><b>9.3</b> Two extensions</a><ul>
+<li class="chapter" data-level="9.3.1" data-path="conclusion.html"><a href="conclusion.html#unit-test-code-generation"><i class="fa fa-check"></i><b>9.3.1</b> Unit test code generation</a></li>
+<li class="chapter" data-level="9.3.2" data-path="conclusion.html"><a href="conclusion.html#manual-pages-production"><i class="fa fa-check"></i><b>9.3.2</b> Manual pages production</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="conclusion.html"><a href="conclusion.html#your-feedback-is-welcome"><i class="fa fa-check"></i><b>9.4</b> Your feedback is welcome</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://www.linkedin.com/in/fabiengelineau" target="blank">instigator Fabien GELINEAU</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Offensive Programming Book</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="the-type-factory" class="section level1">
+<h1><span class="header-section-number"> 4</span> The type factory</h1>
+<p>The types that you wish to control are managed by a type factory, named <cite class='kw'>FunctionParameterTypeFactory</cite>.
+Instantiating an object of this class allows you to</p>
+<ol style="list-style-type: lower-alpha">
+<li>discover what are the already available for reuse and recorded types</li>
+<li>register your own types so they can be checked dynamically wherever and whenever required</li>
+<li>understand the verification logic for each type</li>
+</ol>
+<div id="get-recorded-types-inventory" class="section level2">
+<h2><span class="header-section-number">4.1</span> Get recorded types inventory</h2>
+<p>Simply use <cite class='kw'>retrieveFactory</cite> and <cite class='kw'>getRecordedTypes</cite> functions.
+Here is an example.</p>
+<pre class="sourceCode r"><code class="sourceCode r">f &lt;-<span class="st"> </span><span class="kw">retrieveFactory</span>()
+f<span class="op">$</span><span class="kw">getRecordedTypes</span>()
+<span class="co">#&gt;     suffix        type verify_function         category</span>
+<span class="co">#&gt;  1:      a       array      &lt;function&gt;   data structure</span>
+<span class="co">#&gt;  2:      b     boolean      &lt;function&gt;            basic</span>
+<span class="co">#&gt;  3:      c     complex      &lt;function&gt;          numeric</span>
+<span class="co">#&gt;  4:     ca        call      &lt;function&gt;         language</span>
+<span class="co">#&gt;  5:      d      double      &lt;function&gt;          numeric</span>
+<span class="co">#&gt;  6:     da        date      &lt;function&gt;             date</span>
+<span class="co">#&gt;  7:     dc     POSIXct      &lt;function&gt;             date</span>
+<span class="co">#&gt;  8:     dl     POSIXlt      &lt;function&gt;             date</span>
+<span class="co">#&gt;  9:      e environment      &lt;function&gt;            basic</span>
+<span class="co">#&gt; 10:     ex  expression      &lt;function&gt;         language</span>
+<span class="co">#&gt; 11:     er       error      &lt;function&gt; error management</span>
+<span class="co">#&gt; 12:     fa      factor      &lt;function&gt;            basic</span>
+<span class="co">#&gt; 13:      f    function      &lt;function&gt;            basic</span>
+<span class="co">#&gt; 14:     df  data.frame      &lt;function&gt;   data structure</span>
+<span class="co">#&gt; 15:     dt  data.table      &lt;function&gt;   data structure</span>
+<span class="co">#&gt; 16:      i     integer      &lt;function&gt;          numeric</span>
+<span class="co">#&gt; 17:      l        list      &lt;function&gt;   data structure</span>
+<span class="co">#&gt; 18:     lo     logical      &lt;function&gt;   data structure</span>
+<span class="co">#&gt; 19:      m      matrix      &lt;function&gt;   data structure</span>
+<span class="co">#&gt; 20:      n     numeric      &lt;function&gt;          numeric</span>
+<span class="co">#&gt; 21:     na          na      &lt;function&gt;            basic</span>
+<span class="co">#&gt; 22:     nm        name      &lt;function&gt;         language</span>
+<span class="co">#&gt; 23:      o      object      &lt;function&gt;            basic</span>
+<span class="co">#&gt; 24:      r         raw      &lt;function&gt;            basic</span>
+<span class="co">#&gt; 25:      s      string      &lt;function&gt;            basic</span>
+<span class="co">#&gt; 26:      t       table      &lt;function&gt;   data structure</span>
+<span class="co">#&gt; 27:      w     warning      &lt;function&gt; error management</span>
+<span class="co">#&gt;     suffix        type verify_function         category</span></code></pre>
+</div>
+<div id="register-your-own-type" class="section level2">
+<h2><span class="header-section-number">4.2</span> Register your own type</h2>
+<p>Type registration is achieved by providing a type suffix, a type name and a verification function. Registration will be tagged automatically as user-defined. Here is a typical sequence to register your own type</p>
+<pre class="sourceCode r"><code class="sourceCode r">f<span class="op">$</span><span class="kw">addSuffix</span>(<span class="st">&#39;mc&#39;</span>, <span class="st">&#39;MyClass&#39;</span>, <span class="cf">function</span>(o_<span class="dv">1</span>_) <span class="kw">is</span>(o_<span class="dv">1</span>_, <span class="st">&#39;MyClass&#39;</span>))
+<span class="co">#&gt; [1] TRUE</span>
+f<span class="op">$</span><span class="kw">getRecordedTypes</span>()[suffix <span class="op">==</span><span class="st"> &#39;mc&#39;</span>]
+<span class="co">#&gt;    suffix    type verify_function     category</span>
+<span class="co">#&gt; 1:     mc MyClass      &lt;function&gt; user defined</span></code></pre>
+<p>Note that no implementation of the class is required. It is purely declarative registration. You told the type factory to record the type <cite class='fn'>MyClass</cite> under the suffix <cite class='fd'>mc</cite>, with the verification function you provided. Here verification function is quite simple. Notice, that it takes a single object as argument.</p>
+</div>
+<div id="get-access-to-verification-functions" class="section level2">
+<h2><span class="header-section-number">4.3</span> Get access to verification functions</h2>
+<p>Implementation of verification function can range from quite simple to as complex as required. This allows you to manage functional scopes much more easily, whatever you work and organization context.</p>
+<p>For example, if you want to see at a glance the differences between a boolean and a logical, here is the sequence you could use</p>
+<pre class="sourceCode r"><code class="sourceCode r">f<span class="op">$</span><span class="kw">getVerificationFunction</span>(<span class="st">&#39;b&#39;</span>)
+<span class="co">#&gt; function(o_1_) is.logical(o_1_) &amp;&amp; !is.na(o_1_)</span>
+<span class="co">#&gt; &lt;bytecode: 0x000000001f1c2440&gt;</span>
+<span class="co">#&gt; &lt;environment: 0x000000001f23ee08&gt;</span>
+f<span class="op">$</span><span class="kw">getVerificationFunction</span>(<span class="st">&#39;logical&#39;</span>)
+<span class="co">#&gt; function (x)  .Primitive(&quot;is.logical&quot;)</span></code></pre>
+<p>From the two definitions, you can deduce the differences between the two types. A boolean is a 2-value boolean, either <cite class='kw'>TRUE</cite> or <cite class='kw'>FALSE</cite>. A logical, is a <cite class='it'>R</cite> logical value, that is a 3-value boolean, so it may take value <cite class='kw'>NA</cite>.</p>
+<p>Note that arguments to the function can be either a registered suffix or a registered type.</p>
+</div>
+<div id="some-hints" class="section level2">
+<h2><span class="header-section-number">4.4</span> Some hints</h2>
+<p>There is currently no way to remove one recorded type. This need is indeed very specific and arise only when there is a name collision and you wish to use an already taken name for your own purpose.</p>
+<p>Solution is quite simple, use another name. Provided types are the most commons, and the current suffixes have been chosen for ease of use and for intuitive usage.</p>
+<p>Whenever you need to register a new type, ask yourself ‘what is the suffix I wish to use for the new type?’. My advice is to use short suffixes, made of 2 or 3 letters. That’s clearly sufficient to distinguish your type from others. Know that there is not limitation to the length of the suffix you can use. Simply, comply with <cite class='kw'>KISS</cite>, as you will have to type it several times.</p>
+<p>If you come from another programming language, you may consider to create aliased types by recording new entries. Let’s look at a concrete case.</p>
+<pre class="sourceCode r"><code class="sourceCode r">f<span class="op">$</span><span class="kw">addSuffix</span>(<span class="st">&#39;ui&#39;</span>, <span class="st">&#39;unsigned integer&#39;</span>, <span class="cf">function</span>(o_<span class="dv">1</span>_) f<span class="op">$</span><span class="kw">getVerificationFunction</span>(<span class="st">&#39;i&#39;</span>)(o_<span class="dv">1</span>_) <span class="op">&amp;&amp;</span><span class="st"> </span>o_<span class="dv">1</span>_ <span class="op">&gt;=</span><span class="st"> </span>0L) 
+<span class="co">#&gt; [1] TRUE</span>
+f<span class="op">$</span><span class="kw">addSuffix</span>(<span class="st">&#39;ul&#39;</span>, <span class="st">&#39;unsigned long&#39;</span>   , f<span class="op">$</span><span class="kw">getVerificationFunction</span>(<span class="st">&#39;ui&#39;</span>))
+<span class="co">#&gt; [1] TRUE</span>
+f<span class="op">$</span><span class="kw">getRecordedTypes</span>()[suffix <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;ui&#39;</span>, <span class="st">&#39;ul&#39;</span>)]
+<span class="co">#&gt;    suffix             type verify_function     category</span>
+<span class="co">#&gt; 1:     ui unsigned integer      &lt;function&gt; user defined</span>
+<span class="co">#&gt; 2:     ul    unsigned long      &lt;function&gt; user defined</span></code></pre>
+<p>You just added two new entries in the type factory, and they share the same verification function. Now, <cite class='fn'>ui</cite> and <cite class='fn'>ul</cite> are aliases of the same verification function. Notice that this is true now, but can be changed whenever needed. In particular, you may change one or the other of the two functions as soon as you need to specialize the behavior. It depends largely on your case.</p>
+<p>The term alias shall not be understood, as an authorization to use one name for the other, but rather as an ability to define quickly new types to ease functional scope management.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="putting-in-action-wyz-code-offensiveprogramming.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="semantic-names.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "night",
+"family": "serif",
+"size": 2
+},
+"edit": null,
+"history": {
+"link": null,
+"text": null
+},
+"download": ["offensive-programming-book.pdf"],
+"toc": {
+"collapse": "subsection"
+},
+"toolbar": {
+"position": "fixed"
+},
+"search": true
+});
+});
+</script>
+
+</body>
+
+</html>
