@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>References | Offensive Programming Book</title>
+  <title> 9 Generating testthat test files | Offensive Programming Book</title>
   <meta name="description" content="wyz.code.offensiveProgramming package related documentation" />
   <meta name="generator" content="bookdown 0.12 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="References | Offensive Programming Book" />
+  <meta property="og:title" content=" 9 Generating testthat test files | Offensive Programming Book" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="figures/op.png" />
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="References | Offensive Programming Book" />
+  <meta name="twitter:title" content=" 9 Generating testthat test files | Offensive Programming Book" />
   
   <meta name="twitter:description" content="wyz.code.offensiveProgramming package related documentation" />
   <meta name="twitter:image" content="figures/op.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="conclusion.html">
-
+<link rel="prev" href="running-test-cases.html">
+<link rel="next" href="generating-r-documentation.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -237,25 +237,157 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="references" class="section level1 unnumbered">
-<h1>References</h1>
+<div id="generating-testthat-test-files" class="section level1">
+<h1><span class="header-section-number"> 9</span> Generating <cite class='it'>testthat</cite> test files</h1>
+<p>When your <cite class='it'>R</cite> code is offensive programming instrumented, it becomes possible to generate <cite class='it'>testthat</cite> unit test files, thus improving greatly developers productivity.</p>
+<p>To be able to generate <cite class='it'>testthat</cite> unit test files, you must ensure that your <cite class='it'>R</cite> code is function return type instrumented and test cases instrumented. Both are required for this generation.</p>
+<div id="package-wyz.code.testthat-in-action" class="section level2">
+<h2><span class="header-section-number">9.1</span> Package <cite class='it'>wyz.code.testthat</cite> in action</h2>
+<div id="setting-up-the-context" class="section level3">
+<h3><span class="header-section-number">9.1.1</span> Setting up the context</h3>
+<p>To create <cite class='it'>testthat</cite> unit test files, you must provide a target folder, to store the generated unit test files. In this session, generated files will be stored onto folder <cite class='fd'>generated-testthat</cite>. You may change this, but be warned that generated files might be overwritten without any reminder. Be careful, if you set the target folder to <cite class='fd'>tests/testthat</cite> as you may loose previous work. You may save frequently your results in configuration management to be able to retrieve original file content whenever required.</p>
+<p>Here, I reuse 4 files from package <cite class='it'>wyz.code.offensiveProgramming</cite> to generate unit test files from.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1"><span class="kw">library</span>(wyz.code.testthat)</a>
+<a class="sourceLine" id="cb31-2" title="2"></a>
+<a class="sourceLine" id="cb31-3" title="3">target_folder &lt;-<span class="st"> &#39;generated-testthat&#39;</span></a>
+<a class="sourceLine" id="cb31-4" title="4"><span class="cf">if</span> (<span class="op">!</span><span class="kw">dir.exists</span>(target_folder)) <span class="kw">dir.create</span>(target_folder)</a>
+<a class="sourceLine" id="cb31-5" title="5"></a>
+<a class="sourceLine" id="cb31-6" title="6">generateTests &lt;-<span class="st"> </span><span class="cf">function</span>(sourceFile_s_<span class="dv">1</span>, sourcePackage_s_<span class="dv">1</span>, object_o_<span class="dv">1</span>) {</a>
+<a class="sourceLine" id="cb31-7" title="7">  g &lt;-<span class="st"> </span><span class="kw">gautfo</span>(object_o_<span class="dv">1</span>, sourceFile_s_<span class="dv">1</span>, sourcePackage_s_<span class="dv">1</span>, target_folder)</a>
+<a class="sourceLine" id="cb31-8" title="8">  <span class="kw">print</span>(g)</a>
+<a class="sourceLine" id="cb31-9" title="9">  g</a>
+<a class="sourceLine" id="cb31-10" title="10">}</a>
+<a class="sourceLine" id="cb31-11" title="11"></a>
+<a class="sourceLine" id="cb31-12" title="12">source_package &lt;-<span class="st"> &#39;wyz.code.offensiveProgramming&#39;</span></a>
+<a class="sourceLine" id="cb31-13" title="13"></a>
+<a class="sourceLine" id="cb31-14" title="14">source_files &lt;-<span class="st"> </span><span class="kw">c</span>(</a>
+<a class="sourceLine" id="cb31-15" title="15">  <span class="st">&#39;code-samples/full-instrumentation/AdditionTCFIG1.R&#39;</span>,</a>
+<a class="sourceLine" id="cb31-16" title="16">  <span class="st">&#39;code-samples/no-instrumentation/Addition.R&#39;</span>,</a>
+<a class="sourceLine" id="cb31-17" title="17">  <span class="st">&#39;code-samples/fun-defs/good/partial/AdditionFIPartial.R&#39;</span>,</a>
+<a class="sourceLine" id="cb31-18" title="18">  <span class="st">&#39;code-samples/tc-defs/good/partial/AdditionTCPartial.R&#39;</span></a>
+<a class="sourceLine" id="cb31-19" title="19">)</a>
+<a class="sourceLine" id="cb31-20" title="20"></a>
+<a class="sourceLine" id="cb31-21" title="21"><span class="kw">invisible</span>(<span class="kw">sapply</span>(source_files, <span class="cf">function</span>(e) {</a>
+<a class="sourceLine" id="cb31-22" title="22">  <span class="kw">source</span>(<span class="kw">system.file</span>(e, <span class="dt">package =</span> source_package))</a>
+<a class="sourceLine" id="cb31-23" title="23">}))</a></code></pre></div>
+</div>
+<div id="unit-test-file-generation" class="section level3">
+<h3><span class="header-section-number">9.1.2</span> Unit test file generation</h3>
+<p>Generation is done on a per class basis. Simply use function <cite class='kw'>gautfo</cite> or function <cite class='kw'>generateAllUnitTestsFromObject</cite>.</p>
+<div id="nominal-case-1" class="section level4">
+<h4><span class="header-section-number">9.1.2.1</span> Nominal case</h4>
+<p>Class <cite class='kw'>AdditionTCFIG1</cite> is offensive programming instrumented. It uses both function return type instrumentation and test case instrumentation. Indeed, this class is partially instrumented. Not all the methods of the class have test cases declared for.</p>
+<p>Generation is quite straightforward.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1"><span class="kw">print</span>(<span class="kw">gautfo</span>(<span class="kw">AdditionTCFIG1</span>(), source_files[<span class="dv">1</span>], source_package, target_folder))</a>
+<a class="sourceLine" id="cb32-2" title="2"><span class="co">#&gt; $class</span></a>
+<a class="sourceLine" id="cb32-3" title="3"><span class="co">#&gt; [1] &quot;AdditionTCFIG1&quot;</span></a>
+<a class="sourceLine" id="cb32-4" title="4"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb32-5" title="5"><span class="co">#&gt; $filenames</span></a>
+<a class="sourceLine" id="cb32-6" title="6"><span class="co">#&gt;                                                    filename overwritten</span></a>
+<a class="sourceLine" id="cb32-7" title="7"><span class="co">#&gt; 1:       generated-testthat/test_AdditionTCFIG1-addDouble.R        TRUE</span></a>
+<a class="sourceLine" id="cb32-8" title="8"><span class="co">#&gt; 2:      generated-testthat/test_AdditionTCFIG1-addInteger.R        TRUE</span></a>
+<a class="sourceLine" id="cb32-9" title="9"><span class="co">#&gt; 3:    generated-testthat/test_AdditionTCFIG1-divideByZero.R        TRUE</span></a>
+<a class="sourceLine" id="cb32-10" title="10"><span class="co">#&gt; 4: generated-testthat/test_AdditionTCFIG1-generateWarning.R        TRUE</span></a>
+<a class="sourceLine" id="cb32-11" title="11"><span class="co">#&gt; 5:   generated-testthat/test_AdditionTCFIG1-generateError.R        TRUE</span></a>
+<a class="sourceLine" id="cb32-12" title="12"><span class="co">#&gt; 6:  generated-testthat/test_AdditionTCFIG1-addMultiDouble.R        TRUE</span></a>
+<a class="sourceLine" id="cb32-13" title="13"><span class="co">#&gt; 7: generated-testthat/test_AdditionTCFIG1-addMultiInteger.R        TRUE</span></a></code></pre></div>
+<p>Results is a list with two entries. Entry named <cite class='oc'>filenames</cite> holds a <cite class='it'>data.table</cite> providing insight about created files.</p>
+</div>
+<div id="exception-cases" class="section level4">
+<h4><span class="header-section-number">9.1.2.2</span> Exception cases</h4>
+<p>Class <cite class='kw'>Addition</cite> is NOT offensive programming instrumented.</p>
+<p>Class <cite class='kw'>AdditionFIPartial</cite> is NOT FULLY offensive programming instrumented. It lacks test cases instrumentation.</p>
+<p>Class <cite class='kw'>AdditionTCPartial</cite> is NOT offensive programming instrumented. It lacks function return type instrumentation.</p>
+<p>Expected results is no unit test file generation.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1"><span class="kw">print</span>(<span class="kw">gautfo</span>(<span class="kw">Addition</span>(), source_files[<span class="dv">2</span>], source_package, target_folder))</a>
+<a class="sourceLine" id="cb33-2" title="2"><span class="co">#&gt; [1] &quot;Class [Addition] apparently owns no test instrumentation. No test created.&quot;</span></a>
+<a class="sourceLine" id="cb33-3" title="3"></a>
+<a class="sourceLine" id="cb33-4" title="4"><span class="kw">print</span>(<span class="kw">gautfo</span>(<span class="kw">AdditionFIPartial</span>(), source_files[<span class="dv">3</span>], source_package, target_folder))</a>
+<a class="sourceLine" id="cb33-5" title="5"><span class="co">#&gt; [1] &quot;Class [AdditionFIPartial] apparently owns no test instrumentation. No test created.&quot;</span></a>
+<a class="sourceLine" id="cb33-6" title="6"></a>
+<a class="sourceLine" id="cb33-7" title="7"><span class="kw">print</span>(<span class="kw">gautfo</span>(<span class="kw">AdditionTCPartial</span>(), source_files[<span class="dv">4</span>], source_package, target_folder))</a>
+<a class="sourceLine" id="cb33-8" title="8"><span class="co">#&gt; [1] &quot;Class [AdditionTCPartial] apparently owns no function return type instrumentation. No test created.&quot;</span></a></code></pre></div>
+</div>
+</div>
+</div>
+<div id="generated-unit-test-file-content" class="section level2">
+<h2><span class="header-section-number">9.2</span> Generated unit test file content</h2>
+<p>Typically, generated <cite class='it'>R</cite> code will looks like following unit test code. Note, that comments are provided to ease cross-referencing and to link back easily to <cite class='it'>wyz.code.offensiveProgramming</cite> test case number. This is helpful when facing dysfunctions.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1"><span class="kw">source</span>(<span class="kw">system.file</span>(<span class="st">&quot;code-samples/full-instrumentation/AdditionTCFIG1.R&quot;</span>,</a>
+<a class="sourceLine" id="cb34-2" title="2">                   <span class="dt">package =</span> <span class="st">&quot;wyz.code.offensiveProgramming&quot;</span>))</a>
+<a class="sourceLine" id="cb34-3" title="3">object_o_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">AdditionTCFIG1</span>()</a>
+<a class="sourceLine" id="cb34-4" title="4">emsre &lt;-<span class="st"> </span><span class="kw">EvaluationMode</span>(<span class="st">&quot;standard_R_evaluation&quot;</span>)</a>
+<a class="sourceLine" id="cb34-5" title="5">rtcsre24 &lt;-<span class="st"> </span><span class="kw">runTestCase</span>(object_o_<span class="dv">1</span>, <span class="dv">24</span>, emsre)</a>
+<a class="sourceLine" id="cb34-6" title="6">rtcsre25 &lt;-<span class="st"> </span><span class="kw">runTestCase</span>(object_o_<span class="dv">1</span>, <span class="dv">25</span>, emsre)</a>
+<a class="sourceLine" id="cb34-7" title="7">rtcsre26 &lt;-<span class="st"> </span><span class="kw">runTestCase</span>(object_o_<span class="dv">1</span>, <span class="dv">26</span>, emsre)</a>
+<a class="sourceLine" id="cb34-8" title="8"></a>
+<a class="sourceLine" id="cb34-9" title="9"><span class="kw">test_that</span>(<span class="st">&#39;addMultiDouble&#39;</span>, {</a>
+<a class="sourceLine" id="cb34-10" title="10"></a>
+<a class="sourceLine" id="cb34-11" title="11"><span class="co"># test 24 - sum of 1 integer and 1 double - correct</span></a>
+<a class="sourceLine" id="cb34-12" title="12"><span class="kw">expect_true</span>(rtcsre24<span class="op">$</span>synthesis<span class="op">$</span>status)</a>
+<a class="sourceLine" id="cb34-13" title="13"><span class="kw">expect_true</span>(rtcsre24<span class="op">$</span>synthesis<span class="op">$</span>value_check)</a>
+<a class="sourceLine" id="cb34-14" title="14"></a>
+<a class="sourceLine" id="cb34-15" title="15"></a>
+<a class="sourceLine" id="cb34-16" title="16"><span class="co"># test 25 - sum of 1 double, 2 integers and 1 NA_integer_ - correct</span></a>
+<a class="sourceLine" id="cb34-17" title="17"><span class="kw">expect_true</span>(rtcsre25<span class="op">$</span>synthesis<span class="op">$</span>status)</a>
+<a class="sourceLine" id="cb34-18" title="18"><span class="kw">expect_true</span>(rtcsre25<span class="op">$</span>synthesis<span class="op">$</span>value_check)</a>
+<a class="sourceLine" id="cb34-19" title="19"></a>
+<a class="sourceLine" id="cb34-20" title="20"></a>
+<a class="sourceLine" id="cb34-21" title="21"><span class="co"># test 26 - sum of nothing - correct</span></a>
+<a class="sourceLine" id="cb34-22" title="22"><span class="kw">expect_true</span>(rtcsre26<span class="op">$</span>synthesis<span class="op">$</span>status)</a>
+<a class="sourceLine" id="cb34-23" title="23"><span class="kw">expect_true</span>(rtcsre26<span class="op">$</span>synthesis<span class="op">$</span>value_check)</a>
+<a class="sourceLine" id="cb34-24" title="24"></a>
+<a class="sourceLine" id="cb34-25" title="25">})</a>
+<a class="sourceLine" id="cb34-26" title="26"></a>
+<a class="sourceLine" id="cb34-27" title="27">emtce &lt;-<span class="st"> </span><span class="kw">EvaluationMode</span>(<span class="st">&quot;type_checking_enforcement&quot;</span>)</a>
+<a class="sourceLine" id="cb34-28" title="28">rtctce24 &lt;-<span class="st"> </span><span class="kw">runTestCase</span>(object_o_<span class="dv">1</span>, <span class="dv">24</span>, emtce)</a>
+<a class="sourceLine" id="cb34-29" title="29">rtctce25 &lt;-<span class="st"> </span><span class="kw">runTestCase</span>(object_o_<span class="dv">1</span>, <span class="dv">25</span>, emtce)</a>
+<a class="sourceLine" id="cb34-30" title="30">rtctce26 &lt;-<span class="st"> </span><span class="kw">runTestCase</span>(object_o_<span class="dv">1</span>, <span class="dv">26</span>, emtce)</a>
+<a class="sourceLine" id="cb34-31" title="31"></a>
+<a class="sourceLine" id="cb34-32" title="32"><span class="kw">test_that</span>(<span class="st">&#39;addMultiDouble&#39;</span>, {</a>
+<a class="sourceLine" id="cb34-33" title="33"></a>
+<a class="sourceLine" id="cb34-34" title="34"><span class="co"># test 24 - sum of 1 integer and 1 double - correct</span></a>
+<a class="sourceLine" id="cb34-35" title="35"><span class="kw">expect_true</span>(rtctce24<span class="op">$</span>synthesis<span class="op">$</span>status)</a>
+<a class="sourceLine" id="cb34-36" title="36"><span class="kw">expect_true</span>(rtctce24<span class="op">$</span>synthesis<span class="op">$</span>value_check)</a>
+<a class="sourceLine" id="cb34-37" title="37"></a>
+<a class="sourceLine" id="cb34-38" title="38"></a>
+<a class="sourceLine" id="cb34-39" title="39"><span class="co"># test 25 - sum of 1 double, 2 integers and 1 NA_integer_ - correct</span></a>
+<a class="sourceLine" id="cb34-40" title="40"><span class="kw">expect_true</span>(rtctce25<span class="op">$</span>synthesis<span class="op">$</span>status)</a>
+<a class="sourceLine" id="cb34-41" title="41"><span class="kw">expect_true</span>(rtctce25<span class="op">$</span>synthesis<span class="op">$</span>value_check)</a>
+<a class="sourceLine" id="cb34-42" title="42"></a>
+<a class="sourceLine" id="cb34-43" title="43"></a>
+<a class="sourceLine" id="cb34-44" title="44"><span class="co"># test 26 - sum of nothing - correct</span></a>
+<a class="sourceLine" id="cb34-45" title="45"><span class="kw">expect_true</span>(rtctce26<span class="op">$</span>synthesis<span class="op">$</span>status)</a>
+<a class="sourceLine" id="cb34-46" title="46"><span class="kw">expect_true</span>(rtctce26<span class="op">$</span>synthesis<span class="op">$</span>value_check)</a>
+<a class="sourceLine" id="cb34-47" title="47"></a>
+<a class="sourceLine" id="cb34-48" title="48">})</a></code></pre></div>
+</div>
+<div id="known-limits" class="section level2">
+<h2><span class="header-section-number">9.3</span> Known-limits</h2>
+<p>Generation of unit test file uses meta-programmation based on <cite class='oc'>call</cite> function, and aims to produce <cite class='it'>R</cite> valid code. Indeed, format and presentation are not managed, in generated file. Used <strong>RStudio</strong> editing facilities to ensure nice presentation, although neither mandatory nor required.</p>
+<p>Generated tests cases are ready to run. Use the standard way to run your <cite class='it'>testthat</cite> test cases onto them. If you face some test failures, verify following points</p>
+<ol style="list-style-type: decimal">
+<li>make sure offensive programming evaluation is running fine for ALL evaluation schemes, and that you have no errors at this level</li>
+<li>make sure your generated test case source is well up to date with the your <cite class='it'>R</cite> offensive programming code. You may regenerate your tests cases at any time if you have any doubt.</li>
+</ol>
+<p>Note that unit test file generated is fully dependent of your <cite class='it'>R</cite> source and of the instrumented scope. If there are function not instrumented in your source code, do not expect to have unit test cases for them.</p>
+<p>Also note, when working incrementally, you need to regenerate the unit test cases each time you change the <cite class='it'>R</cite> source code or the offensive programming instrumentation.</p>
+<p>Best way to put <cite class='it'>wyz.code.testthat</cite> in practice, is to apply following procedure</p>
+<ol style="list-style-type: decimal">
+<li>apply offensive programming at the required scope and ensure <cite class='it'>wyz.code.offensiveProgramming</cite> test cases are valid, using <cite class='kw'>runTestCase</cite> function</li>
+<li>generate <cite class='it'>testthat</cite> test cases in one single pass using <cite class='it'>wyz.code.testthat</cite>. To do so, create an <cite class='it'>R</cite> script. This will ease your pain, and will provide consistent results through calls</li>
+<li>apply <cite class='it'>testthat</cite> testing practice, to verify that generated tests are running fine.</li>
+</ol>
 
-
-
-
-
-
-
-
-
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="conclusion.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="running-test-cases.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="generating-r-documentation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

@@ -35,7 +35,8 @@ cite.op { font-weight: normal;  color: teal;}
 cite.os { font-weight: bold;  color: orange;}
 cite.qs { font-weight: normal;  color: darkKhaki;}
 cite.rt { font-weight: bold;  color: purple;}
-
+cite.ff { font: 'Courier new'; color: teal;}
+cite.fd { font: 'Courier new'; color: lime;}
 cite.imperatif { font-weight: bold;  color: red;}
 
 /*cite.archi { font-weight: normal;  color: CornFlowerBlue;}

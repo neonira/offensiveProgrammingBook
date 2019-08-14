@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html >
-
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
 
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title> 2 Application in R language | Offensive Programming Book</title>
-  <meta name="description" content="wyz.code.offensiveProgramming package related documentation">
-  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+  <meta name="description" content="wyz.code.offensiveProgramming package related documentation" />
+  <meta name="generator" content="bookdown 0.12 and GitBook 2.6.7" />
 
   <meta property="og:title" content=" 2 Application in R language | Offensive Programming Book" />
   <meta property="og:type" content="book" />
@@ -22,13 +21,13 @@
   <meta name="twitter:description" content="wyz.code.offensiveProgramming package related documentation" />
   <meta name="twitter:image" content="figures/op.png" />
 
-<meta name="author" content="Fabien GELINEAU neonira@gmail.com">
+<meta name="author" content="Fabien GELINEAU neonira@gmail.com" />
 
 
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
 <link rel="prev" href="programming-styles.html">
@@ -55,7 +54,6 @@ a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
 a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
@@ -187,14 +185,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.2" data-path="running-test-cases.html"><a href="running-test-cases.html#test-case-definitions-verification"><i class="fa fa-check"></i><b>8.2</b> Test case definitions verification</a></li>
 <li class="chapter" data-level="8.3" data-path="running-test-cases.html"><a href="running-test-cases.html#run-a-test-case"><i class="fa fa-check"></i><b>8.3</b> Run a test case</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>9</b> Conclusion</a><ul>
-<li class="chapter" data-level="9.1" data-path="conclusion.html"><a href="conclusion.html#benefits-of-offensive-programming"><i class="fa fa-check"></i><b>9.1</b> Benefits of offensive programming</a></li>
-<li class="chapter" data-level="9.2" data-path="conclusion.html"><a href="conclusion.html#concerns-of-offensive-programming"><i class="fa fa-check"></i><b>9.2</b> Concerns of offensive programming</a></li>
-<li class="chapter" data-level="9.3" data-path="conclusion.html"><a href="conclusion.html#two-extensions"><i class="fa fa-check"></i><b>9.3</b> Two extensions</a><ul>
-<li class="chapter" data-level="9.3.1" data-path="conclusion.html"><a href="conclusion.html#unit-test-code-generation"><i class="fa fa-check"></i><b>9.3.1</b> Unit test code generation</a></li>
-<li class="chapter" data-level="9.3.2" data-path="conclusion.html"><a href="conclusion.html#manual-pages-production"><i class="fa fa-check"></i><b>9.3.2</b> Manual pages production</a></li>
+<li class="chapter" data-level="9" data-path="generating-testthat-test-files.html"><a href="generating-testthat-test-files.html"><i class="fa fa-check"></i><b>9</b> Generating <cite class='it'>testthat</cite> test files</a><ul>
+<li class="chapter" data-level="9.1" data-path="generating-testthat-test-files.html"><a href="generating-testthat-test-files.html#package-wyz.code.testthat-in-action"><i class="fa fa-check"></i><b>9.1</b> Package <cite class='it'>wyz.code.testthat</cite> in action</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="generating-testthat-test-files.html"><a href="generating-testthat-test-files.html#setting-up-the-context"><i class="fa fa-check"></i><b>9.1.1</b> Setting up the context</a></li>
+<li class="chapter" data-level="9.1.2" data-path="generating-testthat-test-files.html"><a href="generating-testthat-test-files.html#unit-test-file-generation"><i class="fa fa-check"></i><b>9.1.2</b> Unit test file generation</a></li>
 </ul></li>
-<li class="chapter" data-level="9.4" data-path="conclusion.html"><a href="conclusion.html#your-feedback-is-welcome"><i class="fa fa-check"></i><b>9.4</b> Your feedback is welcome</a></li>
+<li class="chapter" data-level="9.2" data-path="generating-testthat-test-files.html"><a href="generating-testthat-test-files.html#generated-unit-test-file-content"><i class="fa fa-check"></i><b>9.2</b> Generated unit test file content</a></li>
+<li class="chapter" data-level="9.3" data-path="generating-testthat-test-files.html"><a href="generating-testthat-test-files.html#known-limits"><i class="fa fa-check"></i><b>9.3</b> Known-limits</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html"><i class="fa fa-check"></i><b>10</b> Generating <cite class='it'>R</cite> documentation</a><ul>
+<li class="chapter" data-level="10.1" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#automated-r-documentation-generation"><i class="fa fa-check"></i><b>10.1</b> Automated <cite class='it'>R</cite> documentation generation</a></li>
+<li class="chapter" data-level="10.2" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#focus-on-r-documentation-generation"><i class="fa fa-check"></i><b>10.2</b> Focus on <cite class='kw'>R</cite> documentation generation</a></li>
+<li class="chapter" data-level="10.3" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#package-wyz.code.rdoc-utilities"><i class="fa fa-check"></i><b>10.3</b> package <cite class='it'>wyz.code.rdoc</cite> utilities</a><ul>
+<li class="chapter" data-level="10.3.1" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#generate-a-r-documentation-section"><i class="fa fa-check"></i><b>10.3.1</b> Generate a <cite class='it'>R</cite> documentation section</a></li>
+<li class="chapter" data-level="10.3.2" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#format-an-english-sentence"><i class="fa fa-check"></i><b>10.3.2</b> Format an English sentence</a></li>
+<li class="chapter" data-level="10.3.3" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#generate-some-r-documentation-content"><i class="fa fa-check"></i><b>10.3.3</b> Generate some <cite class='it'>R</cite> documentation content</a></li>
+<li class="chapter" data-level="10.3.4" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#generate-cross-ref-to-other-r-package"><i class="fa fa-check"></i><b>10.3.4</b> Generate cross-ref to other <cite class='it'>R</cite> package</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#manual-pages-generation"><i class="fa fa-check"></i><b>10.4</b> Manual pages generation</a><ul>
+<li class="chapter" data-level="10.4.1" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#context-setup"><i class="fa fa-check"></i><b>10.4.1</b> Context setup</a></li>
+<li class="chapter" data-level="10.4.2" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#method-manual-page"><i class="fa fa-check"></i><b>10.4.2</b> Method manual page</a></li>
+<li class="chapter" data-level="10.4.3" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#class-manual-page"><i class="fa fa-check"></i><b>10.4.3</b> Class manual page</a></li>
+<li class="chapter" data-level="10.4.4" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#package-manual-page"><i class="fa fa-check"></i><b>10.4.4</b> Package manual page</a></li>
+<li class="chapter" data-level="10.4.5" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#in-one-shot"><i class="fa fa-check"></i><b>10.4.5</b> In one shot</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#known-limits-1"><i class="fa fa-check"></i><b>10.5</b> Known-limits</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>11</b> Conclusion</a><ul>
+<li class="chapter" data-level="11.1" data-path="conclusion.html"><a href="conclusion.html#benefits-of-offensive-programming"><i class="fa fa-check"></i><b>11.1</b> Benefits of offensive programming</a></li>
+<li class="chapter" data-level="11.2" data-path="conclusion.html"><a href="conclusion.html#concerns-of-offensive-programming"><i class="fa fa-check"></i><b>11.2</b> Concerns of offensive programming</a></li>
+<li class="chapter" data-level="11.3" data-path="conclusion.html"><a href="conclusion.html#your-feedback-is-welcome"><i class="fa fa-check"></i><b>11.3</b> Your feedback is welcome</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -222,18 +242,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="a-simple-case" class="section level2">
 <h2><span class="header-section-number">2.1</span> A simple case</h2>
 <p>Consider following <cite class='it'>R</cite> class implementation which provides some basic mathematics operations.</p>
-<pre class="sourceCode r"><code class="sourceCode r">MathOperation &lt;-<span class="st"> </span><span class="cf">function</span>() {
-  self &lt;-<span class="st"> </span><span class="kw">environment</span>()
-  <span class="kw">class</span>(self) &lt;-<span class="st"> </span><span class="kw">append</span>(<span class="st">&#39;Addition&#39;</span>, <span class="kw">class</span>(self))
-
-  add &lt;-<span class="st"> </span><span class="cf">function</span>(x, y) x <span class="op">+</span><span class="st"> </span>y
-  
-  multiply &lt;-<span class="st"> </span><span class="cf">function</span>(x, y) x <span class="op">*</span><span class="st"> </span>y
-  
-  divide &lt;-<span class="st"> </span><span class="cf">function</span>(x, y) x <span class="op">/</span><span class="st"> </span>y
-
-  self
-}</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">MathOperation &lt;-<span class="st"> </span><span class="cf">function</span>() {</a>
+<a class="sourceLine" id="cb1-2" title="2">  self &lt;-<span class="st"> </span><span class="kw">environment</span>()</a>
+<a class="sourceLine" id="cb1-3" title="3">  <span class="kw">class</span>(self) &lt;-<span class="st"> </span><span class="kw">append</span>(<span class="st">&#39;Addition&#39;</span>, <span class="kw">class</span>(self))</a>
+<a class="sourceLine" id="cb1-4" title="4"></a>
+<a class="sourceLine" id="cb1-5" title="5">  add &lt;-<span class="st"> </span><span class="cf">function</span>(x, y) x <span class="op">+</span><span class="st"> </span>y</a>
+<a class="sourceLine" id="cb1-6" title="6">  </a>
+<a class="sourceLine" id="cb1-7" title="7">  multiply &lt;-<span class="st"> </span><span class="cf">function</span>(x, y) x <span class="op">*</span><span class="st"> </span>y</a>
+<a class="sourceLine" id="cb1-8" title="8">  </a>
+<a class="sourceLine" id="cb1-9" title="9">  divide &lt;-<span class="st"> </span><span class="cf">function</span>(x, y) x <span class="op">/</span><span class="st"> </span>y</a>
+<a class="sourceLine" id="cb1-10" title="10"></a>
+<a class="sourceLine" id="cb1-11" title="11">  self</a>
+<a class="sourceLine" id="cb1-12" title="12">}</a></code></pre></div>
 <p>Let’s not argue about the design and relevancy of the approach. Instead, can you tell the scopes of each function, and identify/inventorize the implementations flaws ?</p>
 </div>
 <div id="defensive-programming" class="section level2">
@@ -286,24 +306,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="offensive-programming" class="section level2">
 <h2><span class="header-section-number">2.3</span> Offensive programming</h2>
 <p>Consider same <cite class='it'>R</cite> class implementation with a little bit instrumentation.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">suppressMessages</span>(<span class="kw">require</span>(data.table))
-MathOperation &lt;-<span class="st"> </span><span class="cf">function</span>() {
-  self &lt;-<span class="st"> </span><span class="kw">environment</span>()
-  <span class="kw">class</span>(self) &lt;-<span class="st"> </span><span class="kw">append</span>(<span class="st">&#39;Addition&#39;</span>, <span class="kw">class</span>(self))
-
-  add &lt;-<span class="st"> </span><span class="cf">function</span>(x_r, y_r) x_r <span class="op">+</span><span class="st"> </span>y_r
-  
-  multiply &lt;-<span class="st"> </span><span class="cf">function</span>(x_r, y_r) x_r <span class="op">*</span><span class="st"> </span>y_r
-  
-  divide &lt;-<span class="st"> </span><span class="cf">function</span>(x_r, y_r) x_r <span class="op">/</span><span class="st"> </span>y_r
-  
-  function_return_types &lt;-<span class="st"> </span><span class="kw">data.table</span>(
-    <span class="dt">function_name =</span> <span class="kw">c</span>(<span class="st">&#39;add&#39;</span>, <span class="st">&#39;multiply&#39;</span>, <span class="st">&#39;divide&#39;</span>),
-    <span class="dt">return_value =</span> <span class="kw">c</span>(<span class="st">&#39;x_r&#39;</span>, <span class="st">&#39;x_r&#39;</span>, <span class="st">&#39;x_d&#39;</span>)
-  )
-
-  self
-}</code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">suppressMessages</span>(<span class="kw">require</span>(data.table))</a>
+<a class="sourceLine" id="cb2-2" title="2">MathOperation &lt;-<span class="st"> </span><span class="cf">function</span>() {</a>
+<a class="sourceLine" id="cb2-3" title="3">  self &lt;-<span class="st"> </span><span class="kw">environment</span>()</a>
+<a class="sourceLine" id="cb2-4" title="4">  <span class="kw">class</span>(self) &lt;-<span class="st"> </span><span class="kw">append</span>(<span class="st">&#39;Addition&#39;</span>, <span class="kw">class</span>(self))</a>
+<a class="sourceLine" id="cb2-5" title="5"></a>
+<a class="sourceLine" id="cb2-6" title="6">  add &lt;-<span class="st"> </span><span class="cf">function</span>(x_r, y_r) x_r <span class="op">+</span><span class="st"> </span>y_r</a>
+<a class="sourceLine" id="cb2-7" title="7">  </a>
+<a class="sourceLine" id="cb2-8" title="8">  multiply &lt;-<span class="st"> </span><span class="cf">function</span>(x_r, y_r) x_r <span class="op">*</span><span class="st"> </span>y_r</a>
+<a class="sourceLine" id="cb2-9" title="9">  </a>
+<a class="sourceLine" id="cb2-10" title="10">  divide &lt;-<span class="st"> </span><span class="cf">function</span>(x_r, y_r) x_r <span class="op">/</span><span class="st"> </span>y_r</a>
+<a class="sourceLine" id="cb2-11" title="11">  </a>
+<a class="sourceLine" id="cb2-12" title="12">  function_return_types &lt;-<span class="st"> </span><span class="kw">data.table</span>(</a>
+<a class="sourceLine" id="cb2-13" title="13">    <span class="dt">function_name =</span> <span class="kw">c</span>(<span class="st">&#39;add&#39;</span>, <span class="st">&#39;multiply&#39;</span>, <span class="st">&#39;divide&#39;</span>),</a>
+<a class="sourceLine" id="cb2-14" title="14">    <span class="dt">return_value =</span> <span class="kw">c</span>(<span class="st">&#39;x_r&#39;</span>, <span class="st">&#39;x_r&#39;</span>, <span class="st">&#39;x_d&#39;</span>)</a>
+<a class="sourceLine" id="cb2-15" title="15">  )</a>
+<a class="sourceLine" id="cb2-16" title="16"></a>
+<a class="sourceLine" id="cb2-17" title="17">  self</a>
+<a class="sourceLine" id="cb2-18" title="18">}</a></code></pre></div>
 <div id="what-is-different" class="section level3">
 <h3><span class="header-section-number">2.3.1</span> What is different?</h3>
 <p>Compare to previously shown implementation, here are the two main differences</p>
@@ -317,19 +337,19 @@ MathOperation &lt;-<span class="st"> </span><span class="cf">function</span>() {
 <h3><span class="header-section-number">2.3.2</span> Semantic argument naming</h3>
 <p>Arguments have been renamed from <cite class='kw'>x</cite> to <cite class='kw'>x_r</cite>.
 What does that mean? Syntactically, it changes nothing for <cite class='it'>R</cite>. For us humans, it changes a lot of things, as this follows a pattern that allows to specify several intents in a short, concise, and reliable way.</p>
-<p>The pattern is simple to understand. Its parts can be up to three, and the second and third parts are optional. First part, is the variable name. Second part is the type of the variable. Third part is the length constraint specification. Part are separated by underscore. Refer to <a href="semantic-names.html#semantic-names">5</a> for more details about syntax, and for illustrative examples.</p>
+<p>The pattern is simple to understand. Its parts can be up to three, and the second and third parts are optional. First part, is the variable name. Second part is the type of the variable. Third part is the length constraint specification. Parts are separated by underscore. Refer to <a href="semantic-names.html#semantic-names">5</a> for more details about syntax, and for illustrative examples.</p>
 </div>
 </div>
 <div id="back-to-definition" class="section level2">
 <h2><span class="header-section-number">2.4</span> Back to definition</h2>
 <p>So now you may be able to translate the variable <cite class='kw'>x_r</cite> by yourself. Just a vector of real values, unconstrained in length. Using this parameter name implies that the the developer is responsible for testing cases of various length and has to prevent weirdness propagation.</p>
 <p>For example following R code shows results that require decisions</p>
-<pre class="sourceCode r"><code class="sourceCode r">mo &lt;-<span class="st"> </span><span class="kw">MathOperation</span>()
-
-<span class="kw">print</span>(mo<span class="op">$</span><span class="kw">add</span>(<span class="fl">1.0</span> <span class="op">*</span><span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="fl">1.0</span> <span class="op">*</span><span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">7</span>))
-<span class="co">#&gt; Warning in x_r + y_r: la taille d&#39;un objet plus long n&#39;est pas multiple de</span>
-<span class="co">#&gt; la taille d&#39;un objet plus court</span>
-<span class="co">#&gt; [1] 2 4 6 5 7 9 8</span></code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">mo &lt;-<span class="st"> </span><span class="kw">MathOperation</span>()</a>
+<a class="sourceLine" id="cb3-2" title="2"></a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="kw">print</span>(mo<span class="op">$</span><span class="kw">add</span>(<span class="fl">1.0</span> <span class="op">*</span><span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="fl">1.0</span> <span class="op">*</span><span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">7</span>))</a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="co">#&gt; Warning in x_r + y_r: la taille d&#39;un objet plus long n&#39;est pas multiple de</span></a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="co">#&gt; la taille d&#39;un objet plus court</span></a>
+<a class="sourceLine" id="cb3-6" title="6"><span class="co">#&gt; [1] 2 4 6 5 7 9 8</span></a></code></pre></div>
 <p>This code provides both an output and a warning, because of R recycling on various length vectors. What decision should be taken ? Allow or deny this behavior ? It depends of your usage. If you are creating a real math library, I would recommend to duplicate the code and create two functions named <cite class='kw'>addRCompliant</cite> and <cite class='kw'>addMathCompliant</cite>. Later should enforce arguments length control in his body, while former should keep the body as is or instrument it with an encapsulating <cite class='kw'>suppressWarning</cite> call. That way, you should easily meet your end-users expectations, either mathematicians or software engineers.</p>
 <p>Note that in the later case, added controls are not defensive programming but functional scope verification.</p>
 
