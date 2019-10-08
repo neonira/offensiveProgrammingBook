@@ -1,0 +1,137 @@
+# Running functions 
+
+Our goal is to run a R instrumented function, under a given evaluation mode. To do so, some prerequisites have to be met, prior to use some (ref:PKN) utilities to proceed to the function execution with context capture and human-readable feedback generation. 
+
+## Prerequisites
+
+To run a R function is has to be instrumented. Two requirements have to be met
+
+1. the function must comply with semantic parameter naming 
+1. the function return type must be specified
+
+
+
+## Function return types definition verification
+
+To verify function return types definition you may use the low level function <cite class='kw'>verifyFunctionReturnTypesDefinition</cite> or the higher level one named <cite class='kw'>retrieveFunctionReturnTypes</cite>. Indeed, this approach requires persistent instrumentation
+of the code. 
+
+```{r eval=TRUE}
+retrieveFunctionReturnTypes(AdditionTCFIG1())
+```
+
+
+## Transient invocations {.tabset .tabset-fade .tabset-pills}
+
+Transient means instrumentation is done dynamically and not persisted anywhere. Here is a typical case. That's a convenient way to discover and to play with package (ref:PKN). 
+
+
+### Nominal case
+
+
+To get the definition for 'emo' variable, please refer to \@ref(evaluation-modes).
+
+```{r runningFunctions1, eval=TRUE}
+h <- function(x_s) x_s
+runTransientFunction(h, list('neonira'), emo$type, 'x_s')
+```
+
+Semantically, function <cite class='kw'>h</cite> takes a vector of strings as argument and returns a vector of strings. 
+As provided parameter <cite class='kw'>'neonira'</cite> is a vector of type character, <cite class='kw'>parameter_type_checks</cite> succeed. As returned value is a vector of type character, <cite class='kw'>function_return_type_check</cite> also succeeds. 
+
+#### Wrong parameter type
+
+Let's change the provided argument from 'neonira' to pi value. 
+```{r runningFunctions2, eval=TRUE}
+h <- function(x_s) x_s
+runTransientFunction(h, list(pi), emo$type, 'x_s')
+```
+We now face a case where function specification is unchanged but provided argument is not complying to specification. 
+Impact is <cite class='kw'>parameter_type_checks</cite> failure and <cite class='kw'>function_return_type_check</cite> failure. 
+
+#### Change expected return type
+
+Let's change the expected function return type, to be double <cite class='comment'> <cite class='kw'>x_d</cite></cite>. 
+```{r runningFunctions3, eval=TRUE}
+h <- function(x_s) x_s
+runTransientFunction(h, list(pi), emo$type, 'x_d')
+```
+We now face a case where function specification is unchanged but expected return type is expected to be a double. Provided argument is not complying to specification. Impact is <cite class='kw'>parameter_type_checks</cite> failure. 
+
+### Prerequisite mismatch 
+
+What if function is not fulfilling prerequisites 
+```{r runningFunctions4, eval=TRUE}
+g <- function(x) x # No semantic name compliance 
+runTransientFunction(g, list(pi), EvaluationMode(defineEvaluationModes()[3]), 'x_d')
+```
+Impact is <cite class='kw'>parameter_type_checks</cite> failure. 
+
+
+### Object function call
+
+What if the function you desire to call is an object function? 
+In such a case, be sure to pass the object as first parameter of the list of parameters,
+as shown by example below,  based on a S3 object. A priori, all kind of (ref:R) objects are supported: S3, S4, RC, R6 and environment objects. 
+
+```{r runningFunctions5, eval=TRUE}
+library(data.table)
+source(file.path(system.file(package = 'wyz.code.offensiveProgramming'), 'code-samples',
+       'both-defs/good/partial', 'Addition_TCFI_Partial_S3.R'), encoding = 'UTF-8')
+a <- Addition_TCFI_Partial_S3()
+runTransientFunction(addInteger.Addition_TCFI_Partial_S3, list(a, 3L, 4L), emo$type, 'x_i')
+
+runTransientFunction(addInteger.Addition_TCFI_Partial_S3, list(NULL, 3L, 4L), emo$type, 'x_i')
+
+print(ls())
+
+#runTransientFunction(addInteger, list(a, 3L, 4L), emo$type, 'x_i')
+```
+
+## Persistent invocations {.tabset .tabset-fade .tabset-pills}
+
+Transient invocations are convenient but limited. Especially, when you create classes, they do not appear to be as friendly and useful as necessary. When dealing with your own class code, you may opt for an easier and more industrial approach that is class instrumentation. Prerequisite remains the same, but you may fulfill them much more easily by defining a variable named <cite class='kw'>function_return_type</cite> in your class. Let's see an example. 
+
+### Nominal persistent case 
+
+```{r runningFunctions6, eval=TRUE}
+source(system.file('code-samples/frt-defs/good/partial/AdditionFIPartial.R', package = 'wyz.code.offensiveProgramming'))
+runFunction(AdditionFIPartial(), 'addInteger', list(1:3, 6:8), emo$type)
+```
+We now face a case where function specification is expecting to sum integers. Provided arguments are complying to specification. Impact is <cite class='kw'>parameter_type_checks</cite> success and <cite class='kw'>function_return_type_check</cite> success.
+
+### Subtile change 
+
+Just change the function name. Now expectations brought by the function definition are not the same. This leads to a completely different result. 
+
+```{r runningFunctions7, eval=TRUE}
+runFunction(AdditionFIPartial(), 'addDouble', list(1:3, 6:8), emo$type)
+```
+
+### Call case with named and positional parameters
+
+```{r runningFunctions8, eval=TRUE}
+runFunction(AdditionFIPartial(), 'addInteger', list(y_i = 1:3, 6:8), emo$type)
+```
+
+Look at  <cite class='kw'>parameter_type_checks</cite> to ensure arguments are well associated. 
+
+### Call case with ellipsis 
+
+```{r runningFunctions9, eval=TRUE}
+runFunction(AdditionFIPartial(), 'addMultiDouble', list(1:3, 1:7), emo$type)
+```
+
+### Second call case with ellipsis 
+
+```{r runningFunctions10, eval=TRUE}
+runFunction(AdditionFIPartial(), 'addMultiInteger', list(1:3, 1:7, 0, floor(pi)), emo$type)
+```
+
+Two issues here. Value 0 is double, not integer and <cite class='kw'>floor</cite> function returns also a double. To get a correct results here is how to transform the call
+
+```{r runningFunctions11, eval=TRUE}
+runFunction(AdditionFIPartial(), 'addMultiInteger', list(1:3, 1:7, 0L, as.integer(floor(pi))), emo$type)
+```
+
+

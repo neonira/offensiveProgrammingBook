@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title> 9 Generating testthat test files | Offensive Programming Book</title>
+  <meta name="description" content="wyz.code.offensiveProgramming package related documentation" />
+  <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
+
+  <meta property="og:title" content=" 9 Generating testthat test files | Offensive Programming Book" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:image" content="figures/op.png" />
+  <meta property="og:description" content="wyz.code.offensiveProgramming package related documentation" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content=" 9 Generating testthat test files | Offensive Programming Book" />
+  
+  <meta name="twitter:description" content="wyz.code.offensiveProgramming package related documentation" />
+  <meta name="twitter:image" content="figures/op.png" />
+
+<meta name="author" content="Fabien GELINEAU neonira@gmail.com" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="running-test-cases.html"/>
+<link rel="next" href="meta-testing.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Offensive Programming Book</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#book-version"><i class="fa fa-check"></i>Book version</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#book-production"><i class="fa fa-check"></i>Book production</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="preamble.html"><a href="preamble.html"><i class="fa fa-check"></i>Preamble</a></li>
+<li class="chapter" data-level="1" data-path="programming-styles.html"><a href="programming-styles.html"><i class="fa fa-check"></i><b>1</b> Programming styles</a><ul>
+<li class="chapter" data-level="1.1" data-path="programming-styles.html"><a href="programming-styles.html#defensive-programming-style"><i class="fa fa-check"></i><b>1.1</b> Defensive programming style</a></li>
+<li class="chapter" data-level="1.2" data-path="programming-styles.html"><a href="programming-styles.html#offensive-programming-style"><i class="fa fa-check"></i><b>1.2</b> Offensive programming style</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="application-in-r-language.html"><a href="application-in-r-language.html"><i class="fa fa-check"></i><b>2</b> Application in R language</a><ul>
+<li class="chapter" data-level="2.1" data-path="application-in-r-language.html"><a href="application-in-r-language.html#a-simple-case"><i class="fa fa-check"></i><b>2.1</b> A simple case</a></li>
+<li class="chapter" data-level="2.2" data-path="application-in-r-language.html"><a href="application-in-r-language.html#defensive-programming"><i class="fa fa-check"></i><b>2.2</b> Defensive programming</a></li>
+<li class="chapter" data-level="2.3" data-path="application-in-r-language.html"><a href="application-in-r-language.html#offensive-programming"><i class="fa fa-check"></i><b>2.3</b> Offensive programming</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="application-in-r-language.html"><a href="application-in-r-language.html#what-is-different"><i class="fa fa-check"></i><b>2.3.1</b> What is different?</a></li>
+<li class="chapter" data-level="2.3.2" data-path="application-in-r-language.html"><a href="application-in-r-language.html#semantic-argument-naming"><i class="fa fa-check"></i><b>2.3.2</b> Semantic argument naming</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="application-in-r-language.html"><a href="application-in-r-language.html#back-to-definition"><i class="fa fa-check"></i><b>2.4</b> Back to definition</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="putting-in-action-wyz-code-offensiveprogramming.html"><a href="putting-in-action-wyz-code-offensiveprogramming.html"><i class="fa fa-check"></i><b>3</b> Putting in action wyz.code.offensiveProgramming</a><ul>
+<li class="chapter" data-level="3.1" data-path="putting-in-action-wyz-code-offensiveprogramming.html"><a href="putting-in-action-wyz-code-offensiveprogramming.html#package-overview"><i class="fa fa-check"></i><b>3.1</b> Package overview</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="the-type-factory.html"><a href="the-type-factory.html"><i class="fa fa-check"></i><b>4</b> The type factory</a><ul>
+<li class="chapter" data-level="4.1" data-path="the-type-factory.html"><a href="the-type-factory.html#get-recorded-types-inventory"><i class="fa fa-check"></i><b>4.1</b> Get recorded types inventory</a></li>
+<li class="chapter" data-level="4.2" data-path="the-type-factory.html"><a href="the-type-factory.html#understanding-the-model"><i class="fa fa-check"></i><b>4.2</b> Understanding the model</a></li>
+<li class="chapter" data-level="4.3" data-path="the-type-factory.html"><a href="the-type-factory.html#register-your-own-type"><i class="fa fa-check"></i><b>4.3</b> Register your own type</a></li>
+<li class="chapter" data-level="4.4" data-path="the-type-factory.html"><a href="the-type-factory.html#get-access-to-verification-functions"><i class="fa fa-check"></i><b>4.4</b> Get access to verification functions</a></li>
+<li class="chapter" data-level="4.5" data-path="the-type-factory.html"><a href="the-type-factory.html#some-hints"><i class="fa fa-check"></i><b>4.5</b> Some hints</a></li>
+<li class="chapter" data-level="4.6" data-path="the-type-factory.html"><a href="the-type-factory.html#enforcing-use-of-your-own-type-factory"><i class="fa fa-check"></i><b>4.6</b> Enforcing use of your own type factory</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="semantic-names.html"><a href="semantic-names.html"><i class="fa fa-check"></i><b>5</b> Semantic names</a><ul>
+<li class="chapter" data-level="5.1" data-path="semantic-names.html"><a href="semantic-names.html#what-is-semantic-naming"><i class="fa fa-check"></i><b>5.1</b> What is semantic naming?</a></li>
+<li class="chapter" data-level="5.2" data-path="semantic-names.html"><a href="semantic-names.html#verifying-a-function-parameter-or-return-type-declaration"><i class="fa fa-check"></i><b>5.2</b> Verifying a function parameter or return type declaration</a></li>
+<li class="chapter" data-level="5.3" data-path="semantic-names.html"><a href="semantic-names.html#verifying-a-class-name"><i class="fa fa-check"></i><b>5.3</b> Verifying a class name</a></li>
+<li class="chapter" data-level="5.4" data-path="semantic-names.html"><a href="semantic-names.html#verifying-a-function-name"><i class="fa fa-check"></i><b>5.4</b> Verifying a function name</a></li>
+<li class="chapter" data-level="5.5" data-path="semantic-names.html"><a href="semantic-names.html#get-naming-balance-from-an-r-object"><i class="fa fa-check"></i><b>5.5</b> Get naming balance from an R object</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="evaluation-modes.html"><a href="evaluation-modes.html"><i class="fa fa-check"></i><b>6</b> Evaluation modes</a><ul>
+<li class="chapter" data-level="6.1" data-path="evaluation-modes.html"><a href="evaluation-modes.html#understanding-evaluation-modes"><i class="fa fa-check"></i><b>6.1</b> Understanding evaluation modes</a></li>
+<li class="chapter" data-level="6.2" data-path="evaluation-modes.html"><a href="evaluation-modes.html#instantiating-evaluation-mode"><i class="fa fa-check"></i><b>6.2</b> Instantiating evaluation mode</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="running-functions.html"><a href="running-functions.html"><i class="fa fa-check"></i><b>7</b> Running functions</a><ul>
+<li class="chapter" data-level="7.1" data-path="running-functions.html"><a href="running-functions.html#prerequisites"><i class="fa fa-check"></i><b>7.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="7.2" data-path="running-functions.html"><a href="running-functions.html#function-return-types-definition-verification"><i class="fa fa-check"></i><b>7.2</b> Function return types definition verification</a></li>
+<li class="chapter" data-level="7.3" data-path="running-functions.html"><a href="running-functions.html#transient-invocations"><i class="fa fa-check"></i><b>7.3</b> Transient invocations</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="running-functions.html"><a href="running-functions.html#nominal-case"><i class="fa fa-check"></i><b>7.3.1</b> Nominal case</a></li>
+<li class="chapter" data-level="7.3.2" data-path="running-functions.html"><a href="running-functions.html#prerequisite-mismatch"><i class="fa fa-check"></i><b>7.3.2</b> Prerequisite mismatch</a></li>
+<li class="chapter" data-level="7.3.3" data-path="running-functions.html"><a href="running-functions.html#object-function-call"><i class="fa fa-check"></i><b>7.3.3</b> Object function call</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="running-functions.html"><a href="running-functions.html#persistent-invocations"><i class="fa fa-check"></i><b>7.4</b> Persistent invocations</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="running-functions.html"><a href="running-functions.html#nominal-persistent-case"><i class="fa fa-check"></i><b>7.4.1</b> Nominal persistent case</a></li>
+<li class="chapter" data-level="7.4.2" data-path="running-functions.html"><a href="running-functions.html#subtile-change"><i class="fa fa-check"></i><b>7.4.2</b> Subtile change</a></li>
+<li class="chapter" data-level="7.4.3" data-path="running-functions.html"><a href="running-functions.html#call-case-with-named-and-positional-parameters"><i class="fa fa-check"></i><b>7.4.3</b> Call case with named and positional parameters</a></li>
+<li class="chapter" data-level="7.4.4" data-path="running-functions.html"><a href="running-functions.html#call-case-with-ellipsis"><i class="fa fa-check"></i><b>7.4.4</b> Call case with ellipsis</a></li>
+<li class="chapter" data-level="7.4.5" data-path="running-functions.html"><a href="running-functions.html#second-call-case-with-ellipsis"><i class="fa fa-check"></i><b>7.4.5</b> Second call case with ellipsis</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="running-test-cases.html"><a href="running-test-cases.html"><i class="fa fa-check"></i><b>8</b> Running test cases</a><ul>
+<li class="chapter" data-level="8.1" data-path="running-test-cases.html"><a href="running-test-cases.html#reusing-defined-test-case-definitions"><i class="fa fa-check"></i><b>8.1</b> Reusing defined test case definitions</a></li>
+<li class="chapter" data-level="8.2" data-path="running-test-cases.html"><a href="running-test-cases.html#embedding-test-cases-in-class-definition"><i class="fa fa-check"></i><b>8.2</b> Embedding test cases in class definition</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="running-test-cases.html"><a href="running-test-cases.html#a-simple-case-1"><i class="fa fa-check"></i><b>8.2.1</b> A simple case</a></li>
+<li class="chapter" data-level="8.2.2" data-path="running-test-cases.html"><a href="running-test-cases.html#a-more-complex-case"><i class="fa fa-check"></i><b>8.2.2</b> A more complex case</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="running-test-cases.html"><a href="running-test-cases.html#test-case-definitions-verification"><i class="fa fa-check"></i><b>8.3</b> Test case definitions verification</a></li>
+<li class="chapter" data-level="8.4" data-path="running-test-cases.html"><a href="running-test-cases.html#discovering-test-cases-descriptions"><i class="fa fa-check"></i><b>8.4</b> Discovering test cases descriptions</a></li>
+<li class="chapter" data-level="8.5" data-path="running-test-cases.html"><a href="running-test-cases.html#run-a-test-case"><i class="fa fa-check"></i><b>8.5</b> Run a test case</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="generating-testthat-test-files.html"><a href="generating-testthat-test-files.html"><i class="fa fa-check"></i><b>9</b> Generating <cite class='it'>testthat</cite> test files</a><ul>
+<li class="chapter" data-level="9.1" data-path="generating-testthat-test-files.html"><a href="generating-testthat-test-files.html#package-wyz.code.testthat-in-action"><i class="fa fa-check"></i><b>9.1</b> Package <cite class='it'>wyz.code.testthat</cite> in action</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="generating-testthat-test-files.html"><a href="generating-testthat-test-files.html#setting-up-the-context"><i class="fa fa-check"></i><b>9.1.1</b> Setting up the context</a></li>
+<li class="chapter" data-level="9.1.2" data-path="generating-testthat-test-files.html"><a href="generating-testthat-test-files.html#unit-test-file-generation"><i class="fa fa-check"></i><b>9.1.2</b> Unit test file generation</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="generating-testthat-test-files.html"><a href="generating-testthat-test-files.html#generated-unit-test-file-content"><i class="fa fa-check"></i><b>9.2</b> Generated unit test file content</a></li>
+<li class="chapter" data-level="9.3" data-path="generating-testthat-test-files.html"><a href="generating-testthat-test-files.html#known-limits"><i class="fa fa-check"></i><b>9.3</b> Known-limits</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="meta-testing.html"><a href="meta-testing.html"><i class="fa fa-check"></i><b>10</b> Meta-testing</a><ul>
+<li class="chapter" data-level="10.1" data-path="meta-testing.html"><a href="meta-testing.html#wrapper-function-creation"><i class="fa fa-check"></i><b>10.1</b> Wrapper function creation</a></li>
+<li class="chapter" data-level="10.2" data-path="meta-testing.html"><a href="meta-testing.html#exploration-function"><i class="fa fa-check"></i><b>10.2</b> Exploration function</a></li>
+<li class="chapter" data-level="10.3" data-path="meta-testing.html"><a href="meta-testing.html#a-more-complex-example"><i class="fa fa-check"></i><b>10.3</b> A more complex example</a></li>
+<li class="chapter" data-level="10.4" data-path="meta-testing.html"><a href="meta-testing.html#an-example-using-ellipsis"><i class="fa fa-check"></i><b>10.4</b> An example using ellipsis</a></li>
+<li class="chapter" data-level="10.5" data-path="meta-testing.html"><a href="meta-testing.html#an-example-with-imperative-default-and-ellipsis-arguments"><i class="fa fa-check"></i><b>10.5</b> An example with imperative, default and ellipsis arguments</a></li>
+<li class="chapter" data-level="10.6" data-path="meta-testing.html"><a href="meta-testing.html#pitfalls-to-avoid"><i class="fa fa-check"></i><b>10.6</b> Pitfalls to avoid</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html"><i class="fa fa-check"></i><b>11</b> Generating <cite class='it'>R</cite> documentation</a><ul>
+<li class="chapter" data-level="11.1" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#automated-r-documentation-generation"><i class="fa fa-check"></i><b>11.1</b> Automated <cite class='it'>R</cite> documentation generation</a></li>
+<li class="chapter" data-level="11.2" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#focus-on-r-documentation-generation"><i class="fa fa-check"></i><b>11.2</b> Focus on <cite class='kw'>R</cite> documentation generation</a></li>
+<li class="chapter" data-level="11.3" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#package-wyz.code.rdoc-utilities"><i class="fa fa-check"></i><b>11.3</b> package <cite class='it'>wyz.code.rdoc</cite> utilities</a><ul>
+<li class="chapter" data-level="11.3.1" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#generate-a-r-documentation-section"><i class="fa fa-check"></i><b>11.3.1</b> Generate a <cite class='it'>R</cite> documentation section</a></li>
+<li class="chapter" data-level="11.3.2" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#format-an-english-sentence"><i class="fa fa-check"></i><b>11.3.2</b> Format an English sentence</a></li>
+<li class="chapter" data-level="11.3.3" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#generate-some-r-documentation-content"><i class="fa fa-check"></i><b>11.3.3</b> Generate some <cite class='it'>R</cite> documentation content</a></li>
+<li class="chapter" data-level="11.3.4" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#generate-cross-ref-to-other-r-package"><i class="fa fa-check"></i><b>11.3.4</b> Generate cross-ref to other <cite class='it'>R</cite> package</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#manual-pages-generation"><i class="fa fa-check"></i><b>11.4</b> Manual pages generation</a><ul>
+<li class="chapter" data-level="11.4.1" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#context-setup"><i class="fa fa-check"></i><b>11.4.1</b> Context setup</a></li>
+<li class="chapter" data-level="11.4.2" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#method-manual-page"><i class="fa fa-check"></i><b>11.4.2</b> Method manual page</a></li>
+<li class="chapter" data-level="11.4.3" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#class-manual-page"><i class="fa fa-check"></i><b>11.4.3</b> Class manual page</a></li>
+<li class="chapter" data-level="11.4.4" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#package-manual-page"><i class="fa fa-check"></i><b>11.4.4</b> Package manual page</a></li>
+<li class="chapter" data-level="11.4.5" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#in-one-shot"><i class="fa fa-check"></i><b>11.4.5</b> In one shot</a></li>
+<li class="chapter" data-level="11.4.6" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#and-a-special-case-from-a-standalone-function"><i class="fa fa-check"></i><b>11.4.6</b> and a special case, from a standalone function</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#known-limits-1"><i class="fa fa-check"></i><b>11.5</b> Known-limits</a></li>
+<li class="chapter" data-level="11.6" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#opportunities"><i class="fa fa-check"></i><b>11.6</b> Opportunities</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="implementation-figures.html"><a href="implementation-figures.html"><i class="fa fa-check"></i><b>12</b> Implementation figures</a><ul>
+<li class="chapter" data-level="12.1" data-path="implementation-figures.html"><a href="implementation-figures.html#file-statistics"><i class="fa fa-check"></i><b>12.1</b> File statistics</a></li>
+<li class="chapter" data-level="12.2" data-path="implementation-figures.html"><a href="implementation-figures.html#code-statistics"><i class="fa fa-check"></i><b>12.2</b> Code statistics</a></li>
+<li class="chapter" data-level="12.3" data-path="implementation-figures.html"><a href="implementation-figures.html#test-and-coverage"><i class="fa fa-check"></i><b>12.3</b> Test and coverage</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>13</b> Conclusion</a><ul>
+<li class="chapter" data-level="13.1" data-path="conclusion.html"><a href="conclusion.html#benefits-of-offensive-programming"><i class="fa fa-check"></i><b>13.1</b> Benefits of offensive programming</a></li>
+<li class="chapter" data-level="13.2" data-path="conclusion.html"><a href="conclusion.html#concerns-of-offensive-programming"><i class="fa fa-check"></i><b>13.2</b> Concerns of offensive programming</a></li>
+<li class="chapter" data-level="13.3" data-path="conclusion.html"><a href="conclusion.html#your-feedback-is-welcome"><i class="fa fa-check"></i><b>13.3</b> Your feedback is welcome</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="explicit-lege-feliciter.html"><a href="explicit-lege-feliciter.html"><i class="fa fa-check"></i>Explicit - Lege feliciter</a></li>
+<li class="divider"></li>
+<li><a href="https://www.linkedin.com/in/fabiengelineau" target="blank">instigator Fabien GELINEAU</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Offensive Programming Book</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="generating-testthat-test-files" class="section level1">
+<h1><span class="header-section-number"> 9</span> Generating <cite class='it'>testthat</cite> test files</h1>
+<p>When your <cite class='it'>R</cite> code is offensive programming instrumented, it becomes possible to generate <cite class='it'>testthat</cite> unit test files, thus improving greatly developers productivity.</p>
+<p>To be able to generate <cite class='it'>testthat</cite> unit test files, you must ensure that your <cite class='it'>R</cite> code is function return type instrumented and test cases instrumented. Both are required for this generation.</p>
+<div id="package-wyz.code.testthat-in-action" class="section level2">
+<h2><span class="header-section-number">9.1</span> Package <cite class='it'>wyz.code.testthat</cite> in action</h2>
+<div id="setting-up-the-context" class="section level3">
+<h3><span class="header-section-number">9.1.1</span> Setting up the context</h3>
+<p>To create <cite class='it'>testthat</cite> unit test files, you must provide a target folder, to store the generated unit test files. In this session, generated files will be stored onto folder <cite class='fd'>generated-testthat</cite>. You may change this, but be warned that generated files might be overwritten without any reminder. Be careful, if you set the target folder to <cite class='fd'>tests/testthat</cite> as you may loose previous work. You may save frequently your results in configuration management to be able to retrieve original file content whenever required.</p>
+<p>Here, I reuse 4 files from package <cite class='it'>wyz.code.offensiveProgramming</cite> to generate unit test files from.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" title="1"><span class="kw">library</span>(wyz.code.testthat)</a>
+<a class="sourceLine" id="cb37-2" title="2"></a>
+<a class="sourceLine" id="cb37-3" title="3">target_folder &lt;-<span class="st"> &#39;generated-testthat&#39;</span></a>
+<a class="sourceLine" id="cb37-4" title="4"><span class="cf">if</span> (<span class="op">!</span><span class="kw">dir.exists</span>(target_folder)) <span class="kw">dir.create</span>(target_folder)</a>
+<a class="sourceLine" id="cb37-5" title="5"></a>
+<a class="sourceLine" id="cb37-6" title="6">generateTests &lt;-<span class="st"> </span><span class="cf">function</span>(sourceFile_s_<span class="dv">1</span>, sourcePackage_s_<span class="dv">1</span>, object_o_<span class="dv">1</span>) {</a>
+<a class="sourceLine" id="cb37-7" title="7">  g &lt;-<span class="st"> </span><span class="kw">gautfo</span>(object_o_<span class="dv">1</span>, sourceFile_s_<span class="dv">1</span>, sourcePackage_s_<span class="dv">1</span>, target_folder)</a>
+<a class="sourceLine" id="cb37-8" title="8">  <span class="kw">print</span>(g)</a>
+<a class="sourceLine" id="cb37-9" title="9">  g</a>
+<a class="sourceLine" id="cb37-10" title="10">}</a>
+<a class="sourceLine" id="cb37-11" title="11"></a>
+<a class="sourceLine" id="cb37-12" title="12">source_package &lt;-<span class="st"> &#39;wyz.code.offensiveProgramming&#39;</span></a>
+<a class="sourceLine" id="cb37-13" title="13"></a>
+<a class="sourceLine" id="cb37-14" title="14">source_files &lt;-<span class="st"> </span><span class="kw">c</span>(</a>
+<a class="sourceLine" id="cb37-15" title="15">  <span class="st">&#39;code-samples/both-defs/good/full/AdditionTCFIG1.R&#39;</span>,</a>
+<a class="sourceLine" id="cb37-16" title="16">  <span class="st">&#39;code-samples/no-defs/Addition.R&#39;</span>,</a>
+<a class="sourceLine" id="cb37-17" title="17">  <span class="st">&#39;code-samples/frt-defs/good/partial/AdditionFIPartial.R&#39;</span>,</a>
+<a class="sourceLine" id="cb37-18" title="18">  <span class="st">&#39;code-samples/tcd-defs/good/partial/AdditionTCPartial.R&#39;</span></a>
+<a class="sourceLine" id="cb37-19" title="19">)</a>
+<a class="sourceLine" id="cb37-20" title="20"></a>
+<a class="sourceLine" id="cb37-21" title="21"><span class="kw">invisible</span>(<span class="kw">sapply</span>(source_files, <span class="cf">function</span>(e) {</a>
+<a class="sourceLine" id="cb37-22" title="22">  <span class="kw">source</span>(<span class="kw">system.file</span>(e, <span class="dt">package =</span> source_package))</a>
+<a class="sourceLine" id="cb37-23" title="23">}))</a></code></pre></div>
+</div>
+<div id="unit-test-file-generation" class="section level3">
+<h3><span class="header-section-number">9.1.2</span> Unit test file generation</h3>
+<p>Generation is done on a per class basis. Simply use function <cite class='kw'>gautfo</cite> or function <cite class='kw'>generateAllUnitTestsFromObject</cite>.</p>
+<div id="nominal-case-1" class="section level4">
+<h4><span class="header-section-number">9.1.2.1</span> Nominal case</h4>
+<p>Class <cite class='kw'>AdditionTCFIG1</cite> is offensive programming instrumented. It uses both function return type instrumentation and test case instrumentation. Indeed, this class is partially instrumented. Not all the methods of the class have test cases declared for.</p>
+<p>Generation is quite straightforward.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" title="1"><span class="kw">print</span>(<span class="kw">gautfo</span>(<span class="kw">AdditionTCFIG1</span>(), source_files[<span class="dv">1</span>], source_package, target_folder))</a>
+<a class="sourceLine" id="cb38-2" title="2"><span class="co">#&gt; $class</span></a>
+<a class="sourceLine" id="cb38-3" title="3"><span class="co">#&gt; [1] &quot;AdditionTCFIG1&quot;</span></a>
+<a class="sourceLine" id="cb38-4" title="4"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb38-5" title="5"><span class="co">#&gt; $filenames</span></a>
+<a class="sourceLine" id="cb38-6" title="6"><span class="co">#&gt;                                                    filename overwritten</span></a>
+<a class="sourceLine" id="cb38-7" title="7"><span class="co">#&gt; 1:       generated-testthat/test_AdditionTCFIG1-addDouble.R        TRUE</span></a>
+<a class="sourceLine" id="cb38-8" title="8"><span class="co">#&gt; 2:      generated-testthat/test_AdditionTCFIG1-addInteger.R        TRUE</span></a>
+<a class="sourceLine" id="cb38-9" title="9"><span class="co">#&gt; 3:    generated-testthat/test_AdditionTCFIG1-divideByZero.R        TRUE</span></a>
+<a class="sourceLine" id="cb38-10" title="10"><span class="co">#&gt; 4: generated-testthat/test_AdditionTCFIG1-generateWarning.R        TRUE</span></a>
+<a class="sourceLine" id="cb38-11" title="11"><span class="co">#&gt; 5:   generated-testthat/test_AdditionTCFIG1-generateError.R        TRUE</span></a>
+<a class="sourceLine" id="cb38-12" title="12"><span class="co">#&gt; 6:  generated-testthat/test_AdditionTCFIG1-addMultiDouble.R        TRUE</span></a>
+<a class="sourceLine" id="cb38-13" title="13"><span class="co">#&gt; 7: generated-testthat/test_AdditionTCFIG1-addMultiInteger.R        TRUE</span></a></code></pre></div>
+<p>Results is a list with two entries. Entry named <cite class='oc'>filenames</cite> holds a <cite class='it'>data.table</cite> providing insight about created files.</p>
+</div>
+<div id="exception-cases" class="section level4">
+<h4><span class="header-section-number">9.1.2.2</span> Exception cases</h4>
+<p>Class <cite class='kw'>Addition</cite> is NOT offensive programming instrumented.</p>
+<p>Class <cite class='kw'>AdditionFIPartial</cite> is NOT FULLY offensive programming instrumented. It lacks test cases instrumentation.</p>
+<p>Class <cite class='kw'>AdditionTCPartial</cite> is NOT offensive programming instrumented. It lacks function return type instrumentation.</p>
+<p>Expected results is no unit test file generation.</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" title="1"><span class="kw">print</span>(<span class="kw">gautfo</span>(<span class="kw">Addition</span>(), source_files[<span class="dv">2</span>], source_package, target_folder))</a>
+<a class="sourceLine" id="cb39-2" title="2"><span class="co">#&gt; [1] &quot;Class [Addition] apparently owns no test instrumentation. No test created.&quot;</span></a>
+<a class="sourceLine" id="cb39-3" title="3"></a>
+<a class="sourceLine" id="cb39-4" title="4"><span class="kw">print</span>(<span class="kw">gautfo</span>(<span class="kw">AdditionFIPartial</span>(), source_files[<span class="dv">3</span>], source_package, target_folder))</a>
+<a class="sourceLine" id="cb39-5" title="5"><span class="co">#&gt; [1] &quot;Class [AdditionFIPartial] apparently owns no test instrumentation. No test created.&quot;</span></a>
+<a class="sourceLine" id="cb39-6" title="6"></a>
+<a class="sourceLine" id="cb39-7" title="7"><span class="kw">print</span>(<span class="kw">gautfo</span>(<span class="kw">AdditionTCPartial</span>(), source_files[<span class="dv">4</span>], source_package, target_folder))</a>
+<a class="sourceLine" id="cb39-8" title="8"><span class="co">#&gt; [1] &quot;Class [AdditionTCPartial] apparently owns no function return type instrumentation. No test created.&quot;</span></a></code></pre></div>
+</div>
+</div>
+</div>
+<div id="generated-unit-test-file-content" class="section level2">
+<h2><span class="header-section-number">9.2</span> Generated unit test file content</h2>
+<p>Typically, generated <cite class='it'>R</cite> code will looks like following unit test code. Note, that comments are provided to ease cross-referencing and to link back easily to <cite class='it'>wyz.code.offensiveProgramming</cite> test case number. This is helpful when facing dysfunctions.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" title="1"><span class="kw">source</span>(<span class="kw">system.file</span>(<span class="st">&quot;code-samples/both-defs/good/full/AdditionTCFIG1.R&quot;</span>,</a>
+<a class="sourceLine" id="cb40-2" title="2">                   <span class="dt">package =</span> <span class="st">&quot;wyz.code.offensiveProgramming&quot;</span>))</a>
+<a class="sourceLine" id="cb40-3" title="3">object_o_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">AdditionTCFIG1</span>()</a>
+<a class="sourceLine" id="cb40-4" title="4">emsre &lt;-<span class="st"> </span><span class="kw">EvaluationMode</span>(<span class="st">&quot;standard_R_evaluation&quot;</span>)</a>
+<a class="sourceLine" id="cb40-5" title="5">rtcsre24 &lt;-<span class="st"> </span><span class="kw">runTestCase</span>(object_o_<span class="dv">1</span>, <span class="dv">24</span>, emsre)</a>
+<a class="sourceLine" id="cb40-6" title="6">rtcsre25 &lt;-<span class="st"> </span><span class="kw">runTestCase</span>(object_o_<span class="dv">1</span>, <span class="dv">25</span>, emsre)</a>
+<a class="sourceLine" id="cb40-7" title="7">rtcsre26 &lt;-<span class="st"> </span><span class="kw">runTestCase</span>(object_o_<span class="dv">1</span>, <span class="dv">26</span>, emsre)</a>
+<a class="sourceLine" id="cb40-8" title="8"></a>
+<a class="sourceLine" id="cb40-9" title="9"><span class="kw">test_that</span>(<span class="st">&#39;addMultiDouble&#39;</span>, {</a>
+<a class="sourceLine" id="cb40-10" title="10"></a>
+<a class="sourceLine" id="cb40-11" title="11"><span class="co"># test 24 - sum of 1 integer and 1 double - correct</span></a>
+<a class="sourceLine" id="cb40-12" title="12"><span class="kw">expect_true</span>(rtcsre24<span class="op">$</span>synthesis<span class="op">$</span>status)</a>
+<a class="sourceLine" id="cb40-13" title="13"><span class="kw">expect_true</span>(rtcsre24<span class="op">$</span>synthesis<span class="op">$</span>value_check)</a>
+<a class="sourceLine" id="cb40-14" title="14"></a>
+<a class="sourceLine" id="cb40-15" title="15"></a>
+<a class="sourceLine" id="cb40-16" title="16"><span class="co"># test 25 - sum of 1 double, 2 integers and 1 NA_integer_ - correct</span></a>
+<a class="sourceLine" id="cb40-17" title="17"><span class="kw">expect_true</span>(rtcsre25<span class="op">$</span>synthesis<span class="op">$</span>status)</a>
+<a class="sourceLine" id="cb40-18" title="18"><span class="kw">expect_true</span>(rtcsre25<span class="op">$</span>synthesis<span class="op">$</span>value_check)</a>
+<a class="sourceLine" id="cb40-19" title="19"></a>
+<a class="sourceLine" id="cb40-20" title="20"></a>
+<a class="sourceLine" id="cb40-21" title="21"><span class="co"># test 26 - sum of nothing - correct</span></a>
+<a class="sourceLine" id="cb40-22" title="22"><span class="kw">expect_true</span>(rtcsre26<span class="op">$</span>synthesis<span class="op">$</span>status)</a>
+<a class="sourceLine" id="cb40-23" title="23"><span class="kw">expect_true</span>(rtcsre26<span class="op">$</span>synthesis<span class="op">$</span>value_check)</a>
+<a class="sourceLine" id="cb40-24" title="24"></a>
+<a class="sourceLine" id="cb40-25" title="25">})</a>
+<a class="sourceLine" id="cb40-26" title="26"></a>
+<a class="sourceLine" id="cb40-27" title="27">emtce &lt;-<span class="st"> </span><span class="kw">EvaluationMode</span>(<span class="st">&quot;type_checking_enforcement&quot;</span>)</a>
+<a class="sourceLine" id="cb40-28" title="28">rtctce24 &lt;-<span class="st"> </span><span class="kw">runTestCase</span>(object_o_<span class="dv">1</span>, <span class="dv">24</span>, emtce)</a>
+<a class="sourceLine" id="cb40-29" title="29">rtctce25 &lt;-<span class="st"> </span><span class="kw">runTestCase</span>(object_o_<span class="dv">1</span>, <span class="dv">25</span>, emtce)</a>
+<a class="sourceLine" id="cb40-30" title="30">rtctce26 &lt;-<span class="st"> </span><span class="kw">runTestCase</span>(object_o_<span class="dv">1</span>, <span class="dv">26</span>, emtce)</a>
+<a class="sourceLine" id="cb40-31" title="31"></a>
+<a class="sourceLine" id="cb40-32" title="32"><span class="kw">test_that</span>(<span class="st">&#39;addMultiDouble&#39;</span>, {</a>
+<a class="sourceLine" id="cb40-33" title="33"></a>
+<a class="sourceLine" id="cb40-34" title="34"><span class="co"># test 24 - sum of 1 integer and 1 double - correct</span></a>
+<a class="sourceLine" id="cb40-35" title="35"><span class="kw">expect_true</span>(rtctce24<span class="op">$</span>synthesis<span class="op">$</span>status)</a>
+<a class="sourceLine" id="cb40-36" title="36"><span class="kw">expect_true</span>(rtctce24<span class="op">$</span>synthesis<span class="op">$</span>value_check)</a>
+<a class="sourceLine" id="cb40-37" title="37"></a>
+<a class="sourceLine" id="cb40-38" title="38"></a>
+<a class="sourceLine" id="cb40-39" title="39"><span class="co"># test 25 - sum of 1 double, 2 integers and 1 NA_integer_ - correct</span></a>
+<a class="sourceLine" id="cb40-40" title="40"><span class="kw">expect_true</span>(rtctce25<span class="op">$</span>synthesis<span class="op">$</span>status)</a>
+<a class="sourceLine" id="cb40-41" title="41"><span class="kw">expect_true</span>(rtctce25<span class="op">$</span>synthesis<span class="op">$</span>value_check)</a>
+<a class="sourceLine" id="cb40-42" title="42"></a>
+<a class="sourceLine" id="cb40-43" title="43"></a>
+<a class="sourceLine" id="cb40-44" title="44"><span class="co"># test 26 - sum of nothing - correct</span></a>
+<a class="sourceLine" id="cb40-45" title="45"><span class="kw">expect_true</span>(rtctce26<span class="op">$</span>synthesis<span class="op">$</span>status)</a>
+<a class="sourceLine" id="cb40-46" title="46"><span class="kw">expect_true</span>(rtctce26<span class="op">$</span>synthesis<span class="op">$</span>value_check)</a>
+<a class="sourceLine" id="cb40-47" title="47"></a>
+<a class="sourceLine" id="cb40-48" title="48">})</a></code></pre></div>
+</div>
+<div id="known-limits" class="section level2">
+<h2><span class="header-section-number">9.3</span> Known-limits</h2>
+<p>Generation of unit test file uses meta-programmation based on <cite class='oc'>call</cite> function, and aims to produce <cite class='it'>R</cite> valid code. Indeed, format and presentation are not managed, in generated file. Used <strong>RStudio</strong> editing facilities to ensure nice presentation, although neither mandatory nor required.</p>
+<p>Generated tests cases are ready to run. Use the standard way to run your <cite class='it'>testthat</cite> test cases onto them. If you face some test failures, verify following points</p>
+<ol style="list-style-type: decimal">
+<li>make sure offensive programming evaluation is running fine for ALL evaluation schemes, and that you have no errors at this level</li>
+<li>make sure your generated test case source is well up to date with the your <cite class='it'>R</cite> offensive programming code. You may regenerate your tests cases at any time if you have any doubt.</li>
+</ol>
+<p>Note that unit test file generated is fully dependent of your <cite class='it'>R</cite> source and of the instrumented scope. If there are function not instrumented in your source code, do not expect to have unit test cases for them.</p>
+<p>Also note, when working incrementally, you need to regenerate the unit test cases each time you change the <cite class='it'>R</cite> source code or the offensive programming instrumentation.</p>
+<p>Best way to put <cite class='it'>wyz.code.testthat</cite> in practice, is to apply following procedure</p>
+<ol style="list-style-type: decimal">
+<li>apply offensive programming at the required scope and ensure <cite class='it'>wyz.code.offensiveProgramming</cite> test cases are valid, using <cite class='kw'>runTestCase</cite> function</li>
+<li>generate <cite class='it'>testthat</cite> test cases in one single pass using <cite class='it'>wyz.code.testthat</cite>. To do so, create an <cite class='it'>R</cite> script. This will ease your pain, and will provide consistent results through calls</li>
+<li>apply <cite class='it'>testthat</cite> testing practice, to verify that generated tests are running fine.</li>
+</ol>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="running-test-cases.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="meta-testing.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "night",
+"family": "serif",
+"size": 2
+},
+"edit": null,
+"history": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+},
+"toolbar": {
+"position": "fixed"
+},
+"search": true
+});
+});
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,1540 @@
+--- 
+title: "Offensive Programming Book"
+author: "Fabien GELINEAU <neonira@gmail.com>"
+date: "2019-Q2"
+site: bookdown::bookdown_site
+cover-image: 'figures/op.png'
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+description: "wyz.code.offensiveProgramming package related documentation"
+output:
+    html_document
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+# Welcome {-}
+
+```{r figcover, echo = FALSE, out.width='80%', fig.asp=.75, fig.align='center'}
+knitr::include_graphics('figures/op-hexsticker-transparent.png')
+```
+
+This is the website for “offensive programming”. This book will teach you how to put offensive programming in action with R.
+
+This website is <cite class='comment'>and will remain</cite> free to use. It is licensed under the Creative Commons Attribution-NonCommercial-NoDerivs 3.0 License. 
+
+## Book version {-}
+
+This book version is 1.2.1. It relates to following (ref:R) package versions. 
+
+(ref:R) package | version 
+:-----------------------------|:--------
+wyz.code.offensiveProgramming | 1.1.12
+wyz.code.testthat | 1.1.9
+wyz.code.metaTesting | 1.1.3
+wyz.code.rdoc | 1.1.7
+
+
+## Book production {-}
+
+The book is written in [RMarkdown](https://rmarkdown.rstudio.com/) with [bookdown](https://bookdown.org/). You may get access to the [source](source) for contributions. The book is for the moment just resulting of my efforts. Hope it will be enhanced and result from a collaborative effort very soon. 
+
+This book is identified by ISBN 979-10-699-4075-8. 
+
+![](figures/barcode.gif)
+
+# Preamble {-}
+
+Package (ref:PKN) aims to provide a strict type checking enforcement in (ref:R).
+
+The (ref:R) language is a weakly typed script language. As such, it simplifies greatly program writing and allows for great flexibility.That's fine, and conceptually, there is no issue about that. 
+
+Indeed, this leads more than desired to defensive programming practice. The absolute need to verify provided arguments, all along the function call chain, is very strong if you want to provide reliable and robust implementation. 
+
+Consider following table about benefits of type control and type inference in lazy and strict type checking approaches. 
+
+Goal | Lazy type control (standard (ref:R)) | Strict type checking
+:----------------:|----------------------------------|:-------------------------------
+type control | Weak type control implies coding of many contextual type controls | Strong type checking brings some rigidity
+type inference | requires knowledge and navigation from code to doc (forth and back) is required | semantic naming allows more intuitive type inference
+
+Won't it be nice to get the benefits of defensive programming and offensive programming, where ever and when ever needed?
+ 
+The main objective of package (ref:PKN) is to allow strict type checking in (ref:R) to be as easy to use and to run as standard (ref:R)
+
+<!--chapter:end:index.Rmd-->
+
+# Programming styles
+
+General reference might be found on [wikiwand](https://www.wikiwand.com/en/Defensive_programming). 
+
+## Defensive programming style
+
+Defensive programming style consist of implementation of many controls at the entry of functions. This is required to ensure parameters meet some conditions required by the developer or the context. 
+
+There are some benefits to this style. It is clearly incremental, and you can always add as many controls as desired, to meet the level of robustness and reliability you aim for. Indeed, this comes with some drawbacks that are repeated verifications at various depth levels, and worst the executed verifications are often the same code, leading to a waste of time during implementation, testing and execution.  
+
+Second, an evolution of any function signature in the function call chain, may imply shallow or deep changes in the subsequent verifications, depending of the case. 
+
+Defensive programming style also requires a good documentation, as there is no way to infer rationally and with a high level of confidence, what type has to be used for a given parameter of a function. 
+
+Notice, that quality and consistency of type and value verification changes from one package to another. 
+
+
+## Offensive programming style
+
+Offensive programming styles works differently. It is based on an implicit contract with bilateral responsibilities
+
+* developer implements required verification about values, not about types unless absolutely required, 
+* end-user provides values with right or wrong types, when using developer delivered package
+* type checks can be enforced at any time by end-user if needed. They are not hard coded by the developer in each function. 
+
+In this way, the contract, is end-user is responsible of type concordance and developer is responsible of implementation from type
+concordance. Instrumentation is provided to let the end-user easily check the type concordance. 
+
+<!--chapter:end:01-intro.Rmd-->
+
+# Application in R language
+
+## A simple case 
+
+Consider following (ref:R) class implementation which provides some basic mathematics operations. 
+
+```{r language1, echo=TRUE, eval=FALSE}
+MathOperation <- function() {
+  self <- environment()
+  class(self) <- append('Addition', class(self))
+
+  add <- function(x, y) x + y
+  
+  multiply <- function(x, y) x * y
+  
+  divide <- function(x, y) x / y
+
+  self
+}
+```
+
+Let's not argue about the design and relevancy of the approach. Instead, can you tell the scopes of each function, and identify/inventorize the implementations flaws ? 
+
+## Defensive programming 
+
+In standard (ref:R), the provided implementation might behave correctly, erroneously, or even generate errors, depending on the inputs you provide. 
+
+Is it bad code ? Not at all according to me. The class name mentions clearly the intent that is to encapsulate some math operations. There are 3 operations. They can take any argument that can be accepted by operators '+', '*' or '/'. So, providing, integers, doubles, and complex numbers should work. If you use an external package like (ref:gmp), it is also an acceptable input for any of the needed parameters. Any combination of this types will provide a correct result, using scalars or vectors. 
+
+From my point of view, main issues are the followings
+
+issue number | issue description | issue severity
+:------:|:----------------------------------------------------|:--------------:
+1 | few seconds for creation, several quarters of an hour for testing, and hours for documentation | UNACCEPTABLE
+2 | does it complies with maths sets? Not at all, this is software engineering implementation, not a math compliant one | SEVERE
+3 | high sensitivity to input values <cite class='comment'>did you consider that NaN, NA, Inf, -Inf, 0 could be valid input values here?</cite>. Indeed R is naturally great on this part | LOW
+4 | natural polymorphism of returned types, that brings again software engineering whereas reliable math ops are needed. From a mathematical point of view, input belong to a predefined mathematical set, and output belongs also to a predefined mathematical set. Not the case with provided implementations | HIGH
+5 | unreliable implementation as input might return numeric output, warning or errors | HIGH
+
+
+## Offensive programming
+
+Consider same (ref:R) class implementation with a little bit instrumentation. 
+
+```{r language2, echo=TRUE, eval=TRUE}
+suppressMessages(require(data.table))
+MathOperation <- function() {
+  self <- environment()
+  class(self) <- append('Addition', class(self))
+
+  add <- function(x_r, y_r) x_r + y_r
+  
+  multiply <- function(x_r, y_r) x_r * y_r
+  
+  divide <- function(x_r, y_r) x_r / y_r
+  
+  function_return_types <- data.table(
+    function_name = c('add', 'multiply', 'divide'),
+    return_value = c('x_r', 'x_r', 'x_d')
+  )
+
+  self
+}
+```
+
+### What is different?
+
+Compare to previously shown implementation, here are the two main differences
+
+1. arguments are renamed according to a pattern
+1. a variable named (ref:frt) has been added. It holds a (ref:datatable) that defines expected function return types. 
+
+That's it. Function implementation is exactly the same. No change done elsewhere. Everything is there and should be sufficient to solve many of the faced issues. 
+
+
+### Semantic argument naming
+
+Arguments have been renamed from <cite class='kw'>x</cite> to <cite class='kw'>x_r</cite>. 
+What does that mean? Syntactically, it changes nothing for (ref:R). For us humans, it changes a lot of things, as this follows a pattern that allows to specify several intents in a short, concise, and reliable way. 
+
+The pattern is simple to understand. Its parts can be up to three, and the second and third parts are optional. First part, is the variable name. Second part is the type of the variable. Third part is the length constraint specification. Parts are separated by underscore. Refer to \@ref(semantic-names) for more details about syntax, and for illustrative examples. 
+
+
+## Back to definition
+
+So now you may be able to translate the variable <cite class='kw'>x_r</cite> by yourself. Just a vector of real values, unconstrained in length. Using this parameter name implies that the the developer is responsible for testing cases of various length and has to prevent weirdness propagation. 
+
+For example following R code shows results that require decisions
+
+```{r language3, echo=TRUE, eval=TRUE}
+mo <- MathOperation()
+
+print(mo$add(1.0 * 1:3, 1.0 * 1:7))
+```
+
+This code provides both an output and a warning, because of R recycling on various length vectors. What decision should be taken ? Allow or deny this behavior ? It depends of your usage. If you are creating a real math library, I would recommend to duplicate the code and create two functions named <cite class='kw'>addRCompliant</cite> and <cite class='kw'>addMathCompliant</cite>. Later should enforce arguments length control in his body, while former should keep the body as is or instrument it with an encapsulating <cite class='kw'>suppressWarning</cite> call. That way, you should easily meet your end-users expectations, either mathematicians or software engineers. 
+
+Note that in the later case, added controls are not defensive programming but functional scope verification. 
+
+<!--chapter:end:02-r-language.Rmd-->
+
+# Putting in action wyz.code.offensiveProgramming
+
+The package provides R tools to ease offensive programming exploitation. 
+
+```{r package1, eval=TRUE, echo=FALSE}
+suppressMessages(library(wyz.code.offensiveProgramming))
+```
+
+## Package overview 
+
+The package is organized around 4 axis that are elaboration, verification, exploitation and information.
+At any time you may get a list of the package functions by calling function <cite class='kw'>packageFunctionsInformation</cite>
+that provides a truth table for each function in package (ref:PKN). This is helpful when lost or just as a reminder. 
+
+```{r package2, eval=TRUE}
+packageFunctionsInformation()
+```
+
+<!--chapter:end:030-package.Rmd-->
+
+# The type factory
+
+The types that you wish to control are managed by a type factory, named <cite class='kw'>FunctionParameterTypeFactory</cite>.
+Instantiating an object of this class allows you to 
+
+a. discover what are the already recorded types, available for reuse
+a. register your own types so they can be checked dynamically wherever and whenever required
+a. understand the verification logic for each type 
+
+
+## Get recorded types inventory
+
+Simply use <cite class='kw'>retrieveFactory</cite> and <cite class='kw'>getRecordedTypes</cite> function. It returns a <cite class='kw'>data.table</cite>, that you can filter out conveniently. 
+
+Here is an example. 
+
+```{r typeFactory1, eval=TRUE}
+f <- retrieveFactory()
+f$getRecordedTypes()
+```
+
+## Understanding the model 
+
+A type is defined by three elements
+
+1. a unique suffix
+1. a unique name
+1. a function that returns a boolean value, <cite class='kw'>TRUE</cite> when examining a value that matches
+the type
+
+For example, you might wonder what means <cite class='fd'>ui</cite> as a suffix
+```{r typeFactory2, eval=TRUE}
+f$getRecordedTypes()[suffix == 'ui']
+```
+
+What is the function related to suffix <cite class='fd'>ui</cite>?
+```{r typeFactory3, eval=TRUE}
+f$getVerificationFunction('ui')
+```
+
+## Register your own type
+
+Type registration is achieved by providing a type suffix, a type name and a verification function. Registration will be tagged automatically as user-defined. Here is a typical sequence to register your own type
+
+```{r typeFactory4, eval=TRUE}
+f$addSuffix('mc', 'MyClass', function(o_1_) is(o_1_, 'MyClass'))
+f$getRecordedTypes()[suffix == 'mc']
+```
+
+Note that no implementation of the class is required. It is purely declarative registration. You told the type factory to record the type <cite class='fd'>MyClass</cite> under the suffix <cite class='fd'>mc</cite>, with the verification function you provided. Here verification function is quite simple. Notice that it takes a single object as argument. 
+
+## Get access to verification functions
+
+Implementation of verification function can range from quite simple to as complex as required. This allows you to manage functional scopes much more easily, whatever you work and organization context. 
+
+For example, if you want to see at a glance the differences between a <cite class='kw'>boolean</cite> and a <cite class='kw'>logical</cite>, here is the sequence you could use 
+
+```{r typeFactory5, eval=TRUE}
+f$getVerificationFunction('b')
+f$getVerificationFunction('logical')
+```
+
+From the two definitions, you can deduce the differences between the two types. A boolean is a 2-value boolean, either <cite class='kw'>TRUE</cite> or <cite class='kw'>FALSE</cite>. A logical, is a (ref:R) logical value, that is a 3-value boolean, so it may take value <cite class='kw'>NA</cite>. 
+
+Note that arguments to the function <cite class='kw'>getVerificationFunction</cite> can be either a registered suffix or a registered type. 
+
+## Some hints
+
+There is currently no way to remove one recorded type. This need is indeed very specific and arise only when there is a name collision and you wish to use an already taken name for your own purpose.
+
+Solution is quite simple, use another name. Provided types are the most commons, and the current suffixes have been chosen for ease of use and for intuitive usage. 
+
+Whenever you need to register a new type, ask yourself 'what is the suffix I wish to use for the new type?'. My advice is to use short suffixes, made of 2 or 3 letters. That's clearly sufficient to distinguish your type from others. Know that there is not limitation to the length of the suffix you can use. Simply, comply with <cite class='kw'>KISS</cite>, as you will  have to type it several times, probably. 
+
+If you come from another programming language, you may consider to create aliased types by recording new entries. Let's look at a concrete case. 
+
+```{r typeFactory6, eval=TRUE}
+f$addSuffix('ui', 'unsigned integer', function(o_1_) f$getVerificationFunction('i')(o_1_) && o_1_ >= 0L) 
+f$addSuffix('ul', 'unsigned long'   , f$getVerificationFunction('ui'))
+f$getRecordedTypes()[suffix %in% c('ui', 'ul')]
+```
+
+You asked to add two new entries in the type factory, and they share the same verification function. First add fails, second one succeeds. The reason is that <cite class='fd'>ui</cite> suffix is already defined and you cannot redefine an already defined suffix. 
+
+Now, <cite class='fd'>ui</cite> and <cite class='fd'>ul</cite> are aliases of the same verification function. Notice that this is true now, and cannot be changed once created. Indeed, you always have the opportunity to create a new type factory to match your new need. You can use as many type factories as you want. 
+
+The term alias shall not be understood, as an authorization to use one name for the other, but rather as an ability to define quickly new types to ease functional scope management. 
+
+
+## Enforcing use of your own type factory
+
+When you customized your own type factory, you need a way to tell (ref:PKN) to use it.
+To do so, simply create your type factory and assign it to a (ref:R) variable, and set environment variable **OP_TYPE_FACTORY** to point to the name of this (ref:R) variable.
+Let's see an example
+
+```{r typeFactory7, eval=TRUE}
+ff <- FunctionParameterTypeFactory()
+ff$addSuffix('wo', "wo class", function(o_) is(o_, "wo"))
+ff$addSuffix('yo', "yo class", function(o_) is(o_, "yo"))
+ff$addSuffix('zo', "zo class", function(o_) is(o_, "zo"))
+Sys.setenv("OP_TYPE_FACTORY" = "ff")
+fg <- retrieveFactory() # retrieves the factory pointed by R variable ff
+fg$getRecordedTypes()[suffix %in% c('wo', 'yo', 'zo')] # right behavior !
+
+# wrong behavior as retrieveFactory will provide the default factory and not yours!
+Sys.setenv("OP_TYPE_FACTORY" = "")
+fh <- retrieveFactory() # retrieves the default factory
+fh$getRecordedTypes()[suffix %in% c('wo', 'yo', 'zo')]
+```
+
+<!--chapter:end:031-type-factory.Rmd-->
+
+# Semantic names
+
+Package (ref:PKN) offers great functionalities at the cost of a few conditions
+
+1. semantic naming has to be used for function parameters names
+1. semantic naming has to be used for function return type definition
+1. semantic naming has to be used for test case definitions
+
+## What is semantic naming?
+
+I call semantic naming, the fact that a named object used in the code should provide much more information than a dumb name.
+
+Semantic naming in package (ref:PKN) defines a few patterns to declare class, function, function parameters and function return type names. Table below shows the related patterns and exposes the underlying philosophy. 
+
+name category | philosophy | pattern to comply with
+:----------------:|:-------------------------------------------|:---------------
+class | java like, starts with upper-cased letter, camel-cased| [A-Z][a-ZA-Z0-9]* 
+function | java like, starts with lower-cased letter, camel-cased| [a-z][a-ZA-Z0-9]* 
+function parameter or function return type | R like, bearing information about type and length constraint| See below.
+
+Function parameter or return type names must comply with one of the following patterns
+
+1. &lt;variableNameCamelCase&gt;\_&lt;typeInformation&gt;\_&lt;lengthConstraint&gt;
+2. &lt;variableNameCamelCase&gt;\_&lt;lengthConstraint&gt;\_
+
+First pattern is to be used for monomorphic types. Second one for polymorphic types. 
+
+Monomorphic types are types that are homogeneous. A string, a double, a MyObject are good example of such monomorphic types. 
+Pattern allows to not only express concisely the type, but also to express some length constraints if needed. 
+
+Polymorphic types are useful as soon as your input or output can take many types, according to your context. For example, a R function may return a double, or a warning, or an error. Polymorphic types always end with '_' in their names, to make them easy to identify. 
+
+The type information part of the pattern has to match one of the recorded entries of the type factory. 
+
+The length constraint part ot the pattern follows the PERL pattern ([1-9][0-9]*(l|m|n)?). Letters mean respectively less or equal, more or equal, 1 or n. The length constraint part is optional. 
+
+Look at following table to get more intuitive traction on function parameter or function return type declarations. 
+
+input name |  meaning
+:-------------:|:---------------------------------------------------------------
+x_s    |an unconstrained vector of strings - might contain no entries
+x_s_3  |a vector of strings with 3 entries
+x_s_3l |a vector of strings with 3 or less entries
+x_s_3m |a vector of strings with 3 or more entries
+x_s_3n |a vector of strings with 3 entries or 1 entry
+flag_b_1  |a vector of booleans with 1 entry - a.k.a a boolean scalar
+z_ | an unconstrained polymorphic type vector named z - Nothing more is known about its content
+z_2_ | a polymorphic type vector named z of length 2 - Nothing more is known about its content
+
+As you can see, rather easy. An advice, when programming try to use meaningful variable names for first part of the pattern. It will ease your job. 
+
+## Verifying a function parameter or return type declaration
+
+Use simply dedicated function named <cite class='kw'>getTypeDescription</cite> from the type factory. 
+
+```{r semantic1, eval=TRUE}
+sapply(c('x_s_3n', 'flag_b_1', 'z_2_'), function(e) f$getTypeDescription(FunctionParameterName(e)))
+```
+
+
+## Verifying a class name
+
+Simply use package eponymous function. 
+
+```{r semantic2, eval=TRUE}
+verifyClassName(c('alphaBeta', 'AlphaBeta', '.alphaBeta'))
+verifyClassName(c('alphaBeta', 'AlphaBeta', '.alphaBeta'), strict = FALSE)
+```
+
+## Verifying a function name
+
+Simply use package eponymous function. 
+
+```{r semantic3, eval=TRUE}
+verifyFunctionName(c('alphaBetaGamma', 'AlphaBetaGamma', '.alphaBetaGamma'))
+verifyFunctionName(c('alphaBetaGamma', 'AlphaBetaGamma', '.alphaBetaGamma'), strict = FALSE)
+```
+
+
+## Get naming balance from an R object
+
+Use package function <cite class='kw'>verifyObjectNames</cite> to get the results of a full compliance analysis of names for the provided object. 
+
+```{r semantic4, eval=TRUE}
+source(system.file('code-samples/no-defs/Addition.R', package = 'wyz.code.offensiveProgramming'))
+verifyObjectNames(Addition())
+```
+
+
+```{r semantic5, eval=TRUE}
+source(system.file('code-samples/both-defs/good/full/AdditionTCFIG1.R', package = 'wyz.code.offensiveProgramming'))
+verifyObjectNames(AdditionTCFIG1())
+```
+
+<!--chapter:end:033-semantic-naming.Rmd-->
+
+# Evaluation modes
+
+Package (ref:PKN) comes with several evaluation modes. You may retrieve them by using function
+<cite class='kw'>defineEvaluationModes</cite> that returns the 3 following modes 
+
+1. standard_R_evaluation
+1. enhanced_R_evaluation
+1. type_checking_enforcement
+
+
+## Understanding evaluation modes
+
+The first mode, <cite class='kw'>standard_R_evaluation</cite>, is to ease comparisons with standard R evaluation. It does not make any sense to use only this mode when using (ref:PKN). 
+
+The second mode, <cite class='kw'>enhanced_R_evaluation</cite>, goes further than standard R evaluation, as it implies a function return type verification. 
+
+The third mode, <cite class='kw'>type_checking_enforcement</cite>, goes still further than the second mode, as it implies a function parameter types verification. 
+
+Roughly speaking, second mode let's you verify function return types in accordance with recorded information, and the third mode, mimics a compiler output for R <cite class='comment'>but it still interpreted language</cite>.
+
+## Instantiating evaluation mode
+
+To handle evaluation mode, use function <cite class='kw'>EvaluationMode</cite>.  A typical way to do so is
+
+```{r evaluationModes1, eval=TRUE}
+print(defineEvaluationModes())
+
+em <- EvaluationMode(defineEvaluationModes()[3])
+
+# convenient definitions, I will reuse in the coming book chapters to simplify writing
+emo <- list(
+  standard = EvaluationMode(defineEvaluationModes()[1]),
+  enhanced = EvaluationMode(defineEvaluationModes()[2]),
+  type     = EvaluationMode(defineEvaluationModes()[3])
+)
+```
+
+<!--chapter:end:036-evaluation-modes.Rmd-->
+
+# Running functions 
+
+Our goal is to run a R instrumented function, under a given evaluation mode. To do so, some prerequisites have to be met, prior to use some (ref:PKN) utilities to proceed to the function execution with context capture and human-readable feedback generation. 
+
+## Prerequisites
+
+To run a R function is has to be instrumented. Two requirements have to be met
+
+1. the function must comply with semantic parameter naming 
+1. the function return type must be specified
+
+
+
+## Function return types definition verification
+
+To verify function return types definition you may use the low level function <cite class='kw'>verifyFunctionReturnTypesDefinition</cite> or the higher level one named <cite class='kw'>retrieveFunctionReturnTypes</cite>. Indeed, this approach requires persistent instrumentation
+of the code. 
+
+```{r eval=TRUE}
+retrieveFunctionReturnTypes(AdditionTCFIG1())
+```
+
+
+## Transient invocations {.tabset .tabset-fade .tabset-pills}
+
+Transient means instrumentation is done dynamically and not persisted anywhere. Here is a typical case. That's a convenient way to discover and to play with package (ref:PKN). 
+
+
+### Nominal case
+
+
+To get the definition for 'emo' variable, please refer to \@ref(evaluation-modes).
+
+```{r runningFunctions1, eval=TRUE}
+h <- function(x_s) x_s
+runTransientFunction(h, list('neonira'), emo$type, 'x_s')
+```
+
+Semantically, function <cite class='kw'>h</cite> takes a vector of strings as argument and returns a vector of strings. 
+As provided parameter <cite class='kw'>'neonira'</cite> is a vector of type character, <cite class='kw'>parameter_type_checks</cite> succeed. As returned value is a vector of type character, <cite class='kw'>function_return_type_check</cite> also succeeds. 
+
+#### Wrong parameter type
+
+Let's change the provided argument from 'neonira' to pi value. 
+```{r runningFunctions2, eval=TRUE}
+h <- function(x_s) x_s
+runTransientFunction(h, list(pi), emo$type, 'x_s')
+```
+We now face a case where function specification is unchanged but provided argument is not complying to specification. 
+Impact is <cite class='kw'>parameter_type_checks</cite> failure and <cite class='kw'>function_return_type_check</cite> failure. 
+
+#### Change expected return type
+
+Let's change the expected function return type, to be double <cite class='comment'> <cite class='kw'>x_d</cite></cite>. 
+```{r runningFunctions3, eval=TRUE}
+h <- function(x_s) x_s
+runTransientFunction(h, list(pi), emo$type, 'x_d')
+```
+We now face a case where function specification is unchanged but expected return type is expected to be a double. Provided argument is not complying to specification. Impact is <cite class='kw'>parameter_type_checks</cite> failure. 
+
+### Prerequisite mismatch 
+
+What if function is not fulfilling prerequisites 
+```{r runningFunctions4, eval=TRUE}
+g <- function(x) x # No semantic name compliance 
+runTransientFunction(g, list(pi), EvaluationMode(defineEvaluationModes()[3]), 'x_d')
+```
+Impact is <cite class='kw'>parameter_type_checks</cite> failure. 
+
+
+### Object function call
+
+What if the function you desire to call is an object function? 
+In such a case, be sure to pass the object as first parameter of the list of parameters,
+as shown by example below,  based on a S3 object. A priori, all kind of (ref:R) objects are supported: S3, S4, RC, R6 and environment objects. 
+
+```{r runningFunctions5, eval=TRUE}
+library(data.table)
+source(file.path(system.file(package = 'wyz.code.offensiveProgramming'), 'code-samples',
+       'both-defs/good/partial', 'Addition_TCFI_Partial_S3.R'), encoding = 'UTF-8')
+a <- Addition_TCFI_Partial_S3()
+runTransientFunction(addInteger.Addition_TCFI_Partial_S3, list(a, 3L, 4L), emo$type, 'x_i')
+
+runTransientFunction(addInteger.Addition_TCFI_Partial_S3, list(NULL, 3L, 4L), emo$type, 'x_i')
+
+print(ls())
+
+#runTransientFunction(addInteger, list(a, 3L, 4L), emo$type, 'x_i')
+```
+
+## Persistent invocations {.tabset .tabset-fade .tabset-pills}
+
+Transient invocations are convenient but limited. Especially, when you create classes, they do not appear to be as friendly and useful as necessary. When dealing with your own class code, you may opt for an easier and more industrial approach that is class instrumentation. Prerequisite remains the same, but you may fulfill them much more easily by defining a variable named <cite class='kw'>function_return_type</cite> in your class. Let's see an example. 
+
+### Nominal persistent case 
+
+```{r runningFunctions6, eval=TRUE}
+source(system.file('code-samples/frt-defs/good/partial/AdditionFIPartial.R', package = 'wyz.code.offensiveProgramming'))
+runFunction(AdditionFIPartial(), 'addInteger', list(1:3, 6:8), emo$type)
+```
+We now face a case where function specification is expecting to sum integers. Provided arguments are complying to specification. Impact is <cite class='kw'>parameter_type_checks</cite> success and <cite class='kw'>function_return_type_check</cite> success.
+
+### Subtile change 
+
+Just change the function name. Now expectations brought by the function definition are not the same. This leads to a completely different result. 
+
+```{r runningFunctions7, eval=TRUE}
+runFunction(AdditionFIPartial(), 'addDouble', list(1:3, 6:8), emo$type)
+```
+
+### Call case with named and positional parameters
+
+```{r runningFunctions8, eval=TRUE}
+runFunction(AdditionFIPartial(), 'addInteger', list(y_i = 1:3, 6:8), emo$type)
+```
+
+Look at  <cite class='kw'>parameter_type_checks</cite> to ensure arguments are well associated. 
+
+### Call case with ellipsis 
+
+```{r runningFunctions9, eval=TRUE}
+runFunction(AdditionFIPartial(), 'addMultiDouble', list(1:3, 1:7), emo$type)
+```
+
+### Second call case with ellipsis 
+
+```{r runningFunctions10, eval=TRUE}
+runFunction(AdditionFIPartial(), 'addMultiInteger', list(1:3, 1:7, 0, floor(pi)), emo$type)
+```
+
+Two issues here. Value 0 is double, not integer and <cite class='kw'>floor</cite> function returns also a double. To get a correct results here is how to transform the call
+
+```{r runningFunctions11, eval=TRUE}
+runFunction(AdditionFIPartial(), 'addMultiInteger', list(1:3, 1:7, 0L, as.integer(floor(pi))), emo$type)
+```
+
+
+
+<!--chapter:end:037-running-functions.Rmd-->
+
+# Running test cases
+
+Using package (ref:PKN), you have the opportunity to define test cases and to embed them
+in your class definition, to ease retrieval and reuse. 
+
+## Reusing defined test case definitions
+
+Doing so, allows to get following benefits
+
+1. discover defined test case definitions
+1. run of any test case definition
+1. get interactively the (ref:R) code of a test case, allowing you to play with it, manually, when needed
+1. get contextual results from the test case runs
+
+## Embedding test cases in class definition
+
+This is accomplished easily. You just have to declare a variable named <cite class='kw'>testCaseDefinitions</cite>,
+and provide its content, that is a <cite class='fn'>data.table</cite>. Content could be partial or complete depending of your goals. Spectrum of provided tests cases is as you desire it to be, as shallow or deep as needed. 
+
+The <cite class='kw'>data.table</cite> must hold following columns and content
+
+1. function_name,  a vector of strings, each being the name of the function to test, 
+1. standard_evaluation, a vector of strings, where values are taken from set {'correct', 'erroneous', 'failure'}
+1. type_checking_enforcement, , a vector of strings, where values are taken from set {'correct', 'erroneous', 'failure'}
+1. test case definitions, that is a list of <cite class='kw'>TestCaseDefinition</cite> objects. 
+
+Correct implies right type and right result. Erroneous implies right type and wrong result. Failure implies wrong type.
+To get more details about syntax, please refer to manual page of <cite class='kw'>Definitions</cite>.
+
+### A simple case
+
+```{r runningTestcase1, eval=TRUE}
+source(system.file('code-samples/both-defs/good/partial/AdditionTCFIP.R', package = 'wyz.code.offensiveProgramming'))
+AdditionTCFIP
+```
+
+Just five test cases to test 5 function with various parameters. 
+
+### A more complex case
+
+
+```{r runningTestcase2,eval=TRUE}
+AdditionTCFIG1
+```
+
+Much more complete instrumentation with 29 test cases, various expected outputs, varying from evaluation model to consider. 
+
+## Test case definitions verification
+
+To verify test cases definitions you may use the low level function <cite class='kw'>verifyTestCaseDefinitions</cite> or the higher level one named <cite class='kw'>retrieveTestCaseDefinitions</cite>. 
+
+```{r runningTestcase3, eval=TRUE}
+retrieveTestCaseDefinitions(AdditionTCFIG1())
+```
+
+## Discovering test cases descriptions
+
+Any (ref:R) object instrumented with test case definitions allows for defined test case definitions discovery. 
+
+```{r runningTestcase4, eval=TRUE}
+retrieveTestCaseDescriptions(AdditionTCFIG1())
+```
+
+```{r runningTestcase5, eval=TRUE}
+retrieveTestCaseDescriptions(Addition())
+```
+
+## Run a test case 
+
+To run a test case, you may use the package function <cite class='kw'>runTestCase</cite>. 
+
+```{r runningTestcase6, eval=TRUE}
+runTestCase(AdditionTCFIG1(), 4, EvaluationMode(defineEvaluationModes()[3]))
+```
+
+This runs the test number 4. Result has two parts. A raw part, that holds the intermediate computation results, and a synthesis part that is a data.table provided to ease result interpretation. 
+
+
+You can provide a vector instead of a single test number if you want to run several use test cases in one call. 
+
+```{r runningTestcase7, eval=TRUE}
+runTestCase(AdditionTCFIG1(), 12:17, EvaluationMode(defineEvaluationModes()[3]))
+```
+
+Looking at synthesis, you will discover that test 17 fails under chosen evaluation mode, and therefore should require a fix. 
+Here looking at raw results for test number 17, brings solution, that is about input parameter compliance. Provided values are double, whereas integers were expected. 
+
+
+
+
+
+<!--chapter:end:038-running-test-cases.Rmd-->
+
+# Generating <cite class='it'>testthat</cite> test files 
+
+When your (ref:R) code is offensive programming instrumented, it becomes possible to generate (ref:testthat) unit test files, thus improving greatly developers productivity. 
+
+To be able to generate (ref:testthat) unit test files, you must ensure that your (ref:R) code is function return type instrumented and test cases instrumented. Both are required for this generation. 
+
+
+## Package <cite class='it'>wyz.code.testthat</cite> in action
+
+
+### Setting up the context 
+
+To create (ref:testthat) unit test files, you must provide a target folder, to store the generated unit test files. In this session, generated files will be stored onto folder <cite class='fd'>generated-testthat</cite>. You may change this, but be warned that generated files might be overwritten without any reminder. Be careful, if you set the target folder to <cite class='fd'>tests/testthat</cite> as you may loose previous work. You may save frequently your results in configuration management to be able to retrieve original file content whenever required. 
+
+Here, I reuse 4 files from package (ref:PKN) to generate unit test files from. 
+
+```{r testthat1, eval=TRUE}
+library(wyz.code.testthat)
+
+target_folder <- 'generated-testthat'
+if (!dir.exists(target_folder)) dir.create(target_folder)
+
+generateTests <- function(sourceFile_s_1, sourcePackage_s_1, object_o_1) {
+  g <- gautfo(object_o_1, sourceFile_s_1, sourcePackage_s_1, target_folder)
+  print(g)
+  g
+}
+
+source_package <- 'wyz.code.offensiveProgramming'
+
+source_files <- c(
+  'code-samples/both-defs/good/full/AdditionTCFIG1.R',
+  'code-samples/no-defs/Addition.R',
+  'code-samples/frt-defs/good/partial/AdditionFIPartial.R',
+  'code-samples/tcd-defs/good/partial/AdditionTCPartial.R'
+)
+
+invisible(sapply(source_files, function(e) {
+  source(system.file(e, package = source_package))
+}))
+```
+
+### Unit test file generation
+
+Generation is done on a per class basis. Simply use function <cite class='kw'>gautfo</cite> or function <cite class='kw'>generateAllUnitTestsFromObject</cite>.
+
+#### Nominal case  
+
+Class <cite class='kw'>AdditionTCFIG1</cite> is offensive programming instrumented. It uses both function return type instrumentation and test case instrumentation. Indeed, this class is partially instrumented. Not all the methods of the class have test cases declared for. 
+
+Generation is quite straightforward. 
+
+```{r testthat2, eval=TRUE}
+print(gautfo(AdditionTCFIG1(), source_files[1], source_package, target_folder))
+```
+
+Results is a list with two entries. Entry named <cite class='oc'>filenames</cite> holds a (ref:datatable) providing insight about created files.
+
+#### Exception cases
+
+Class <cite class='kw'>Addition</cite> is NOT offensive programming instrumented.
+
+Class <cite class='kw'>AdditionFIPartial</cite> is NOT FULLY offensive programming instrumented. It lacks test cases instrumentation. 
+
+Class <cite class='kw'>AdditionTCPartial</cite> is NOT offensive programming instrumented. It lacks function return type instrumentation. 
+
+Expected results is no unit test file generation.  
+
+```{r testthat3, eval=TRUE}
+print(gautfo(Addition(), source_files[2], source_package, target_folder))
+
+print(gautfo(AdditionFIPartial(), source_files[3], source_package, target_folder))
+
+print(gautfo(AdditionTCPartial(), source_files[4], source_package, target_folder))
+```
+
+
+## Generated unit test file content 
+
+Typically, generated (ref:R) code will looks like following unit test code. Note, that comments are provided to ease cross-referencing and to link back easily to (ref:PKN) test case number. This is helpful when facing dysfunctions. 
+
+```{r testthat4, eval=FALSE}
+source(system.file("code-samples/both-defs/good/full/AdditionTCFIG1.R",
+                   package = "wyz.code.offensiveProgramming"))
+object_o_1 <- AdditionTCFIG1()
+emsre <- EvaluationMode("standard_R_evaluation")
+rtcsre24 <- runTestCase(object_o_1, 24, emsre)
+rtcsre25 <- runTestCase(object_o_1, 25, emsre)
+rtcsre26 <- runTestCase(object_o_1, 26, emsre)
+
+test_that('addMultiDouble', {
+
+# test 24 - sum of 1 integer and 1 double - correct
+expect_true(rtcsre24$synthesis$status)
+expect_true(rtcsre24$synthesis$value_check)
+
+
+# test 25 - sum of 1 double, 2 integers and 1 NA_integer_ - correct
+expect_true(rtcsre25$synthesis$status)
+expect_true(rtcsre25$synthesis$value_check)
+
+
+# test 26 - sum of nothing - correct
+expect_true(rtcsre26$synthesis$status)
+expect_true(rtcsre26$synthesis$value_check)
+
+})
+
+emtce <- EvaluationMode("type_checking_enforcement")
+rtctce24 <- runTestCase(object_o_1, 24, emtce)
+rtctce25 <- runTestCase(object_o_1, 25, emtce)
+rtctce26 <- runTestCase(object_o_1, 26, emtce)
+
+test_that('addMultiDouble', {
+
+# test 24 - sum of 1 integer and 1 double - correct
+expect_true(rtctce24$synthesis$status)
+expect_true(rtctce24$synthesis$value_check)
+
+
+# test 25 - sum of 1 double, 2 integers and 1 NA_integer_ - correct
+expect_true(rtctce25$synthesis$status)
+expect_true(rtctce25$synthesis$value_check)
+
+
+# test 26 - sum of nothing - correct
+expect_true(rtctce26$synthesis$status)
+expect_true(rtctce26$synthesis$value_check)
+
+})
+```
+
+## Known-limits
+
+Generation of unit test file uses meta-programmation based on <cite class='oc'>call</cite> function, and aims to produce (ref:R) valid code. Indeed, format and presentation are not managed, in generated file. Used **RStudio** editing facilities to ensure nice presentation, although neither mandatory nor required. 
+
+Generated tests cases are ready to run. Use the standard way to run your (ref:testthat) test cases onto them. If  you face some test failures, verify following points 
+
+1. make sure offensive programming evaluation is running fine for ALL evaluation schemes, and that you have no errors at this level
+1. make sure your generated test case source is well up to date with the your (ref:R) offensive programming code. You may regenerate your tests cases at any time if you have any doubt. 
+
+Note that unit test file generated is fully dependent of your (ref:R) source and of the instrumented scope. If there are function not instrumented in your source code, do not expect to have unit test cases for them. 
+
+Also note, when working incrementally, you need to regenerate the unit test cases each time you change the (ref:R) source code or the offensive programming instrumentation.
+
+Best way to put (ref:TT) in practice, is to apply following procedure
+
+1. apply offensive programming at the required scope and ensure (ref:PKN) test cases are valid, using <cite class='kw'>runTestCase</cite> function
+1. generate (ref:testthat) test cases in one single pass using (ref:TT). To do so, create an (ref:R) script. This will ease your pain, and will provide consistent results through calls
+1. apply (ref:testthat) testing practice, to verify that generated tests are running fine. 
+
+
+
+
+
+
+<!--chapter:end:05-testthat.Rmd-->
+
+# Meta-testing
+
+Meta-testing is the activity aiming to test a function while providing no data to test it. 
+
+In a (ref:R) context, it means being able to 
+
+1. discover function signature
+1. infer data type for each argument
+1. generate data set to be used for each argument
+1. run the function with generated data sets
+1. give back some summary statistics about discoveries of various test run achieved
+
+
+If you try it by hand, you will probably succeed, because the second point will be managed directly by your brain. If you try it by a program, type inference is much trickier, because any argument in (ref:R) could be of any type. Generally, you need the documentation and explanations to restrict the scope of possible types. That's where using (ref:MT) will ease your work and bring instrumentation to get results in a more reliable and quicker way.
+
+
+## Wrapper function creation 
+
+Any (ref:R) function can be classified as offensive programming compliant or not. 
+Second case is indeed much more common and will be encountered more often. 
+
+In such a case, use <cite class='kw'>offensiveProgrammingWrapFunction</cite> or function <cite class='kw'>opwf</cite> to generate a new (ref:R) function that will be offensive programming compliant. 
+
+You have to provide semantic argument names to this function to be able to generate correctly the wrapping function. Once done, type inference is now driven by semantic
+argument names. 
+
+Let's see a trivial example, considering function <cite class='kw'>cos</cite> from base package. 
+
+```{r metatesting1, eval=TRUE}
+library(wyz.code.metaTesting)
+op_cos <- opwf(cos, 'radianAngleOrComplex_')
+op_cos              
+```
+
+You may wonder what are the difference between the two signatures? They share same
+number of arguments, just the name changed. Yes, but as the name is now a semantic name, it can be managed by a factory <cite class='comment'>See FunctionParameterTypeFactory in wyz.code.offensiveProgramming for more details</cite>. 
+
+
+## Exploration function  
+
+Let's test base function <cite class='kw'>cos</cite> in a traditional way. 
+
+```{r metatesting2, eval=TRUE}
+rt <- tryCatch( lapply(list(2 * pi / 1:9, NA, Inf, 1+1i, list(), letters[1:3]), cos),
+                error = function(e) { print(e); NaN } )
+```
+
+And now, we have to unravel the arguments to find which ones are generating warnings or errors, to identify the ones that are accepted. Note that this trial is a gentle trial. It does not try for example to provide raw type or data frame or matrix or a function as argument. If you opt for a more traditionnal approach, then you will have to type as many lines as value types you want to test. This could become really boring very fast, as it disturbates you from the analysis of the results. 
+
+Let's test it using (ref:MT). 
+
+First thing do achieve is to get some knowlegde about the function signature complexity. 
+This is easily achieved using function <cite class='kw'>computeArgumentsCombination</cite>.
+
+```{r metatesting3, eval=TRUE}
+computeArgumentsCombination(op_cos)
+```
+
+The number of signatures is given by the <cite class='kw'>signatures</cite> name. Here there exist only one signature for function <cite class='kw'>op_cos</cite> and so for function <cite class='kw'>cos</cite>. 
+
+Note that function <cite class='kw'>computeArgumentsCombination</cite> can be used with any (ref:R) function. It does not requires offensive programming instrumentated function as argument. 
+
+Let's test function <cite class='kw'>op_cos</cite>.
+
+```{r metatesting4, eval=TRUE}
+es <- exploreSignatures(op_cos, list(radianAngleOrComplex_ = c('im', 'r', 'cm')))
+
+print(es$success$synthesis)
+print(es$failure$synthesis)
+```
+
+The second argument is just type restriction to be enforced. Here I asked for 
+integer real and complex mathematical types <cite class='comment'>these are different from (ref:R) integer, double and complex as they cannot take value NA</cite>. Type restrictions are only considered for polymorphic arguments <cite class='comment'>reminder: the ones that ends with an underscore</cite>.
+
+Results tell you that same signature brings various results. Here, 6 tests succeeded and 6 failed. It is clear that the issue is tied to using a list as value to an imperative argument <cite class='comment'>you will have to learn how to interpret the synthesis indeed</cite>. All execution errors provided the same error message. Looking closer, on success, you see that only vectors provided results.
+
+Now, you can conclude that <cite class='kw'>cos</cite> functions
+
+1. accepts as input vectors of integers, reals and complex
+1. passing a list as argument brings an error with the shown message. 
+
+To be complete, note that 
+
+a. as I enforced mathematical arguments, values NA, NaN and Inf are no more possible values for test. This match the mathematic function cosinus and not the (ref:R) function cos. This is an important point, know what scope you want to test, not just what function you want to test
+a. I do not understand the results when using complex numbers. I was expecting the cosinus of a complex number to compute the cosinus of the argument of the complex number, normalized by its modulus. Was expecting a (ref:cset) to (ref:rset) function. That is clearly not the case as output are complex numbers. That is a (ref:cset) to (ref:cset) function. I am still a taker of any explanation about this. 
+
+
+## A more complex example
+
+Let's now use function <cite class='kw'>append</cite> from base package. 
+
+As you know, we need first to create the offensive programming wrapper function. 
+
+```{r metatesting10, eval=TRUE}
+op_append <- opwf(append, c('originalValues_', 'valuesToInsert_', 'afterIndex_ui_1'))
+op_append              
+```
+
+As you can see, parameter substitution is also achieved in code for default arguments.
+
+How complex is it to test this function?
+```{r metatesting11, eval=TRUE}
+computeArgumentsCombination(op_append)
+```
+There are two call signatures, one without default parameter, one with. Let's test them. 
+
+```{r metatesting12, eval=TRUE}
+es <- exploreSignatures(op_append)
+
+print(es$success$synthesis)
+print(es$failure$synthesis)
+```
+
+From the 24 test runs, no errors where generated. If you are curious about a particular test call, let's say number 22, just introspect returned values as below. You will see the code use to call the function during the test.
+
+```{r metatesting13, eval=TRUE}
+print(es$success$code[22]$call_string)
+```
+
+
+If you desire to introspect the call results, use this approach.
+```{r metatesting14, eval=TRUE}
+print(es$success$code[22]$result)
+```
+
+## An example using ellipsis
+
+Let's now use function <cite class='kw'>sum</cite> from base package. 
+
+As you know, we need first to create the offensive programming wrapper function. 
+
+```{r metatesting20, eval=TRUE}
+op_sum <- opwf(sum, c('...', 'removeNAValues_b_1'))
+op_sum             
+```
+
+As you can see, parameter substitution is also achieved in code for default arguments.
+
+How complex is it to test this function?
+```{r metatesting21, eval=TRUE}
+cac_sum <- computeArgumentsCombination(op_sum)
+print(cac_sum)
+```
+There are eight call signatures, four without default parameter, four with. 
+By default, ellipsis is replaced by 0 to three arguments. That's why, first signature
+is empty, and the total is 8. Let's test them. 
+
+```{r metatesting22, eval=TRUE}
+es <- exploreSignatures(op_sum)
+
+print(es$success$synthesis)
+print(es$failure$synthesis)
+```
+
+From the 32 test runs, 8 passed, 24 failed. As we gave no restriction types for ellipsis,
+it has been replaced by any kind of characters, and in particular some that cannot fit a sum. Let's restrict the types to uses and run again same kind of test.  
+
+```{r metatesting23, eval=TRUE}
+es2 <- exploreSignatures(op_sum, list('...' = c('im', 'rm', 'cm')))
+```
+
+Much better. Still 32 tests, now 20 passed, 12 failed. Why?
+
+
+```{r metatesting24, eval=TRUE}
+print(es2$failure$synthesis)
+```
+
+All failures seems to be related to arguments passed as list. 
+
+
+## An example with imperative, default and ellipsis arguments
+
+Let's now use function <cite class='kw'>kronecker</cite> from base package. 
+
+As you know, we need first to create the offensive programming wrapper function. 
+
+```{r metatesting30, eval=TRUE}
+op_kronecker <- opwf(kronecker, c('arrayA_a_1', 'arrayB_a_1', 'function_f_1', 'computeDimensionNames_b_1', '...'))
+op_kronecker             
+```
+
+How complex is it to test this function?
+```{r metatesting31, eval=TRUE}
+cac_kronecker <- computeArgumentsCombination(op_kronecker)
+print(cac_kronecker)
+```
+There are sixteen call signatures. 
+
+Let's try brut force analysis first. 
+
+```{r metatesting32, eval=TRUE}
+tryCatch(es <- exploreSignatures(op_kronecker),
+         error = function(e) print(e) )
+```
+
+This fails as there exist no data generation function provided for array. 
+We have to provide one. 
+
+```{r metatesting33, eval=TRUE}
+wrong_draw_integer_array <- function(n, replace_b_1 = TRUE) {
+  m <- n + sample(0:3, 1)
+  matrix(seq(1, n * m), byrow = TRUE, nrow = n, 
+         dimnames = list(paste('row_', 1:n), paste('col_', 1:m)))
+} 
+# wrong because it does not respect argument names that must be
+# n_i_1 and replace_b_1
+
+df <- DataFactory()
+df$addSuffix('a', 'array', wrong_draw_integer_array)
+
+draw_integer_array <- function(n_i_1, replace_b_1 = TRUE) {
+  m <- n_i_1 + sample(0:3, 1)
+  matrix(seq(1, n_i_1 * m), byrow = TRUE, nrow = n_i_1, 
+         dimnames = list(paste('row_', 1:n_i_1), paste('col_', 1:m)))
+}
+
+draw_function <- function(n_i_1, replace_b_1 = TRUE) { list(`*`, `+`, `-`)[[sample(1:3, 1)]]}
+
+# good practice verifies your functions behave correctly on a single example
+a1 <- draw_integer_array(2)
+a2 <- draw_integer_array(3)
+f <- draw_function(1)
+kronecker(a1, a2, f, TRUE)
+
+# register functions
+df$addSuffix('a', 'array', draw_integer_array)
+df$addSuffix('f', 'function', draw_function)
+
+# make your factory findable
+Sys.setenv("OP_DATA_FACTORY" = "df")
+
+# fire tests - up to 768 contexts managed in one shot
+es <- exploreSignatures(op_kronecker)
+
+print(es$success$synthesis)
+print(es$failure$synthesis)
+```
+
+## Pitfalls to avoid
+
+1. When using <cite class='kw'>opwf</cite> function, make sure you provide the argument names in the right order. Examine created function signature prior going further. Make sure it fits the desired definition you look for.
+1. <cite class='kw'>DataFactory</cite> changes remain invisible to processing as long as you do not set the environment variable <cite class='kw'>OP_DATA_FACTORY</cite> with the name of the (ref:R) variable that holds the <cite class='kw'>DataFactory</cite> you want to use. This is often forgotten. 
+
+<!--chapter:end:06-meta-testing.Rmd-->
+
+# Generating <cite class='it'>R</cite> documentation
+
+When your code uses offensive programming features, it becomes much easier to
+generate (ref:R) documentation, as now, several information might be deduced and reused
+for manual pages composition. Let's see how. 
+
+
+## Automated <cite class='it'>R</cite> documentation generation 
+
+Using package (ref:RD), manual pages <cite class='comment'><cite class='kw'>.Rd</cite> files stored in <cite class='fd'>man</cite> folder in a package context</cite> can be automatically created and filled up nearly to completion, depending on the level of offensive programming instrumentation of your code.
+
+Generated manual pages uses English language. Feel free to modify produced English, to 
+match your own English flavor, if needed. 
+
+The level of your (ref:R) code instrumentation will impact the quality of the generation and your review work depth and time. When using both function return type instrumentation and test case instrumentation, expects produced manual page content to be fully generated and ready for review. 
+
+No automated generation of manual page is possible when your code is not offensive programming instrumented. In such a case, rely either on standard (ref:R) tools to generate documentation or use package (ref:RD) to create the artifact program that will reduce the burden of documentation generation. 
+
+
+## Focus on <cite class='kw'>R</cite> documentation generation
+
+Package (ref:RD) generates manual page sections, presented below with their information source and your remaining duties. 
+
+R manual section | information source | your duty 
+:----------------|:--------------|:-------------------------------------------
+name | (ref:R) code | none
+alias | (ref:R) code | none, unless you want to add extraneous aliases
+title | (ref:R) code | none
+usage | (ref:R) code | none
+arguments | (ref:R) code | none
+value | (ref:R) code | none if your code is function return type instrumented. Otherwise, you will have to write explicitly this part. 
+details | (ref:R) code | you may complete this part that is generated when your code is function test case instrumented.
+references | your instruction | Generated from instructions you may provide.
+author | package DESCRIPTION | none
+seealso | your instruction | Generated from instructions you may provide.
+keyword | your instruction | Generated from instructions you may provide.
+examples | (ref:R) code | none when your code is function test case instrumented.
+concept | your instruction | Generated from instructions you may provide.
+
+
+Missing sections can be added on your instruction when generating manual pages. Package
+(ref:RD) provides a convenient and easy way to do so.
+
+The generated manual page can be used as-is, and should be immediately viewable and usable. From a format point of view, it complies with  <cite class='kw'>.Rd</cite> file syntax. From a content point of view, generated content aims to be reliable and express in human readable English wherever this makes sense. Indeed, you may bring desired enhancements to generated English sentences as you want. 
+
+Generated manual page requires review. You may add extraneous content, modify
+provided content and beautify the result. See known limits section <cite class='comment'>\@ref(known-limits)</cite> to know more.
+
+## package <cite class='it'>wyz.code.rdoc</cite> utilities
+
+The package (ref:RD) can be used to produce (ref:R) documentation parts and (ref:R) documentation generation programs. 
+
+Here under are presented a few utilities that will greatly help you in producing high quality manual pages. Please, take time to read the full paragraph as it will mind you about some very convenient (ref:R) functions to produces (ref:R) code documentation snippets. For more information, refer to respective manual pages. 
+
+### Generate a <cite class='it'>R</cite> documentation section
+
+Use function <cite class='kw'>generateSection</cite> to generate a standard manual page section. Provide section name as first argument, and content as second. 
+
+```{r rdoc1, echo=TRUE, eval=TRUE}
+library(wyz.code.rdoc)
+
+print(generateSection('note', 'A note text.'))
+```
+
+This function does not allow you to generate a customized <cite class='comment'>non standard</cite> manual page section. To do so, use <cite class='kw'>generateContent</cite>.  
+
+### Format an English sentence
+
+Use function <cite class='kw'>sentensize</cite> to format a sentence. 
+
+```{r rdoc2, echo=TRUE, eval=TRUE}
+sentensize('some text \t\b  will  \n\b be generated')
+```
+
+This functions ensures sentence starts with an upper-cased letter, adds a final dot if missing, and normalizes spaces, to ease readability. 
+
+### Generate some <cite class='it'>R</cite> documentation content
+
+Use function <cite class='kw'>generateContent</cite> to generate some (ref:R) documentation content. Beware, as argument order is opposite to the one used for <cite class='kw'>generateSection</cite>.
+
+```{r rdoc3, echo=TRUE, eval=TRUE}
+print(generateContent('a title', 'title'))
+print(generateContent('https://neonira.github.io/offensiveProgrammingBook/', 'href',
+                      'Offensive Programming Book'))
+print(generateContent('warning', 'section', 'Warning section content ...'))
+print(generateContent('a', 'item', 'description of a', useSpace_b_1 = TRUE))
+print(generateContent('a', 'item', 'description of a', useSpace_b_1 = FALSE))
+```
+
+### Generate cross-ref to other <cite class='it'>R</cite> package
+
+Use function <cite class='kw'>generateSpecialLink</cite> to generate a (ref:R) documentation cross-ref to any other (ref:R) package.
+
+```{r rdoc4, echo=TRUE, eval=TRUE}
+print(generateSpecialLink('wyz.code.offensiveProgramming', 'runTransientFunction'))
+```
+
+## Manual pages generation
+
+Simply use <cite class='kw'>generateDocumentationContent</cite> to do so. 
+
+### Context setup
+
+I will reuse some classes delivered with (ref:PKN) to ease demonstration of (ref:R) documentation generation. 
+
+```{r rdoc5, echo=TRUE, eval=TRUE}
+
+target_folder <- 'man' #"~/tmp/generated-doc"
+if (!dir.exists(target_folder)) dir.create(target_folder)
+
+source_package <- 'wyz.code.offensiveProgramming'
+
+source_files <- c(
+  'code-samples/both-defs/good/full/AdditionTCFIG1.R',
+  'code-samples/no-defs/Addition.R',
+  'code-samples/frt-defs/good/partial/AdditionFIPartial.R',
+  'code-samples/tcd-defs/good/partial/AdditionTCPartial.R'
+)
+
+invisible(sapply(source_files, function(e) {
+  source(system.file(e, package = source_package))
+}))
+```
+
+### Method manual page
+
+Use keyword **method** to generate a dedicated manual page for an S3 method. 
+
+```{r rdoc6, echo=TRUE, eval=TRUE}
+object <- AdditionTCFIG1()
+package_name <- 'zorg'
+
+refs <- list(
+  list(url = 'https://cran.r-project.org/doc/manuals/R-exts.html',
+       label = 'Writing R extensions',
+       comment = 'to know more about R documentation requirements'),
+  list(url = 'https://www.burns-stat.com/pages/Tutor/R_inferno.pdf',
+       label = 'The R Inferno',
+       comment = 'to discover some well-known R weirdness')
+)
+
+extra_method <- list(
+  keyword = c('classes', 'environment', 'utilities', 'misc'),
+  concept = c('evaluation mode', 'standard evaluation',
+              'function return type evaluation', 'parameter check evaluation'),
+  references = c(sentensize(paste('see',
+                                  generateContent('wyz.code.offensiveProgramming', 'code'),
+                                  'package documentation')),
+                 '',
+                 sentensize(paste('You may read',
+                                  generateContent('https://neonira.github.io/offensiveProgrammingBook/',
+                                                  'href', 'Offensive Programming Book'),
+                                  'to get introduction and expert advices on offensive programming')),
+                 '',
+                 generateReference(refs[[1]])
+  ),
+  seealso = c(sentensize(paste('see',
+                               generateContent(generateSpecialLink('wyz.code.offensiveProgramming',
+                                                                   'runTransientFunction'),
+                                               'code'),
+                               'to call interactively an offensive programming function, whether instrumented or not.')),
+              '',
+              sentensize(paste('see',
+                               generateContent(generateSpecialLink('wyz.code.offensiveProgramming',
+                                                                   'runTestCase'),
+                                               'code'),
+                               'to reuse on-demand instrumented offensive programming function tests'))
+  )
+)
+
+# explicit invocation for method
+generateDocumentationContent(target_folder, 'method', 'addMultiDouble',
+                             object, package_name,
+                             extra_method, overwrite_b_1 = TRUE)
+
+```
+
+Note how parameter <cite class='oc'>extra_method</cite> allows you to provide specific content as instruction to be considered for manual page generation. The extraneous content must be a <cite class='oc'>list</cite>, where names are manual page sections, and where content is (ref:R) documentation content. 
+
+You may use function <cite class='kw'>generateDocumentationContent</cite> to generate your own (ref:R) documentation generation scripts. This allows you to generate programmatically your manual pages, in a customized way. 
+
+Note that parameter <cite class='oc'>package_name</cite> is the name of the target package you want to generate documentation for. Here, files are taken from the (ref:PKN) package, and documentation is generated for package <cite class='it'>zorg</cite>. Really useful when programming, not so useful when used interactively. 
+
+### Class manual page
+
+Use keyword **class** to create a manual page for a class. Provide the class name. 
+
+```{r rdoc7, echo=TRUE, eval=TRUE}
+extra_class <- extra_method
+extra_class$references <- extra_method$references[[5]]
+extra_class$seealso <- NULL
+generateDocumentationContent(target_folder, 'class', 'AdditionTCFIG1',
+                             object, package_name,
+                             extra_class, overwrite_b_1 = TRUE)
+```
+
+### Package manual page
+
+Use keyword **class** to generate a summary manual page for your package. Provide explicitly, all the class names you desired to emphase over.  
+
+```{r rdoc8, echo=TRUE, eval=TRUE}
+extra_package <- extra_method
+extra_package$seealso <- NULL
+extra_package$content <- c('AdditionTCFIG1', 'AdditionTCFIP', 'Addition')
+z <- generateDocumentationContent(target_folder, 'package', package_name,
+                                  object, package_name, extra_package, overwrite_b_1 = TRUE)
+```
+
+Result is 
+<pre>
+\name{zorg-package}
+\alias{zorg-package}
+\alias{zorg}
+\docType{package}
+\title{\packageTitle{zorg}}
+\description{
+\packageDescription{zorg}
+}
+\details{
+Most important package entries are
+\itemize{
+\item{\code{\link{AdditionTCFIG1}}}{}
+\item{\code{\link{AdditionTCFIP}}}{}
+\item{\code{\link{Addition}}}{}
+}
+}
+\references{
+See \code{wyz.code.offensiveProgramming} package documentation.
+
+You may read \href{https://neonira.github.io/offensiveProgrammingBook/}{Offensive Programming Book} to get introduction and expert advices on offensive programming.
+
+Refer to \href{https://cran.r-project.org/doc/manuals/R-exts.html}{Writing R extensions} to know more about R documentation requirements.
+}
+\author{
+\packageAuthor{zorg}
+
+Maintainer: \packageMaintainer{zorg}
+}
+\keyword{classes}
+\keyword{environment}
+\keyword{utilities}
+\keyword{misc}
+\concept{evaluation mode}
+\concept{standard evaluation}
+\concept{function return type evaluation}
+\concept{parameter check evaluation}
+</pre>
+
+### In one shot
+
+To simplify your life, you can create in one shot all the manual pages related to
+methods of a class. Simply pass <cite class='bo'>NA</cite> as value for the name. 
+
+```{r rdoc9, echo=TRUE, eval=TRUE}
+generateDocumentationContent(target_folder, 'method', NA,
+                             AdditionTCPartial(), package_name,
+                             extra_method, overwrite_b_1 = TRUE)
+```
+
+
+### and a special case, from a standalone function 
+
+
+When you own an offensive programming instrumented function, it is quite easy to get a pre-filled (ref:R) documentation file from it. Be sure to pass NULL as value for parameter <cite class='kw'>object_o_1</cite>. 
+
+```{r rdoc10, echo=TRUE, eval=TRUE}
+sumValues <- function(x_i, y_i) sum(x_i, y_i, na.rm = TRUE)
+gmf <- generateDocumentationContent(target_folder, 'method', 'sumValues',
+                                    NULL, package_name,
+                                    extra_method, overwrite_b_1 = TRUE)
+print(gmf)
+```
+
+Indeed, this convenience suffers from two drawbacks
+
+1. As the return type of the function is unknown, <cite class='kw'>value</cite> section cannot be documented,
+1. As they are no test case definitions, <cite class='kw'>examples</cite> section cannot be documented
+
+## Known-limits
+
+Generation of manual pages can be quite tricky. Whereas package (ref:RD)
+alleviates greatly the burden, some pitfalls remain. Here they are
+
+1. Generated manual page might not respect the maximum line length required by **R CMD check**, and this tool will provide explicit information about un-compliance. To solve issue, just split the content by adding carriage return wherever required.
+1. Generated documentation is quite stereotyped. Inject your instruction to customize
+the result.  
+
+## Opportunities
+
+Reuse can be made at several levels depending of your needs. Roughly speeking, you maty aim for one of these 3 levels of customization
+1. just customize some textual information. Generate the pages using package (ref:RD) and modify page contents manually is generally the best way to achieve this goal
+1. customize some manual pages sections. Generate the pages using package (ref:RD) while providing some dedicated context information. Refer to previous examples, and look at variables starting with <cite class='kw'>extra_</cite>. They allow you to inject your customized content in targeted sections. 
+1. If you seek for fully customized manual page generation, then you may use package (ref:rd) to create your own (ref:R) generation scheme. That way you will get the benefit of starting launched, using high-level (ref:R) documentation generation functions, and also get the ability to reuse and customized provided generation scheme. This package uses only (ref:R) code, and so you could get insight and reuse any part of it. 
+
+
+
+
+
+
+
+
+<!--chapter:end:07-rdoc.Rmd-->
+
+# Implementation figures
+
+## File statistics 
+
+(ref:R) package | version | R files | size | Rd files | size
+:-----------------------------|:--------:|:--------:|:--------:|:--------:|:--------:
+wyz.code.offensiveProgramming | 1.1.12 | 34 | 46 | 30 | 34
+wyz.code.testthat | 1.1.7 | 7 | 8 | 3 | 6
+wyz.code.metaTesting | 1.1.2 | 25 | 44 | 15 | 24
+wyz.code.rdoc | 1.1.7 | 16 | 18 | 13 | 14
+
+All sizes expressed in kilobytes. 
+
+## Code statistics
+
+(ref:R) package | version | exposed functions | top level functions| inner functions 
+:-----------------------------|:--------:|:--------:|:--------:|:--------:
+wyz.code.offensiveProgramming | 1.1.12 | 30 | 64 | 70 
+wyz.code.testthat | 1.1.7 | 4 | 11 | 16 
+wyz.code.metaTesting | 1.1.2 | 16 | 44 | 96 
+wyz.code.rdoc | 1.1.7 | 13 | 27 | 7 
+
+
+(ref:R) package | version | strings | comments | code lines
+:-----------------------------|:--------:|:--------:|:--------:|:--------:
+wyz.code.offensiveProgramming | 1.1.12 | 444 | 24 | 989
+wyz.code.testthat | 1.1.7 | 4 | 72 | 9 | 188
+wyz.code.metaTesting | 1.1.2 | 230 | 46 | 1048 
+wyz.code.rdoc | 1.1.7 | 219 | 19 | 329
+
+
+## Test and coverage
+
+(ref:R) package | version | number of tests | natural coverage 
+:-----------------------------|:--------:|:--------:|:--------------------------
+wyz.code.offensiveProgramming | 1.1.12 | 374 | 99.07% - 8 lines not covered
+wyz.code.testthat | 1.1.7 | 20 | 99.35% - 1 line not covered
+wyz.code.metaTesting | 1.1.2 | 402 | 99.68% - 2 lines not covered
+wyz.code.rdoc | 1.1.7 | 76 | 97.71% - 6 lines not covered
+
+
+Natural coverage is the coverage without any coverage instrumentation. No file is off the coverage. No function nor code line is off also. In such a context, computed coverage really tells the percentage of lines covered by tests. 
+
+<!--chapter:end:08-next-steps.Rmd-->
+
+# Conclusion 
+
+## Benefits of offensive programming
+
+Neither exhaustive nor limitative list. Main benefits are 
+
+1. Applicable to new and legacy code
+1. Code instrumentation at the required level, according to your needs. No obligation to comply completely or to instrument completely. 
+1. Transient or persistent approach allow to deal with code you own and code you do not own. 
+1. Evaluation modes eases incremental work. Offensive programming type_checking_enforcement mode is complimentary of standard R evaluation mode, not contesting with it.
+1. Usable at build time, at test time, and at run time wherever and whenever needed. 
+1. Reusable test cases, immediately available to replay. No need to read manual pages to run a test case. No need to type or copy/paste code to replay a test
+1. Allow industrialization of test cases 
+1. Allow fully automated generation of (ref:testthat) test cases
+1. Allow fully automated generation of (ref:R) documentation
+
+
+Most of all, offensive programming brings following value
+
+1. reduced code size, as many checks are no more necessary and shall no more be implemented
+1. higher developer's productivity on (ref:R) implementation, although earned time is varying greatly from function to function, depending of its complexity. I got more than 15% of time gain using offensive programming coding on several (ref:R) package creations.
+1. Automated test case generation reduces greatly the burden of (ref:testthat) content generation. Expect a productivity gain higher than 70% here. 
+1. Documentation creation is now reduced in a great proportion, leaving just the review at your charge. Expect a productivity gain higher than 80% here. 
+1. increased execution speed, due to reduced and simplified code. Again, many checks are no more necessary, and comparing, some traditional (ref:R) code with offensive programming (ref:R) code, will bring a clear value in favor of the second, as it tends not only to reduce the volume of code, but also to simplify your (ref:R) code and to ease bug avoidance. The root cause of these two improvements is coming from type purity. 
+
+## Concerns of offensive programming
+
+Again a neither exhaustive nor limitative list
+
+Non standard evaluation is always tricky and difficult to understand and put correctly in action, due to the two evaluation paradigms that are different from traditional (ref:R) logic. Offensive programming is to be used wherever (ref:R) standard evaluation scheme appears too limited or too lazy.
+
+The two extraneous evaluation paradigms might bring runtime performance issues, especially if you compare with standard (ref:R) evaluation. Indeed, doing so is unfair, as it is not comparing apple to apple. Offensive programming adds two more kind of checks to be run to decide on result compliance, that are simply unknown from (ref:R) standard evaluation scheme.
+
+Offensive programming requires some experience with it to fill comfortable in design, build, and run. Nevertheless, quite simple and intuitive, from a programming point of view. One piece of advice, be sure to have a clear idea of what you expect. In standard (ref:R), we are all used to get results without even asking ourselves any question about types, polymorphism, parameters and computed results. With offensive programming you must be able to answer clearly to such questions. 
+
+
+## Your feedback is welcome
+
+Your feedback about package usefulness, package usage, and package extensions is welcome, as any improvement suggestion.Share them, this will really help me. 
+
+I you wish to contribute to package development, just drop me an email. 
+
+
+
+
+<!--chapter:end:09-conclusion.Rmd-->
+
+# Explicit - Lege feliciter {-}
+
+(ref:PKN) <cite class='it'>wyz.code.offensiveProgramming</cite>
+
+(ref:TT) <cite class='it'>wyz.code.testthat</cite>
+
+(ref:RD) <cite class='it'>wyz.code.rdoc</cite>
+
+(ref:MT) <cite class='it'>wyz.code.meta-testing</cite>
+
+(ref:R) <cite class='it'>R</cite>
+
+(ref:gmp) <cite class='it'>gmp</cite>
+
+(ref:datatable) <cite class='it'>data.table</cite>
+
+(ref:testthat) <cite class='it'>testthat</cite>
+
+(ref:frt) <cite class='it'>function_return_types</cite>
+
+(ref:cadratin) &#x2014;
+
+(ref:nset) **<cite class='rt'>&#x2115;</cite>**
+
+(ref:nset0) **<cite class='rt'>&#x2115;<sup>\*</sup></cite>**
+
+(ref:qset) **<cite class='rt'>&#x211A;</cite>**
+
+(ref:rset) **<cite class='rt'>&#x211D;</cite>**
+
+(ref:cset) **<cite class='rt'>&#x2102;</cite>**
+
+(ref:iset) **<cite class='rt'>I</cite>** 
+
+<!--chapter:end:09-references.Rmd-->
+

@@ -1,0 +1,42 @@
+# Implementation figures
+
+## File statistics 
+
+(ref:R) package | version | R files | size | Rd files | size
+:-----------------------------|:--------:|:--------:|:--------:|:--------:|:--------:
+wyz.code.offensiveProgramming | 1.1.12 | 34 | 46 | 30 | 34
+wyz.code.testthat | 1.1.7 | 7 | 8 | 3 | 6
+wyz.code.metaTesting | 1.1.2 | 25 | 44 | 15 | 24
+wyz.code.rdoc | 1.1.7 | 16 | 18 | 13 | 14
+
+All sizes expressed in kilobytes. 
+
+## Code statistics
+
+(ref:R) package | version | exposed functions | top level functions| inner functions 
+:-----------------------------|:--------:|:--------:|:--------:|:--------:
+wyz.code.offensiveProgramming | 1.1.12 | 30 | 64 | 70 
+wyz.code.testthat | 1.1.7 | 4 | 11 | 16 
+wyz.code.metaTesting | 1.1.2 | 16 | 44 | 96 
+wyz.code.rdoc | 1.1.7 | 13 | 27 | 7 
+
+
+(ref:R) package | version | strings | comments | code lines
+:-----------------------------|:--------:|:--------:|:--------:|:--------:
+wyz.code.offensiveProgramming | 1.1.12 | 444 | 24 | 989
+wyz.code.testthat | 1.1.7 | 4 | 72 | 9 | 188
+wyz.code.metaTesting | 1.1.2 | 230 | 46 | 1048 
+wyz.code.rdoc | 1.1.7 | 219 | 19 | 329
+
+
+## Test and coverage
+
+(ref:R) package | version | number of tests | natural coverage 
+:-----------------------------|:--------:|:--------:|:--------------------------
+wyz.code.offensiveProgramming | 1.1.12 | 374 | 99.07% - 8 lines not covered
+wyz.code.testthat | 1.1.7 | 20 | 99.35% - 1 line not covered
+wyz.code.metaTesting | 1.1.2 | 402 | 99.68% - 2 lines not covered
+wyz.code.rdoc | 1.1.7 | 76 | 97.71% - 6 lines not covered
+
+
+Natural coverage is the coverage without any coverage instrumentation. No file is off the coverage. No function nor code line is off also. In such a context, computed coverage really tells the percentage of lines covered by tests. 

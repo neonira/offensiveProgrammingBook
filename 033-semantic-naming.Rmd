@@ -1,0 +1,93 @@
+# Semantic names
+
+Package (ref:PKN) offers great functionalities at the cost of a few conditions
+
+1. semantic naming has to be used for function parameters names
+1. semantic naming has to be used for function return type definition
+1. semantic naming has to be used for test case definitions
+
+## What is semantic naming?
+
+I call semantic naming, the fact that a named object used in the code should provide much more information than a dumb name.
+
+Semantic naming in package (ref:PKN) defines a few patterns to declare class, function, function parameters and function return type names. Table below shows the related patterns and exposes the underlying philosophy. 
+
+name category | philosophy | pattern to comply with
+:----------------:|:-------------------------------------------|:---------------
+class | java like, starts with upper-cased letter, camel-cased| [A-Z][a-ZA-Z0-9]* 
+function | java like, starts with lower-cased letter, camel-cased| [a-z][a-ZA-Z0-9]* 
+function parameter or function return type | R like, bearing information about type and length constraint| See below.
+
+Function parameter or return type names must comply with one of the following patterns
+
+1. &lt;variableNameCamelCase&gt;\_&lt;typeInformation&gt;\_&lt;lengthConstraint&gt;
+2. &lt;variableNameCamelCase&gt;\_&lt;lengthConstraint&gt;\_
+
+First pattern is to be used for monomorphic types. Second one for polymorphic types. 
+
+Monomorphic types are types that are homogeneous. A string, a double, a MyObject are good example of such monomorphic types. 
+Pattern allows to not only express concisely the type, but also to express some length constraints if needed. 
+
+Polymorphic types are useful as soon as your input or output can take many types, according to your context. For example, a R function may return a double, or a warning, or an error. Polymorphic types always end with '_' in their names, to make them easy to identify. 
+
+The type information part of the pattern has to match one of the recorded entries of the type factory. 
+
+The length constraint part ot the pattern follows the PERL pattern ([1-9][0-9]*(l|m|n)?). Letters mean respectively less or equal, more or equal, 1 or n. The length constraint part is optional. 
+
+Look at following table to get more intuitive traction on function parameter or function return type declarations. 
+
+input name |  meaning
+:-------------:|:---------------------------------------------------------------
+x_s    |an unconstrained vector of strings - might contain no entries
+x_s_3  |a vector of strings with 3 entries
+x_s_3l |a vector of strings with 3 or less entries
+x_s_3m |a vector of strings with 3 or more entries
+x_s_3n |a vector of strings with 3 entries or 1 entry
+flag_b_1  |a vector of booleans with 1 entry - a.k.a a boolean scalar
+z_ | an unconstrained polymorphic type vector named z - Nothing more is known about its content
+z_2_ | a polymorphic type vector named z of length 2 - Nothing more is known about its content
+
+As you can see, rather easy. An advice, when programming try to use meaningful variable names for first part of the pattern. It will ease your job. 
+
+## Verifying a function parameter or return type declaration
+
+Use simply dedicated function named <cite class='kw'>getTypeDescription</cite> from the type factory. 
+
+```{r semantic1, eval=TRUE}
+sapply(c('x_s_3n', 'flag_b_1', 'z_2_'), function(e) f$getTypeDescription(FunctionParameterName(e)))
+```
+
+
+## Verifying a class name
+
+Simply use package eponymous function. 
+
+```{r semantic2, eval=TRUE}
+verifyClassName(c('alphaBeta', 'AlphaBeta', '.alphaBeta'))
+verifyClassName(c('alphaBeta', 'AlphaBeta', '.alphaBeta'), strict = FALSE)
+```
+
+## Verifying a function name
+
+Simply use package eponymous function. 
+
+```{r semantic3, eval=TRUE}
+verifyFunctionName(c('alphaBetaGamma', 'AlphaBetaGamma', '.alphaBetaGamma'))
+verifyFunctionName(c('alphaBetaGamma', 'AlphaBetaGamma', '.alphaBetaGamma'), strict = FALSE)
+```
+
+
+## Get naming balance from an R object
+
+Use package function <cite class='kw'>verifyObjectNames</cite> to get the results of a full compliance analysis of names for the provided object. 
+
+```{r semantic4, eval=TRUE}
+source(system.file('code-samples/no-defs/Addition.R', package = 'wyz.code.offensiveProgramming'))
+verifyObjectNames(Addition())
+```
+
+
+```{r semantic5, eval=TRUE}
+source(system.file('code-samples/both-defs/good/full/AdditionTCFIG1.R', package = 'wyz.code.offensiveProgramming'))
+verifyObjectNames(AdditionTCFIG1())
+```

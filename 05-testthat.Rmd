@@ -1,0 +1,155 @@
+# Generating <cite class='it'>testthat</cite> test files 
+
+When your (ref:R) code is offensive programming instrumented, it becomes possible to generate (ref:testthat) unit test files, thus improving greatly developers productivity. 
+
+To be able to generate (ref:testthat) unit test files, you must ensure that your (ref:R) code is function return type instrumented and test cases instrumented. Both are required for this generation. 
+
+
+## Package <cite class='it'>wyz.code.testthat</cite> in action
+
+
+### Setting up the context 
+
+To create (ref:testthat) unit test files, you must provide a target folder, to store the generated unit test files. In this session, generated files will be stored onto folder <cite class='fd'>generated-testthat</cite>. You may change this, but be warned that generated files might be overwritten without any reminder. Be careful, if you set the target folder to <cite class='fd'>tests/testthat</cite> as you may loose previous work. You may save frequently your results in configuration management to be able to retrieve original file content whenever required. 
+
+Here, I reuse 4 files from package (ref:PKN) to generate unit test files from. 
+
+```{r testthat1, eval=TRUE}
+library(wyz.code.testthat)
+
+target_folder <- 'generated-testthat'
+if (!dir.exists(target_folder)) dir.create(target_folder)
+
+generateTests <- function(sourceFile_s_1, sourcePackage_s_1, object_o_1) {
+  g <- gautfo(object_o_1, sourceFile_s_1, sourcePackage_s_1, target_folder)
+  print(g)
+  g
+}
+
+source_package <- 'wyz.code.offensiveProgramming'
+
+source_files <- c(
+  'code-samples/both-defs/good/full/AdditionTCFIG1.R',
+  'code-samples/no-defs/Addition.R',
+  'code-samples/frt-defs/good/partial/AdditionFIPartial.R',
+  'code-samples/tcd-defs/good/partial/AdditionTCPartial.R'
+)
+
+invisible(sapply(source_files, function(e) {
+  source(system.file(e, package = source_package))
+}))
+```
+
+### Unit test file generation
+
+Generation is done on a per class basis. Simply use function <cite class='kw'>gautfo</cite> or function <cite class='kw'>generateAllUnitTestsFromObject</cite>.
+
+#### Nominal case  
+
+Class <cite class='kw'>AdditionTCFIG1</cite> is offensive programming instrumented. It uses both function return type instrumentation and test case instrumentation. Indeed, this class is partially instrumented. Not all the methods of the class have test cases declared for. 
+
+Generation is quite straightforward. 
+
+```{r testthat2, eval=TRUE}
+print(gautfo(AdditionTCFIG1(), source_files[1], source_package, target_folder))
+```
+
+Results is a list with two entries. Entry named <cite class='oc'>filenames</cite> holds a (ref:datatable) providing insight about created files.
+
+#### Exception cases
+
+Class <cite class='kw'>Addition</cite> is NOT offensive programming instrumented.
+
+Class <cite class='kw'>AdditionFIPartial</cite> is NOT FULLY offensive programming instrumented. It lacks test cases instrumentation. 
+
+Class <cite class='kw'>AdditionTCPartial</cite> is NOT offensive programming instrumented. It lacks function return type instrumentation. 
+
+Expected results is no unit test file generation.  
+
+```{r testthat3, eval=TRUE}
+print(gautfo(Addition(), source_files[2], source_package, target_folder))
+
+print(gautfo(AdditionFIPartial(), source_files[3], source_package, target_folder))
+
+print(gautfo(AdditionTCPartial(), source_files[4], source_package, target_folder))
+```
+
+
+## Generated unit test file content 
+
+Typically, generated (ref:R) code will looks like following unit test code. Note, that comments are provided to ease cross-referencing and to link back easily to (ref:PKN) test case number. This is helpful when facing dysfunctions. 
+
+```{r testthat4, eval=FALSE}
+source(system.file("code-samples/both-defs/good/full/AdditionTCFIG1.R",
+                   package = "wyz.code.offensiveProgramming"))
+object_o_1 <- AdditionTCFIG1()
+emsre <- EvaluationMode("standard_R_evaluation")
+rtcsre24 <- runTestCase(object_o_1, 24, emsre)
+rtcsre25 <- runTestCase(object_o_1, 25, emsre)
+rtcsre26 <- runTestCase(object_o_1, 26, emsre)
+
+test_that('addMultiDouble', {
+
+# test 24 - sum of 1 integer and 1 double - correct
+expect_true(rtcsre24$synthesis$status)
+expect_true(rtcsre24$synthesis$value_check)
+
+
+# test 25 - sum of 1 double, 2 integers and 1 NA_integer_ - correct
+expect_true(rtcsre25$synthesis$status)
+expect_true(rtcsre25$synthesis$value_check)
+
+
+# test 26 - sum of nothing - correct
+expect_true(rtcsre26$synthesis$status)
+expect_true(rtcsre26$synthesis$value_check)
+
+})
+
+emtce <- EvaluationMode("type_checking_enforcement")
+rtctce24 <- runTestCase(object_o_1, 24, emtce)
+rtctce25 <- runTestCase(object_o_1, 25, emtce)
+rtctce26 <- runTestCase(object_o_1, 26, emtce)
+
+test_that('addMultiDouble', {
+
+# test 24 - sum of 1 integer and 1 double - correct
+expect_true(rtctce24$synthesis$status)
+expect_true(rtctce24$synthesis$value_check)
+
+
+# test 25 - sum of 1 double, 2 integers and 1 NA_integer_ - correct
+expect_true(rtctce25$synthesis$status)
+expect_true(rtctce25$synthesis$value_check)
+
+
+# test 26 - sum of nothing - correct
+expect_true(rtctce26$synthesis$status)
+expect_true(rtctce26$synthesis$value_check)
+
+})
+```
+
+## Known-limits
+
+Generation of unit test file uses meta-programmation based on <cite class='oc'>call</cite> function, and aims to produce (ref:R) valid code. Indeed, format and presentation are not managed, in generated file. Used **RStudio** editing facilities to ensure nice presentation, although neither mandatory nor required. 
+
+Generated tests cases are ready to run. Use the standard way to run your (ref:testthat) test cases onto them. If  you face some test failures, verify following points 
+
+1. make sure offensive programming evaluation is running fine for ALL evaluation schemes, and that you have no errors at this level
+1. make sure your generated test case source is well up to date with the your (ref:R) offensive programming code. You may regenerate your tests cases at any time if you have any doubt. 
+
+Note that unit test file generated is fully dependent of your (ref:R) source and of the instrumented scope. If there are function not instrumented in your source code, do not expect to have unit test cases for them. 
+
+Also note, when working incrementally, you need to regenerate the unit test cases each time you change the (ref:R) source code or the offensive programming instrumentation.
+
+Best way to put (ref:TT) in practice, is to apply following procedure
+
+1. apply offensive programming at the required scope and ensure (ref:PKN) test cases are valid, using <cite class='kw'>runTestCase</cite> function
+1. generate (ref:testthat) test cases in one single pass using (ref:TT). To do so, create an (ref:R) script. This will ease your pain, and will provide consistent results through calls
+1. apply (ref:testthat) testing practice, to verify that generated tests are running fine. 
+
+
+
+
+

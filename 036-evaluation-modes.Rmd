@@ -1,0 +1,36 @@
+# Evaluation modes
+
+Package (ref:PKN) comes with several evaluation modes. You may retrieve them by using function
+<cite class='kw'>defineEvaluationModes</cite> that returns the 3 following modes 
+
+1. standard_R_evaluation
+1. enhanced_R_evaluation
+1. type_checking_enforcement
+
+
+## Understanding evaluation modes
+
+The first mode, <cite class='kw'>standard_R_evaluation</cite>, is to ease comparisons with standard R evaluation. It does not make any sense to use only this mode when using (ref:PKN). 
+
+The second mode, <cite class='kw'>enhanced_R_evaluation</cite>, goes further than standard R evaluation, as it implies a function return type verification. 
+
+The third mode, <cite class='kw'>type_checking_enforcement</cite>, goes still further than the second mode, as it implies a function parameter types verification. 
+
+Roughly speaking, second mode let's you verify function return types in accordance with recorded information, and the third mode, mimics a compiler output for R <cite class='comment'>but it still interpreted language</cite>.
+
+## Instantiating evaluation mode
+
+To handle evaluation mode, use function <cite class='kw'>EvaluationMode</cite>.  A typical way to do so is
+
+```{r evaluationModes1, eval=TRUE}
+print(defineEvaluationModes())
+
+em <- EvaluationMode(defineEvaluationModes()[3])
+
+# convenient definitions, I will reuse in the coming book chapters to simplify writing
+emo <- list(
+  standard = EvaluationMode(defineEvaluationModes()[1]),
+  enhanced = EvaluationMode(defineEvaluationModes()[2]),
+  type     = EvaluationMode(defineEvaluationModes()[3])
+)
+```

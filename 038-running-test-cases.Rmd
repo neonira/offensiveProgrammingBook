@@ -1,0 +1,90 @@
+# Running test cases
+
+Using package (ref:PKN), you have the opportunity to define test cases and to embed them
+in your class definition, to ease retrieval and reuse. 
+
+## Reusing defined test case definitions
+
+Doing so, allows to get following benefits
+
+1. discover defined test case definitions
+1. run of any test case definition
+1. get interactively the (ref:R) code of a test case, allowing you to play with it, manually, when needed
+1. get contextual results from the test case runs
+
+## Embedding test cases in class definition
+
+This is accomplished easily. You just have to declare a variable named <cite class='kw'>testCaseDefinitions</cite>,
+and provide its content, that is a <cite class='fn'>data.table</cite>. Content could be partial or complete depending of your goals. Spectrum of provided tests cases is as you desire it to be, as shallow or deep as needed. 
+
+The <cite class='kw'>data.table</cite> must hold following columns and content
+
+1. function_name,  a vector of strings, each being the name of the function to test, 
+1. standard_evaluation, a vector of strings, where values are taken from set {'correct', 'erroneous', 'failure'}
+1. type_checking_enforcement, , a vector of strings, where values are taken from set {'correct', 'erroneous', 'failure'}
+1. test case definitions, that is a list of <cite class='kw'>TestCaseDefinition</cite> objects. 
+
+Correct implies right type and right result. Erroneous implies right type and wrong result. Failure implies wrong type.
+To get more details about syntax, please refer to manual page of <cite class='kw'>Definitions</cite>.
+
+### A simple case
+
+```{r runningTestcase1, eval=TRUE}
+source(system.file('code-samples/both-defs/good/partial/AdditionTCFIP.R', package = 'wyz.code.offensiveProgramming'))
+AdditionTCFIP
+```
+
+Just five test cases to test 5 function with various parameters. 
+
+### A more complex case
+
+
+```{r runningTestcase2,eval=TRUE}
+AdditionTCFIG1
+```
+
+Much more complete instrumentation with 29 test cases, various expected outputs, varying from evaluation model to consider. 
+
+## Test case definitions verification
+
+To verify test cases definitions you may use the low level function <cite class='kw'>verifyTestCaseDefinitions</cite> or the higher level one named <cite class='kw'>retrieveTestCaseDefinitions</cite>. 
+
+```{r runningTestcase3, eval=TRUE}
+retrieveTestCaseDefinitions(AdditionTCFIG1())
+```
+
+## Discovering test cases descriptions
+
+Any (ref:R) object instrumented with test case definitions allows for defined test case definitions discovery. 
+
+```{r runningTestcase4, eval=TRUE}
+retrieveTestCaseDescriptions(AdditionTCFIG1())
+```
+
+```{r runningTestcase5, eval=TRUE}
+retrieveTestCaseDescriptions(Addition())
+```
+
+## Run a test case 
+
+To run a test case, you may use the package function <cite class='kw'>runTestCase</cite>. 
+
+```{r runningTestcase6, eval=TRUE}
+runTestCase(AdditionTCFIG1(), 4, EvaluationMode(defineEvaluationModes()[3]))
+```
+
+This runs the test number 4. Result has two parts. A raw part, that holds the intermediate computation results, and a synthesis part that is a data.table provided to ease result interpretation. 
+
+
+You can provide a vector instead of a single test number if you want to run several use test cases in one call. 
+
+```{r runningTestcase7, eval=TRUE}
+runTestCase(AdditionTCFIG1(), 12:17, EvaluationMode(defineEvaluationModes()[3]))
+```
+
+Looking at synthesis, you will discover that test 17 fails under chosen evaluation mode, and therefore should require a fix. 
+Here looking at raw results for test number 17, brings solution, that is about input parameter compliance. Provided values are double, whereas integers were expected. 
+
+
+
+

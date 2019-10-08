@@ -1,0 +1,109 @@
+# The type factory
+
+The types that you wish to control are managed by a type factory, named <cite class='kw'>FunctionParameterTypeFactory</cite>.
+Instantiating an object of this class allows you to 
+
+a. discover what are the already recorded types, available for reuse
+a. register your own types so they can be checked dynamically wherever and whenever required
+a. understand the verification logic for each type 
+
+
+## Get recorded types inventory
+
+Simply use <cite class='kw'>retrieveFactory</cite> and <cite class='kw'>getRecordedTypes</cite> function. It returns a <cite class='kw'>data.table</cite>, that you can filter out conveniently. 
+
+Here is an example. 
+
+```{r typeFactory1, eval=TRUE}
+f <- retrieveFactory()
+f$getRecordedTypes()
+```
+
+## Understanding the model 
+
+A type is defined by three elements
+
+1. a unique suffix
+1. a unique name
+1. a function that returns a boolean value, <cite class='kw'>TRUE</cite> when examining a value that matches
+the type
+
+For example, you might wonder what means <cite class='fd'>ui</cite> as a suffix
+```{r typeFactory2, eval=TRUE}
+f$getRecordedTypes()[suffix == 'ui']
+```
+
+What is the function related to suffix <cite class='fd'>ui</cite>?
+```{r typeFactory3, eval=TRUE}
+f$getVerificationFunction('ui')
+```
+
+## Register your own type
+
+Type registration is achieved by providing a type suffix, a type name and a verification function. Registration will be tagged automatically as user-defined. Here is a typical sequence to register your own type
+
+```{r typeFactory4, eval=TRUE}
+f$addSuffix('mc', 'MyClass', function(o_1_) is(o_1_, 'MyClass'))
+f$getRecordedTypes()[suffix == 'mc']
+```
+
+Note that no implementation of the class is required. It is purely declarative registration. You told the type factory to record the type <cite class='fd'>MyClass</cite> under the suffix <cite class='fd'>mc</cite>, with the verification function you provided. Here verification function is quite simple. Notice that it takes a single object as argument. 
+
+## Get access to verification functions
+
+Implementation of verification function can range from quite simple to as complex as required. This allows you to manage functional scopes much more easily, whatever you work and organization context. 
+
+For example, if you want to see at a glance the differences between a <cite class='kw'>boolean</cite> and a <cite class='kw'>logical</cite>, here is the sequence you could use 
+
+```{r typeFactory5, eval=TRUE}
+f$getVerificationFunction('b')
+f$getVerificationFunction('logical')
+```
+
+From the two definitions, you can deduce the differences between the two types. A boolean is a 2-value boolean, either <cite class='kw'>TRUE</cite> or <cite class='kw'>FALSE</cite>. A logical, is a (ref:R) logical value, that is a 3-value boolean, so it may take value <cite class='kw'>NA</cite>. 
+
+Note that arguments to the function <cite class='kw'>getVerificationFunction</cite> can be either a registered suffix or a registered type. 
+
+## Some hints
+
+There is currently no way to remove one recorded type. This need is indeed very specific and arise only when there is a name collision and you wish to use an already taken name for your own purpose.
+
+Solution is quite simple, use another name. Provided types are the most commons, and the current suffixes have been chosen for ease of use and for intuitive usage. 
+
+Whenever you need to register a new type, ask yourself 'what is the suffix I wish to use for the new type?'. My advice is to use short suffixes, made of 2 or 3 letters. That's clearly sufficient to distinguish your type from others. Know that there is not limitation to the length of the suffix you can use. Simply, comply with <cite class='kw'>KISS</cite>, as you will  have to type it several times, probably. 
+
+If you come from another programming language, you may consider to create aliased types by recording new entries. Let's look at a concrete case. 
+
+```{r typeFactory6, eval=TRUE}
+f$addSuffix('ui', 'unsigned integer', function(o_1_) f$getVerificationFunction('i')(o_1_) && o_1_ >= 0L) 
+f$addSuffix('ul', 'unsigned long'   , f$getVerificationFunction('ui'))
+f$getRecordedTypes()[suffix %in% c('ui', 'ul')]
+```
+
+You asked to add two new entries in the type factory, and they share the same verification function. First add fails, second one succeeds. The reason is that <cite class='fd'>ui</cite> suffix is already defined and you cannot redefine an already defined suffix. 
+
+Now, <cite class='fd'>ui</cite> and <cite class='fd'>ul</cite> are aliases of the same verification function. Notice that this is true now, and cannot be changed once created. Indeed, you always have the opportunity to create a new type factory to match your new need. You can use as many type factories as you want. 
+
+The term alias shall not be understood, as an authorization to use one name for the other, but rather as an ability to define quickly new types to ease functional scope management. 
+
+
+## Enforcing use of your own type factory
+
+When you customized your own type factory, you need a way to tell (ref:PKN) to use it.
+To do so, simply create your type factory and assign it to a (ref:R) variable, and set environment variable **OP_TYPE_FACTORY** to point to the name of this (ref:R) variable.
+Let's see an example
+
+```{r typeFactory7, eval=TRUE}
+ff <- FunctionParameterTypeFactory()
+ff$addSuffix('wo', "wo class", function(o_) is(o_, "wo"))
+ff$addSuffix('yo', "yo class", function(o_) is(o_, "yo"))
+ff$addSuffix('zo', "zo class", function(o_) is(o_, "zo"))
+Sys.setenv("OP_TYPE_FACTORY" = "ff")
+fg <- retrieveFactory() # retrieves the factory pointed by R variable ff
+fg$getRecordedTypes()[suffix %in% c('wo', 'yo', 'zo')] # right behavior !
+
+# wrong behavior as retrieveFactory will provide the default factory and not yours!
+Sys.setenv("OP_TYPE_FACTORY" = "")
+fh <- retrieveFactory() # retrieves the default factory
+fh$getRecordedTypes()[suffix %in% c('wo', 'yo', 'zo')]
+```

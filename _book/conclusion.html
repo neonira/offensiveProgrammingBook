@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title> 13 Conclusion | Offensive Programming Book</title>
+  <meta name="description" content="wyz.code.offensiveProgramming package related documentation" />
+  <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
+
+  <meta property="og:title" content=" 13 Conclusion | Offensive Programming Book" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:image" content="figures/op.png" />
+  <meta property="og:description" content="wyz.code.offensiveProgramming package related documentation" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content=" 13 Conclusion | Offensive Programming Book" />
+  
+  <meta name="twitter:description" content="wyz.code.offensiveProgramming package related documentation" />
+  <meta name="twitter:image" content="figures/op.png" />
+
+<meta name="author" content="Fabien GELINEAU neonira@gmail.com" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="implementation-figures.html"/>
+<link rel="next" href="explicit-lege-feliciter.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Offensive Programming Book</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#book-version"><i class="fa fa-check"></i>Book version</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#book-production"><i class="fa fa-check"></i>Book production</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="preamble.html"><a href="preamble.html"><i class="fa fa-check"></i>Preamble</a></li>
+<li class="chapter" data-level="1" data-path="programming-styles.html"><a href="programming-styles.html"><i class="fa fa-check"></i><b>1</b> Programming styles</a><ul>
+<li class="chapter" data-level="1.1" data-path="programming-styles.html"><a href="programming-styles.html#defensive-programming-style"><i class="fa fa-check"></i><b>1.1</b> Defensive programming style</a></li>
+<li class="chapter" data-level="1.2" data-path="programming-styles.html"><a href="programming-styles.html#offensive-programming-style"><i class="fa fa-check"></i><b>1.2</b> Offensive programming style</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="application-in-r-language.html"><a href="application-in-r-language.html"><i class="fa fa-check"></i><b>2</b> Application in R language</a><ul>
+<li class="chapter" data-level="2.1" data-path="application-in-r-language.html"><a href="application-in-r-language.html#a-simple-case"><i class="fa fa-check"></i><b>2.1</b> A simple case</a></li>
+<li class="chapter" data-level="2.2" data-path="application-in-r-language.html"><a href="application-in-r-language.html#defensive-programming"><i class="fa fa-check"></i><b>2.2</b> Defensive programming</a></li>
+<li class="chapter" data-level="2.3" data-path="application-in-r-language.html"><a href="application-in-r-language.html#offensive-programming"><i class="fa fa-check"></i><b>2.3</b> Offensive programming</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="application-in-r-language.html"><a href="application-in-r-language.html#what-is-different"><i class="fa fa-check"></i><b>2.3.1</b> What is different?</a></li>
+<li class="chapter" data-level="2.3.2" data-path="application-in-r-language.html"><a href="application-in-r-language.html#semantic-argument-naming"><i class="fa fa-check"></i><b>2.3.2</b> Semantic argument naming</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="application-in-r-language.html"><a href="application-in-r-language.html#back-to-definition"><i class="fa fa-check"></i><b>2.4</b> Back to definition</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="putting-in-action-wyz-code-offensiveprogramming.html"><a href="putting-in-action-wyz-code-offensiveprogramming.html"><i class="fa fa-check"></i><b>3</b> Putting in action wyz.code.offensiveProgramming</a><ul>
+<li class="chapter" data-level="3.1" data-path="putting-in-action-wyz-code-offensiveprogramming.html"><a href="putting-in-action-wyz-code-offensiveprogramming.html#package-overview"><i class="fa fa-check"></i><b>3.1</b> Package overview</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="the-type-factory.html"><a href="the-type-factory.html"><i class="fa fa-check"></i><b>4</b> The type factory</a><ul>
+<li class="chapter" data-level="4.1" data-path="the-type-factory.html"><a href="the-type-factory.html#get-recorded-types-inventory"><i class="fa fa-check"></i><b>4.1</b> Get recorded types inventory</a></li>
+<li class="chapter" data-level="4.2" data-path="the-type-factory.html"><a href="the-type-factory.html#understanding-the-model"><i class="fa fa-check"></i><b>4.2</b> Understanding the model</a></li>
+<li class="chapter" data-level="4.3" data-path="the-type-factory.html"><a href="the-type-factory.html#register-your-own-type"><i class="fa fa-check"></i><b>4.3</b> Register your own type</a></li>
+<li class="chapter" data-level="4.4" data-path="the-type-factory.html"><a href="the-type-factory.html#get-access-to-verification-functions"><i class="fa fa-check"></i><b>4.4</b> Get access to verification functions</a></li>
+<li class="chapter" data-level="4.5" data-path="the-type-factory.html"><a href="the-type-factory.html#some-hints"><i class="fa fa-check"></i><b>4.5</b> Some hints</a></li>
+<li class="chapter" data-level="4.6" data-path="the-type-factory.html"><a href="the-type-factory.html#enforcing-use-of-your-own-type-factory"><i class="fa fa-check"></i><b>4.6</b> Enforcing use of your own type factory</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="semantic-names.html"><a href="semantic-names.html"><i class="fa fa-check"></i><b>5</b> Semantic names</a><ul>
+<li class="chapter" data-level="5.1" data-path="semantic-names.html"><a href="semantic-names.html#what-is-semantic-naming"><i class="fa fa-check"></i><b>5.1</b> What is semantic naming?</a></li>
+<li class="chapter" data-level="5.2" data-path="semantic-names.html"><a href="semantic-names.html#verifying-a-function-parameter-or-return-type-declaration"><i class="fa fa-check"></i><b>5.2</b> Verifying a function parameter or return type declaration</a></li>
+<li class="chapter" data-level="5.3" data-path="semantic-names.html"><a href="semantic-names.html#verifying-a-class-name"><i class="fa fa-check"></i><b>5.3</b> Verifying a class name</a></li>
+<li class="chapter" data-level="5.4" data-path="semantic-names.html"><a href="semantic-names.html#verifying-a-function-name"><i class="fa fa-check"></i><b>5.4</b> Verifying a function name</a></li>
+<li class="chapter" data-level="5.5" data-path="semantic-names.html"><a href="semantic-names.html#get-naming-balance-from-an-r-object"><i class="fa fa-check"></i><b>5.5</b> Get naming balance from an R object</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="evaluation-modes.html"><a href="evaluation-modes.html"><i class="fa fa-check"></i><b>6</b> Evaluation modes</a><ul>
+<li class="chapter" data-level="6.1" data-path="evaluation-modes.html"><a href="evaluation-modes.html#understanding-evaluation-modes"><i class="fa fa-check"></i><b>6.1</b> Understanding evaluation modes</a></li>
+<li class="chapter" data-level="6.2" data-path="evaluation-modes.html"><a href="evaluation-modes.html#instantiating-evaluation-mode"><i class="fa fa-check"></i><b>6.2</b> Instantiating evaluation mode</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="running-functions.html"><a href="running-functions.html"><i class="fa fa-check"></i><b>7</b> Running functions</a><ul>
+<li class="chapter" data-level="7.1" data-path="running-functions.html"><a href="running-functions.html#prerequisites"><i class="fa fa-check"></i><b>7.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="7.2" data-path="running-functions.html"><a href="running-functions.html#function-return-types-definition-verification"><i class="fa fa-check"></i><b>7.2</b> Function return types definition verification</a></li>
+<li class="chapter" data-level="7.3" data-path="running-functions.html"><a href="running-functions.html#transient-invocations"><i class="fa fa-check"></i><b>7.3</b> Transient invocations</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="running-functions.html"><a href="running-functions.html#nominal-case"><i class="fa fa-check"></i><b>7.3.1</b> Nominal case</a></li>
+<li class="chapter" data-level="7.3.2" data-path="running-functions.html"><a href="running-functions.html#prerequisite-mismatch"><i class="fa fa-check"></i><b>7.3.2</b> Prerequisite mismatch</a></li>
+<li class="chapter" data-level="7.3.3" data-path="running-functions.html"><a href="running-functions.html#object-function-call"><i class="fa fa-check"></i><b>7.3.3</b> Object function call</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="running-functions.html"><a href="running-functions.html#persistent-invocations"><i class="fa fa-check"></i><b>7.4</b> Persistent invocations</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="running-functions.html"><a href="running-functions.html#nominal-persistent-case"><i class="fa fa-check"></i><b>7.4.1</b> Nominal persistent case</a></li>
+<li class="chapter" data-level="7.4.2" data-path="running-functions.html"><a href="running-functions.html#subtile-change"><i class="fa fa-check"></i><b>7.4.2</b> Subtile change</a></li>
+<li class="chapter" data-level="7.4.3" data-path="running-functions.html"><a href="running-functions.html#call-case-with-named-and-positional-parameters"><i class="fa fa-check"></i><b>7.4.3</b> Call case with named and positional parameters</a></li>
+<li class="chapter" data-level="7.4.4" data-path="running-functions.html"><a href="running-functions.html#call-case-with-ellipsis"><i class="fa fa-check"></i><b>7.4.4</b> Call case with ellipsis</a></li>
+<li class="chapter" data-level="7.4.5" data-path="running-functions.html"><a href="running-functions.html#second-call-case-with-ellipsis"><i class="fa fa-check"></i><b>7.4.5</b> Second call case with ellipsis</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="running-test-cases.html"><a href="running-test-cases.html"><i class="fa fa-check"></i><b>8</b> Running test cases</a><ul>
+<li class="chapter" data-level="8.1" data-path="running-test-cases.html"><a href="running-test-cases.html#reusing-defined-test-case-definitions"><i class="fa fa-check"></i><b>8.1</b> Reusing defined test case definitions</a></li>
+<li class="chapter" data-level="8.2" data-path="running-test-cases.html"><a href="running-test-cases.html#embedding-test-cases-in-class-definition"><i class="fa fa-check"></i><b>8.2</b> Embedding test cases in class definition</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="running-test-cases.html"><a href="running-test-cases.html#a-simple-case-1"><i class="fa fa-check"></i><b>8.2.1</b> A simple case</a></li>
+<li class="chapter" data-level="8.2.2" data-path="running-test-cases.html"><a href="running-test-cases.html#a-more-complex-case"><i class="fa fa-check"></i><b>8.2.2</b> A more complex case</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="running-test-cases.html"><a href="running-test-cases.html#test-case-definitions-verification"><i class="fa fa-check"></i><b>8.3</b> Test case definitions verification</a></li>
+<li class="chapter" data-level="8.4" data-path="running-test-cases.html"><a href="running-test-cases.html#discovering-test-cases-descriptions"><i class="fa fa-check"></i><b>8.4</b> Discovering test cases descriptions</a></li>
+<li class="chapter" data-level="8.5" data-path="running-test-cases.html"><a href="running-test-cases.html#run-a-test-case"><i class="fa fa-check"></i><b>8.5</b> Run a test case</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="generating-testthat-test-files.html"><a href="generating-testthat-test-files.html"><i class="fa fa-check"></i><b>9</b> Generating <cite class='it'>testthat</cite> test files</a><ul>
+<li class="chapter" data-level="9.1" data-path="generating-testthat-test-files.html"><a href="generating-testthat-test-files.html#package-wyz.code.testthat-in-action"><i class="fa fa-check"></i><b>9.1</b> Package <cite class='it'>wyz.code.testthat</cite> in action</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="generating-testthat-test-files.html"><a href="generating-testthat-test-files.html#setting-up-the-context"><i class="fa fa-check"></i><b>9.1.1</b> Setting up the context</a></li>
+<li class="chapter" data-level="9.1.2" data-path="generating-testthat-test-files.html"><a href="generating-testthat-test-files.html#unit-test-file-generation"><i class="fa fa-check"></i><b>9.1.2</b> Unit test file generation</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="generating-testthat-test-files.html"><a href="generating-testthat-test-files.html#generated-unit-test-file-content"><i class="fa fa-check"></i><b>9.2</b> Generated unit test file content</a></li>
+<li class="chapter" data-level="9.3" data-path="generating-testthat-test-files.html"><a href="generating-testthat-test-files.html#known-limits"><i class="fa fa-check"></i><b>9.3</b> Known-limits</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="meta-testing.html"><a href="meta-testing.html"><i class="fa fa-check"></i><b>10</b> Meta-testing</a><ul>
+<li class="chapter" data-level="10.1" data-path="meta-testing.html"><a href="meta-testing.html#wrapper-function-creation"><i class="fa fa-check"></i><b>10.1</b> Wrapper function creation</a></li>
+<li class="chapter" data-level="10.2" data-path="meta-testing.html"><a href="meta-testing.html#exploration-function"><i class="fa fa-check"></i><b>10.2</b> Exploration function</a></li>
+<li class="chapter" data-level="10.3" data-path="meta-testing.html"><a href="meta-testing.html#a-more-complex-example"><i class="fa fa-check"></i><b>10.3</b> A more complex example</a></li>
+<li class="chapter" data-level="10.4" data-path="meta-testing.html"><a href="meta-testing.html#an-example-using-ellipsis"><i class="fa fa-check"></i><b>10.4</b> An example using ellipsis</a></li>
+<li class="chapter" data-level="10.5" data-path="meta-testing.html"><a href="meta-testing.html#an-example-with-imperative-default-and-ellipsis-arguments"><i class="fa fa-check"></i><b>10.5</b> An example with imperative, default and ellipsis arguments</a></li>
+<li class="chapter" data-level="10.6" data-path="meta-testing.html"><a href="meta-testing.html#pitfalls-to-avoid"><i class="fa fa-check"></i><b>10.6</b> Pitfalls to avoid</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html"><i class="fa fa-check"></i><b>11</b> Generating <cite class='it'>R</cite> documentation</a><ul>
+<li class="chapter" data-level="11.1" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#automated-r-documentation-generation"><i class="fa fa-check"></i><b>11.1</b> Automated <cite class='it'>R</cite> documentation generation</a></li>
+<li class="chapter" data-level="11.2" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#focus-on-r-documentation-generation"><i class="fa fa-check"></i><b>11.2</b> Focus on <cite class='kw'>R</cite> documentation generation</a></li>
+<li class="chapter" data-level="11.3" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#package-wyz.code.rdoc-utilities"><i class="fa fa-check"></i><b>11.3</b> package <cite class='it'>wyz.code.rdoc</cite> utilities</a><ul>
+<li class="chapter" data-level="11.3.1" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#generate-a-r-documentation-section"><i class="fa fa-check"></i><b>11.3.1</b> Generate a <cite class='it'>R</cite> documentation section</a></li>
+<li class="chapter" data-level="11.3.2" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#format-an-english-sentence"><i class="fa fa-check"></i><b>11.3.2</b> Format an English sentence</a></li>
+<li class="chapter" data-level="11.3.3" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#generate-some-r-documentation-content"><i class="fa fa-check"></i><b>11.3.3</b> Generate some <cite class='it'>R</cite> documentation content</a></li>
+<li class="chapter" data-level="11.3.4" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#generate-cross-ref-to-other-r-package"><i class="fa fa-check"></i><b>11.3.4</b> Generate cross-ref to other <cite class='it'>R</cite> package</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#manual-pages-generation"><i class="fa fa-check"></i><b>11.4</b> Manual pages generation</a><ul>
+<li class="chapter" data-level="11.4.1" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#context-setup"><i class="fa fa-check"></i><b>11.4.1</b> Context setup</a></li>
+<li class="chapter" data-level="11.4.2" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#method-manual-page"><i class="fa fa-check"></i><b>11.4.2</b> Method manual page</a></li>
+<li class="chapter" data-level="11.4.3" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#class-manual-page"><i class="fa fa-check"></i><b>11.4.3</b> Class manual page</a></li>
+<li class="chapter" data-level="11.4.4" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#package-manual-page"><i class="fa fa-check"></i><b>11.4.4</b> Package manual page</a></li>
+<li class="chapter" data-level="11.4.5" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#in-one-shot"><i class="fa fa-check"></i><b>11.4.5</b> In one shot</a></li>
+<li class="chapter" data-level="11.4.6" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#and-a-special-case-from-a-standalone-function"><i class="fa fa-check"></i><b>11.4.6</b> and a special case, from a standalone function</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#known-limits-1"><i class="fa fa-check"></i><b>11.5</b> Known-limits</a></li>
+<li class="chapter" data-level="11.6" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#opportunities"><i class="fa fa-check"></i><b>11.6</b> Opportunities</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="implementation-figures.html"><a href="implementation-figures.html"><i class="fa fa-check"></i><b>12</b> Implementation figures</a><ul>
+<li class="chapter" data-level="12.1" data-path="implementation-figures.html"><a href="implementation-figures.html#file-statistics"><i class="fa fa-check"></i><b>12.1</b> File statistics</a></li>
+<li class="chapter" data-level="12.2" data-path="implementation-figures.html"><a href="implementation-figures.html#code-statistics"><i class="fa fa-check"></i><b>12.2</b> Code statistics</a></li>
+<li class="chapter" data-level="12.3" data-path="implementation-figures.html"><a href="implementation-figures.html#test-and-coverage"><i class="fa fa-check"></i><b>12.3</b> Test and coverage</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>13</b> Conclusion</a><ul>
+<li class="chapter" data-level="13.1" data-path="conclusion.html"><a href="conclusion.html#benefits-of-offensive-programming"><i class="fa fa-check"></i><b>13.1</b> Benefits of offensive programming</a></li>
+<li class="chapter" data-level="13.2" data-path="conclusion.html"><a href="conclusion.html#concerns-of-offensive-programming"><i class="fa fa-check"></i><b>13.2</b> Concerns of offensive programming</a></li>
+<li class="chapter" data-level="13.3" data-path="conclusion.html"><a href="conclusion.html#your-feedback-is-welcome"><i class="fa fa-check"></i><b>13.3</b> Your feedback is welcome</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="explicit-lege-feliciter.html"><a href="explicit-lege-feliciter.html"><i class="fa fa-check"></i>Explicit - Lege feliciter</a></li>
+<li class="divider"></li>
+<li><a href="https://www.linkedin.com/in/fabiengelineau" target="blank">instigator Fabien GELINEAU</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Offensive Programming Book</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="conclusion" class="section level1">
+<h1><span class="header-section-number"> 13</span> Conclusion</h1>
+<div id="benefits-of-offensive-programming" class="section level2">
+<h2><span class="header-section-number">13.1</span> Benefits of offensive programming</h2>
+<p>Neither exhaustive nor limitative list. Main benefits are</p>
+<ol style="list-style-type: decimal">
+<li>Applicable to new and legacy code</li>
+<li>Code instrumentation at the required level, according to your needs. No obligation to comply completely or to instrument completely.</li>
+<li>Transient or persistent approach allow to deal with code you own and code you do not own.</li>
+<li>Evaluation modes eases incremental work. Offensive programming type_checking_enforcement mode is complimentary of standard R evaluation mode, not contesting with it.</li>
+<li>Usable at build time, at test time, and at run time wherever and whenever needed.</li>
+<li>Reusable test cases, immediately available to replay. No need to read manual pages to run a test case. No need to type or copy/paste code to replay a test</li>
+<li>Allow industrialization of test cases</li>
+<li>Allow fully automated generation of <cite class='it'>testthat</cite> test cases</li>
+<li>Allow fully automated generation of <cite class='it'>R</cite> documentation</li>
+</ol>
+<p>Most of all, offensive programming brings following value</p>
+<ol style="list-style-type: decimal">
+<li>reduced code size, as many checks are no more necessary and shall no more be implemented</li>
+<li>higher developer’s productivity on <cite class='it'>R</cite> implementation, although earned time is varying greatly from function to function, depending of its complexity. I got more than 15% of time gain using offensive programming coding on several <cite class='it'>R</cite> package creations.</li>
+<li>Automated test case generation reduces greatly the burden of <cite class='it'>testthat</cite> content generation. Expect a productivity gain higher than 70% here.</li>
+<li>Documentation creation is now reduced in a great proportion, leaving just the review at your charge. Expect a productivity gain higher than 80% here.</li>
+<li>increased execution speed, due to reduced and simplified code. Again, many checks are no more necessary, and comparing, some traditional <cite class='it'>R</cite> code with offensive programming <cite class='it'>R</cite> code, will bring a clear value in favor of the second, as it tends not only to reduce the volume of code, but also to simplify your <cite class='it'>R</cite> code and to ease bug avoidance. The root cause of these two improvements is coming from type purity.</li>
+</ol>
+</div>
+<div id="concerns-of-offensive-programming" class="section level2">
+<h2><span class="header-section-number">13.2</span> Concerns of offensive programming</h2>
+<p>Again a neither exhaustive nor limitative list</p>
+<p>Non standard evaluation is always tricky and difficult to understand and put correctly in action, due to the two evaluation paradigms that are different from traditional <cite class='it'>R</cite> logic. Offensive programming is to be used wherever <cite class='it'>R</cite> standard evaluation scheme appears too limited or too lazy.</p>
+<p>The two extraneous evaluation paradigms might bring runtime performance issues, especially if you compare with standard <cite class='it'>R</cite> evaluation. Indeed, doing so is unfair, as it is not comparing apple to apple. Offensive programming adds two more kind of checks to be run to decide on result compliance, that are simply unknown from <cite class='it'>R</cite> standard evaluation scheme.</p>
+<p>Offensive programming requires some experience with it to fill comfortable in design, build, and run. Nevertheless, quite simple and intuitive, from a programming point of view. One piece of advice, be sure to have a clear idea of what you expect. In standard <cite class='it'>R</cite>, we are all used to get results without even asking ourselves any question about types, polymorphism, parameters and computed results. With offensive programming you must be able to answer clearly to such questions.</p>
+</div>
+<div id="your-feedback-is-welcome" class="section level2">
+<h2><span class="header-section-number">13.3</span> Your feedback is welcome</h2>
+<p>Your feedback about package usefulness, package usage, and package extensions is welcome, as any improvement suggestion.Share them, this will really help me.</p>
+<p>I you wish to contribute to package development, just drop me an email.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="implementation-figures.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="explicit-lege-feliciter.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "night",
+"family": "serif",
+"size": 2
+},
+"edit": null,
+"history": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+},
+"toolbar": {
+"position": "fixed"
+},
+"search": true
+});
+});
+</script>
+
+</body>
+
+</html>

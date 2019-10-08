@@ -1,5 +1,1 @@
-# offensive Programming Book
-
-See [book source](https://github.com/neonira/offensiveProgramming-bookSource) to get access to the source
-
-See R package wyz.code.offensiveProgramming
+This is a minimal example of a book based on R Markdown and **bookdown** (https://github.com/rstudio/bookdown). Please see the page "Get Started" at https://bookdown.org/ for how to compile this example.

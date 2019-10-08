@@ -1,0 +1,243 @@
+# Meta-testing
+
+Meta-testing is the activity aiming to test a function while providing no data to test it. 
+
+In a (ref:R) context, it means being able to 
+
+1. discover function signature
+1. infer data type for each argument
+1. generate data set to be used for each argument
+1. run the function with generated data sets
+1. give back some summary statistics about discoveries of various test run achieved
+
+
+If you try it by hand, you will probably succeed, because the second point will be managed directly by your brain. If you try it by a program, type inference is much trickier, because any argument in (ref:R) could be of any type. Generally, you need the documentation and explanations to restrict the scope of possible types. That's where using (ref:MT) will ease your work and bring instrumentation to get results in a more reliable and quicker way.
+
+
+## Wrapper function creation 
+
+Any (ref:R) function can be classified as offensive programming compliant or not. 
+Second case is indeed much more common and will be encountered more often. 
+
+In such a case, use <cite class='kw'>offensiveProgrammingWrapFunction</cite> or function <cite class='kw'>opwf</cite> to generate a new (ref:R) function that will be offensive programming compliant. 
+
+You have to provide semantic argument names to this function to be able to generate correctly the wrapping function. Once done, type inference is now driven by semantic
+argument names. 
+
+Let's see a trivial example, considering function <cite class='kw'>cos</cite> from base package. 
+
+```{r metatesting1, eval=TRUE}
+library(wyz.code.metaTesting)
+op_cos <- opwf(cos, 'radianAngleOrComplex_')
+op_cos              
+```
+
+You may wonder what are the difference between the two signatures? They share same
+number of arguments, just the name changed. Yes, but as the name is now a semantic name, it can be managed by a factory <cite class='comment'>See FunctionParameterTypeFactory in wyz.code.offensiveProgramming for more details</cite>. 
+
+
+## Exploration function  
+
+Let's test base function <cite class='kw'>cos</cite> in a traditional way. 
+
+```{r metatesting2, eval=TRUE}
+rt <- tryCatch( lapply(list(2 * pi / 1:9, NA, Inf, 1+1i, list(), letters[1:3]), cos),
+                error = function(e) { print(e); NaN } )
+```
+
+And now, we have to unravel the arguments to find which ones are generating warnings or errors, to identify the ones that are accepted. Note that this trial is a gentle trial. It does not try for example to provide raw type or data frame or matrix or a function as argument. If you opt for a more traditionnal approach, then you will have to type as many lines as value types you want to test. This could become really boring very fast, as it disturbates you from the analysis of the results. 
+
+Let's test it using (ref:MT). 
+
+First thing do achieve is to get some knowlegde about the function signature complexity. 
+This is easily achieved using function <cite class='kw'>computeArgumentsCombination</cite>.
+
+```{r metatesting3, eval=TRUE}
+computeArgumentsCombination(op_cos)
+```
+
+The number of signatures is given by the <cite class='kw'>signatures</cite> name. Here there exist only one signature for function <cite class='kw'>op_cos</cite> and so for function <cite class='kw'>cos</cite>. 
+
+Note that function <cite class='kw'>computeArgumentsCombination</cite> can be used with any (ref:R) function. It does not requires offensive programming instrumentated function as argument. 
+
+Let's test function <cite class='kw'>op_cos</cite>.
+
+```{r metatesting4, eval=TRUE}
+es <- exploreSignatures(op_cos, list(radianAngleOrComplex_ = c('im', 'r', 'cm')))
+
+print(es$success$synthesis)
+print(es$failure$synthesis)
+```
+
+The second argument is just type restriction to be enforced. Here I asked for 
+integer real and complex mathematical types <cite class='comment'>these are different from (ref:R) integer, double and complex as they cannot take value NA</cite>. Type restrictions are only considered for polymorphic arguments <cite class='comment'>reminder: the ones that ends with an underscore</cite>.
+
+Results tell you that same signature brings various results. Here, 6 tests succeeded and 6 failed. It is clear that the issue is tied to using a list as value to an imperative argument <cite class='comment'>you will have to learn how to interpret the synthesis indeed</cite>. All execution errors provided the same error message. Looking closer, on success, you see that only vectors provided results.
+
+Now, you can conclude that <cite class='kw'>cos</cite> functions
+
+1. accepts as input vectors of integers, reals and complex
+1. passing a list as argument brings an error with the shown message. 
+
+To be complete, note that 
+
+a. as I enforced mathematical arguments, values NA, NaN and Inf are no more possible values for test. This match the mathematic function cosinus and not the (ref:R) function cos. This is an important point, know what scope you want to test, not just what function you want to test
+a. I do not understand the results when using complex numbers. I was expecting the cosinus of a complex number to compute the cosinus of the argument of the complex number, normalized by its modulus. Was expecting a (ref:cset) to (ref:rset) function. That is clearly not the case as output are complex numbers. That is a (ref:cset) to (ref:cset) function. I am still a taker of any explanation about this. 
+
+
+## A more complex example
+
+Let's now use function <cite class='kw'>append</cite> from base package. 
+
+As you know, we need first to create the offensive programming wrapper function. 
+
+```{r metatesting10, eval=TRUE}
+op_append <- opwf(append, c('originalValues_', 'valuesToInsert_', 'afterIndex_ui_1'))
+op_append              
+```
+
+As you can see, parameter substitution is also achieved in code for default arguments.
+
+How complex is it to test this function?
+```{r metatesting11, eval=TRUE}
+computeArgumentsCombination(op_append)
+```
+There are two call signatures, one without default parameter, one with. Let's test them. 
+
+```{r metatesting12, eval=TRUE}
+es <- exploreSignatures(op_append)
+
+print(es$success$synthesis)
+print(es$failure$synthesis)
+```
+
+From the 24 test runs, no errors where generated. If you are curious about a particular test call, let's say number 22, just introspect returned values as below. You will see the code use to call the function during the test.
+
+```{r metatesting13, eval=TRUE}
+print(es$success$code[22]$call_string)
+```
+
+
+If you desire to introspect the call results, use this approach.
+```{r metatesting14, eval=TRUE}
+print(es$success$code[22]$result)
+```
+
+## An example using ellipsis
+
+Let's now use function <cite class='kw'>sum</cite> from base package. 
+
+As you know, we need first to create the offensive programming wrapper function. 
+
+```{r metatesting20, eval=TRUE}
+op_sum <- opwf(sum, c('...', 'removeNAValues_b_1'))
+op_sum             
+```
+
+As you can see, parameter substitution is also achieved in code for default arguments.
+
+How complex is it to test this function?
+```{r metatesting21, eval=TRUE}
+cac_sum <- computeArgumentsCombination(op_sum)
+print(cac_sum)
+```
+There are eight call signatures, four without default parameter, four with. 
+By default, ellipsis is replaced by 0 to three arguments. That's why, first signature
+is empty, and the total is 8. Let's test them. 
+
+```{r metatesting22, eval=TRUE}
+es <- exploreSignatures(op_sum)
+
+print(es$success$synthesis)
+print(es$failure$synthesis)
+```
+
+From the 32 test runs, 8 passed, 24 failed. As we gave no restriction types for ellipsis,
+it has been replaced by any kind of characters, and in particular some that cannot fit a sum. Let's restrict the types to uses and run again same kind of test.  
+
+```{r metatesting23, eval=TRUE}
+es2 <- exploreSignatures(op_sum, list('...' = c('im', 'rm', 'cm')))
+```
+
+Much better. Still 32 tests, now 20 passed, 12 failed. Why?
+
+
+```{r metatesting24, eval=TRUE}
+print(es2$failure$synthesis)
+```
+
+All failures seems to be related to arguments passed as list. 
+
+
+## An example with imperative, default and ellipsis arguments
+
+Let's now use function <cite class='kw'>kronecker</cite> from base package. 
+
+As you know, we need first to create the offensive programming wrapper function. 
+
+```{r metatesting30, eval=TRUE}
+op_kronecker <- opwf(kronecker, c('arrayA_a_1', 'arrayB_a_1', 'function_f_1', 'computeDimensionNames_b_1', '...'))
+op_kronecker             
+```
+
+How complex is it to test this function?
+```{r metatesting31, eval=TRUE}
+cac_kronecker <- computeArgumentsCombination(op_kronecker)
+print(cac_kronecker)
+```
+There are sixteen call signatures. 
+
+Let's try brut force analysis first. 
+
+```{r metatesting32, eval=TRUE}
+tryCatch(es <- exploreSignatures(op_kronecker),
+         error = function(e) print(e) )
+```
+
+This fails as there exist no data generation function provided for array. 
+We have to provide one. 
+
+```{r metatesting33, eval=TRUE}
+wrong_draw_integer_array <- function(n, replace_b_1 = TRUE) {
+  m <- n + sample(0:3, 1)
+  matrix(seq(1, n * m), byrow = TRUE, nrow = n, 
+         dimnames = list(paste('row_', 1:n), paste('col_', 1:m)))
+} 
+# wrong because it does not respect argument names that must be
+# n_i_1 and replace_b_1
+
+df <- DataFactory()
+df$addSuffix('a', 'array', wrong_draw_integer_array)
+
+draw_integer_array <- function(n_i_1, replace_b_1 = TRUE) {
+  m <- n_i_1 + sample(0:3, 1)
+  matrix(seq(1, n_i_1 * m), byrow = TRUE, nrow = n_i_1, 
+         dimnames = list(paste('row_', 1:n_i_1), paste('col_', 1:m)))
+}
+
+draw_function <- function(n_i_1, replace_b_1 = TRUE) { list(`*`, `+`, `-`)[[sample(1:3, 1)]]}
+
+# good practice verifies your functions behave correctly on a single example
+a1 <- draw_integer_array(2)
+a2 <- draw_integer_array(3)
+f <- draw_function(1)
+kronecker(a1, a2, f, TRUE)
+
+# register functions
+df$addSuffix('a', 'array', draw_integer_array)
+df$addSuffix('f', 'function', draw_function)
+
+# make your factory findable
+Sys.setenv("OP_DATA_FACTORY" = "df")
+
+# fire tests - up to 768 contexts managed in one shot
+es <- exploreSignatures(op_kronecker)
+
+print(es$success$synthesis)
+print(es$failure$synthesis)
+```
+
+## Pitfalls to avoid
+
+1. When using <cite class='kw'>opwf</cite> function, make sure you provide the argument names in the right order. Examine created function signature prior going further. Make sure it fits the desired definition you look for.
+1. <cite class='kw'>DataFactory</cite> changes remain invisible to processing as long as you do not set the environment variable <cite class='kw'>OP_DATA_FACTORY</cite> with the name of the (ref:R) variable that holds the <cite class='kw'>DataFactory</cite> you want to use. This is often forgotten. 

@@ -1,0 +1,17 @@
+# Putting in action wyz.code.offensiveProgramming
+
+The package provides R tools to ease offensive programming exploitation. 
+
+```{r package1, eval=TRUE, echo=FALSE}
+suppressMessages(library(wyz.code.offensiveProgramming))
+```
+
+## Package overview 
+
+The package is organized around 4 axis that are elaboration, verification, exploitation and information.
+At any time you may get a list of the package functions by calling function <cite class='kw'>packageFunctionsInformation</cite>
+that provides a truth table for each function in package (ref:PKN). This is helpful when lost or just as a reminder. 
+
+```{r package2, eval=TRUE}
+packageFunctionsInformation()
+```

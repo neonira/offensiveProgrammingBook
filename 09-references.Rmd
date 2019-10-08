@@ -1,0 +1,33 @@
+# Explicit - Lege feliciter {-}
+
+(ref:PKN) <cite class='it'>wyz.code.offensiveProgramming</cite>
+
+(ref:TT) <cite class='it'>wyz.code.testthat</cite>
+
+(ref:RD) <cite class='it'>wyz.code.rdoc</cite>
+
+(ref:MT) <cite class='it'>wyz.code.meta-testing</cite>
+
+(ref:R) <cite class='it'>R</cite>
+
+(ref:gmp) <cite class='it'>gmp</cite>
+
+(ref:datatable) <cite class='it'>data.table</cite>
+
+(ref:testthat) <cite class='it'>testthat</cite>
+
+(ref:frt) <cite class='it'>function_return_types</cite>
+
+(ref:cadratin) &#x2014;
+
+(ref:nset) **<cite class='rt'>&#x2115;</cite>**
+
+(ref:nset0) **<cite class='rt'>&#x2115;<sup>\*</sup></cite>**
+
+(ref:qset) **<cite class='rt'>&#x211A;</cite>**
+
+(ref:rset) **<cite class='rt'>&#x211D;</cite>**
+
+(ref:cset) **<cite class='rt'>&#x2102;</cite>**
+
+(ref:iset) **<cite class='rt'>I</cite>** 

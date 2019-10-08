@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title> 10 Meta-testing | Offensive Programming Book</title>
+  <meta name="description" content="wyz.code.offensiveProgramming package related documentation" />
+  <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
+
+  <meta property="og:title" content=" 10 Meta-testing | Offensive Programming Book" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:image" content="figures/op.png" />
+  <meta property="og:description" content="wyz.code.offensiveProgramming package related documentation" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content=" 10 Meta-testing | Offensive Programming Book" />
+  
+  <meta name="twitter:description" content="wyz.code.offensiveProgramming package related documentation" />
+  <meta name="twitter:image" content="figures/op.png" />
+
+<meta name="author" content="Fabien GELINEAU neonira@gmail.com" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="generating-testthat-test-files.html"/>
+<link rel="next" href="generating-r-documentation.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Offensive Programming Book</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#book-version"><i class="fa fa-check"></i>Book version</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#book-production"><i class="fa fa-check"></i>Book production</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="preamble.html"><a href="preamble.html"><i class="fa fa-check"></i>Preamble</a></li>
+<li class="chapter" data-level="1" data-path="programming-styles.html"><a href="programming-styles.html"><i class="fa fa-check"></i><b>1</b> Programming styles</a><ul>
+<li class="chapter" data-level="1.1" data-path="programming-styles.html"><a href="programming-styles.html#defensive-programming-style"><i class="fa fa-check"></i><b>1.1</b> Defensive programming style</a></li>
+<li class="chapter" data-level="1.2" data-path="programming-styles.html"><a href="programming-styles.html#offensive-programming-style"><i class="fa fa-check"></i><b>1.2</b> Offensive programming style</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="application-in-r-language.html"><a href="application-in-r-language.html"><i class="fa fa-check"></i><b>2</b> Application in R language</a><ul>
+<li class="chapter" data-level="2.1" data-path="application-in-r-language.html"><a href="application-in-r-language.html#a-simple-case"><i class="fa fa-check"></i><b>2.1</b> A simple case</a></li>
+<li class="chapter" data-level="2.2" data-path="application-in-r-language.html"><a href="application-in-r-language.html#defensive-programming"><i class="fa fa-check"></i><b>2.2</b> Defensive programming</a></li>
+<li class="chapter" data-level="2.3" data-path="application-in-r-language.html"><a href="application-in-r-language.html#offensive-programming"><i class="fa fa-check"></i><b>2.3</b> Offensive programming</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="application-in-r-language.html"><a href="application-in-r-language.html#what-is-different"><i class="fa fa-check"></i><b>2.3.1</b> What is different?</a></li>
+<li class="chapter" data-level="2.3.2" data-path="application-in-r-language.html"><a href="application-in-r-language.html#semantic-argument-naming"><i class="fa fa-check"></i><b>2.3.2</b> Semantic argument naming</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="application-in-r-language.html"><a href="application-in-r-language.html#back-to-definition"><i class="fa fa-check"></i><b>2.4</b> Back to definition</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="putting-in-action-wyz-code-offensiveprogramming.html"><a href="putting-in-action-wyz-code-offensiveprogramming.html"><i class="fa fa-check"></i><b>3</b> Putting in action wyz.code.offensiveProgramming</a><ul>
+<li class="chapter" data-level="3.1" data-path="putting-in-action-wyz-code-offensiveprogramming.html"><a href="putting-in-action-wyz-code-offensiveprogramming.html#package-overview"><i class="fa fa-check"></i><b>3.1</b> Package overview</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="the-type-factory.html"><a href="the-type-factory.html"><i class="fa fa-check"></i><b>4</b> The type factory</a><ul>
+<li class="chapter" data-level="4.1" data-path="the-type-factory.html"><a href="the-type-factory.html#get-recorded-types-inventory"><i class="fa fa-check"></i><b>4.1</b> Get recorded types inventory</a></li>
+<li class="chapter" data-level="4.2" data-path="the-type-factory.html"><a href="the-type-factory.html#understanding-the-model"><i class="fa fa-check"></i><b>4.2</b> Understanding the model</a></li>
+<li class="chapter" data-level="4.3" data-path="the-type-factory.html"><a href="the-type-factory.html#register-your-own-type"><i class="fa fa-check"></i><b>4.3</b> Register your own type</a></li>
+<li class="chapter" data-level="4.4" data-path="the-type-factory.html"><a href="the-type-factory.html#get-access-to-verification-functions"><i class="fa fa-check"></i><b>4.4</b> Get access to verification functions</a></li>
+<li class="chapter" data-level="4.5" data-path="the-type-factory.html"><a href="the-type-factory.html#some-hints"><i class="fa fa-check"></i><b>4.5</b> Some hints</a></li>
+<li class="chapter" data-level="4.6" data-path="the-type-factory.html"><a href="the-type-factory.html#enforcing-use-of-your-own-type-factory"><i class="fa fa-check"></i><b>4.6</b> Enforcing use of your own type factory</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="semantic-names.html"><a href="semantic-names.html"><i class="fa fa-check"></i><b>5</b> Semantic names</a><ul>
+<li class="chapter" data-level="5.1" data-path="semantic-names.html"><a href="semantic-names.html#what-is-semantic-naming"><i class="fa fa-check"></i><b>5.1</b> What is semantic naming?</a></li>
+<li class="chapter" data-level="5.2" data-path="semantic-names.html"><a href="semantic-names.html#verifying-a-function-parameter-or-return-type-declaration"><i class="fa fa-check"></i><b>5.2</b> Verifying a function parameter or return type declaration</a></li>
+<li class="chapter" data-level="5.3" data-path="semantic-names.html"><a href="semantic-names.html#verifying-a-class-name"><i class="fa fa-check"></i><b>5.3</b> Verifying a class name</a></li>
+<li class="chapter" data-level="5.4" data-path="semantic-names.html"><a href="semantic-names.html#verifying-a-function-name"><i class="fa fa-check"></i><b>5.4</b> Verifying a function name</a></li>
+<li class="chapter" data-level="5.5" data-path="semantic-names.html"><a href="semantic-names.html#get-naming-balance-from-an-r-object"><i class="fa fa-check"></i><b>5.5</b> Get naming balance from an R object</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="evaluation-modes.html"><a href="evaluation-modes.html"><i class="fa fa-check"></i><b>6</b> Evaluation modes</a><ul>
+<li class="chapter" data-level="6.1" data-path="evaluation-modes.html"><a href="evaluation-modes.html#understanding-evaluation-modes"><i class="fa fa-check"></i><b>6.1</b> Understanding evaluation modes</a></li>
+<li class="chapter" data-level="6.2" data-path="evaluation-modes.html"><a href="evaluation-modes.html#instantiating-evaluation-mode"><i class="fa fa-check"></i><b>6.2</b> Instantiating evaluation mode</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="running-functions.html"><a href="running-functions.html"><i class="fa fa-check"></i><b>7</b> Running functions</a><ul>
+<li class="chapter" data-level="7.1" data-path="running-functions.html"><a href="running-functions.html#prerequisites"><i class="fa fa-check"></i><b>7.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="7.2" data-path="running-functions.html"><a href="running-functions.html#function-return-types-definition-verification"><i class="fa fa-check"></i><b>7.2</b> Function return types definition verification</a></li>
+<li class="chapter" data-level="7.3" data-path="running-functions.html"><a href="running-functions.html#transient-invocations"><i class="fa fa-check"></i><b>7.3</b> Transient invocations</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="running-functions.html"><a href="running-functions.html#nominal-case"><i class="fa fa-check"></i><b>7.3.1</b> Nominal case</a></li>
+<li class="chapter" data-level="7.3.2" data-path="running-functions.html"><a href="running-functions.html#prerequisite-mismatch"><i class="fa fa-check"></i><b>7.3.2</b> Prerequisite mismatch</a></li>
+<li class="chapter" data-level="7.3.3" data-path="running-functions.html"><a href="running-functions.html#object-function-call"><i class="fa fa-check"></i><b>7.3.3</b> Object function call</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="running-functions.html"><a href="running-functions.html#persistent-invocations"><i class="fa fa-check"></i><b>7.4</b> Persistent invocations</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="running-functions.html"><a href="running-functions.html#nominal-persistent-case"><i class="fa fa-check"></i><b>7.4.1</b> Nominal persistent case</a></li>
+<li class="chapter" data-level="7.4.2" data-path="running-functions.html"><a href="running-functions.html#subtile-change"><i class="fa fa-check"></i><b>7.4.2</b> Subtile change</a></li>
+<li class="chapter" data-level="7.4.3" data-path="running-functions.html"><a href="running-functions.html#call-case-with-named-and-positional-parameters"><i class="fa fa-check"></i><b>7.4.3</b> Call case with named and positional parameters</a></li>
+<li class="chapter" data-level="7.4.4" data-path="running-functions.html"><a href="running-functions.html#call-case-with-ellipsis"><i class="fa fa-check"></i><b>7.4.4</b> Call case with ellipsis</a></li>
+<li class="chapter" data-level="7.4.5" data-path="running-functions.html"><a href="running-functions.html#second-call-case-with-ellipsis"><i class="fa fa-check"></i><b>7.4.5</b> Second call case with ellipsis</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="running-test-cases.html"><a href="running-test-cases.html"><i class="fa fa-check"></i><b>8</b> Running test cases</a><ul>
+<li class="chapter" data-level="8.1" data-path="running-test-cases.html"><a href="running-test-cases.html#reusing-defined-test-case-definitions"><i class="fa fa-check"></i><b>8.1</b> Reusing defined test case definitions</a></li>
+<li class="chapter" data-level="8.2" data-path="running-test-cases.html"><a href="running-test-cases.html#embedding-test-cases-in-class-definition"><i class="fa fa-check"></i><b>8.2</b> Embedding test cases in class definition</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="running-test-cases.html"><a href="running-test-cases.html#a-simple-case-1"><i class="fa fa-check"></i><b>8.2.1</b> A simple case</a></li>
+<li class="chapter" data-level="8.2.2" data-path="running-test-cases.html"><a href="running-test-cases.html#a-more-complex-case"><i class="fa fa-check"></i><b>8.2.2</b> A more complex case</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="running-test-cases.html"><a href="running-test-cases.html#test-case-definitions-verification"><i class="fa fa-check"></i><b>8.3</b> Test case definitions verification</a></li>
+<li class="chapter" data-level="8.4" data-path="running-test-cases.html"><a href="running-test-cases.html#discovering-test-cases-descriptions"><i class="fa fa-check"></i><b>8.4</b> Discovering test cases descriptions</a></li>
+<li class="chapter" data-level="8.5" data-path="running-test-cases.html"><a href="running-test-cases.html#run-a-test-case"><i class="fa fa-check"></i><b>8.5</b> Run a test case</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="generating-testthat-test-files.html"><a href="generating-testthat-test-files.html"><i class="fa fa-check"></i><b>9</b> Generating <cite class='it'>testthat</cite> test files</a><ul>
+<li class="chapter" data-level="9.1" data-path="generating-testthat-test-files.html"><a href="generating-testthat-test-files.html#package-wyz.code.testthat-in-action"><i class="fa fa-check"></i><b>9.1</b> Package <cite class='it'>wyz.code.testthat</cite> in action</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="generating-testthat-test-files.html"><a href="generating-testthat-test-files.html#setting-up-the-context"><i class="fa fa-check"></i><b>9.1.1</b> Setting up the context</a></li>
+<li class="chapter" data-level="9.1.2" data-path="generating-testthat-test-files.html"><a href="generating-testthat-test-files.html#unit-test-file-generation"><i class="fa fa-check"></i><b>9.1.2</b> Unit test file generation</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="generating-testthat-test-files.html"><a href="generating-testthat-test-files.html#generated-unit-test-file-content"><i class="fa fa-check"></i><b>9.2</b> Generated unit test file content</a></li>
+<li class="chapter" data-level="9.3" data-path="generating-testthat-test-files.html"><a href="generating-testthat-test-files.html#known-limits"><i class="fa fa-check"></i><b>9.3</b> Known-limits</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="meta-testing.html"><a href="meta-testing.html"><i class="fa fa-check"></i><b>10</b> Meta-testing</a><ul>
+<li class="chapter" data-level="10.1" data-path="meta-testing.html"><a href="meta-testing.html#wrapper-function-creation"><i class="fa fa-check"></i><b>10.1</b> Wrapper function creation</a></li>
+<li class="chapter" data-level="10.2" data-path="meta-testing.html"><a href="meta-testing.html#exploration-function"><i class="fa fa-check"></i><b>10.2</b> Exploration function</a></li>
+<li class="chapter" data-level="10.3" data-path="meta-testing.html"><a href="meta-testing.html#a-more-complex-example"><i class="fa fa-check"></i><b>10.3</b> A more complex example</a></li>
+<li class="chapter" data-level="10.4" data-path="meta-testing.html"><a href="meta-testing.html#an-example-using-ellipsis"><i class="fa fa-check"></i><b>10.4</b> An example using ellipsis</a></li>
+<li class="chapter" data-level="10.5" data-path="meta-testing.html"><a href="meta-testing.html#an-example-with-imperative-default-and-ellipsis-arguments"><i class="fa fa-check"></i><b>10.5</b> An example with imperative, default and ellipsis arguments</a></li>
+<li class="chapter" data-level="10.6" data-path="meta-testing.html"><a href="meta-testing.html#pitfalls-to-avoid"><i class="fa fa-check"></i><b>10.6</b> Pitfalls to avoid</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html"><i class="fa fa-check"></i><b>11</b> Generating <cite class='it'>R</cite> documentation</a><ul>
+<li class="chapter" data-level="11.1" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#automated-r-documentation-generation"><i class="fa fa-check"></i><b>11.1</b> Automated <cite class='it'>R</cite> documentation generation</a></li>
+<li class="chapter" data-level="11.2" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#focus-on-r-documentation-generation"><i class="fa fa-check"></i><b>11.2</b> Focus on <cite class='kw'>R</cite> documentation generation</a></li>
+<li class="chapter" data-level="11.3" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#package-wyz.code.rdoc-utilities"><i class="fa fa-check"></i><b>11.3</b> package <cite class='it'>wyz.code.rdoc</cite> utilities</a><ul>
+<li class="chapter" data-level="11.3.1" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#generate-a-r-documentation-section"><i class="fa fa-check"></i><b>11.3.1</b> Generate a <cite class='it'>R</cite> documentation section</a></li>
+<li class="chapter" data-level="11.3.2" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#format-an-english-sentence"><i class="fa fa-check"></i><b>11.3.2</b> Format an English sentence</a></li>
+<li class="chapter" data-level="11.3.3" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#generate-some-r-documentation-content"><i class="fa fa-check"></i><b>11.3.3</b> Generate some <cite class='it'>R</cite> documentation content</a></li>
+<li class="chapter" data-level="11.3.4" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#generate-cross-ref-to-other-r-package"><i class="fa fa-check"></i><b>11.3.4</b> Generate cross-ref to other <cite class='it'>R</cite> package</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#manual-pages-generation"><i class="fa fa-check"></i><b>11.4</b> Manual pages generation</a><ul>
+<li class="chapter" data-level="11.4.1" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#context-setup"><i class="fa fa-check"></i><b>11.4.1</b> Context setup</a></li>
+<li class="chapter" data-level="11.4.2" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#method-manual-page"><i class="fa fa-check"></i><b>11.4.2</b> Method manual page</a></li>
+<li class="chapter" data-level="11.4.3" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#class-manual-page"><i class="fa fa-check"></i><b>11.4.3</b> Class manual page</a></li>
+<li class="chapter" data-level="11.4.4" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#package-manual-page"><i class="fa fa-check"></i><b>11.4.4</b> Package manual page</a></li>
+<li class="chapter" data-level="11.4.5" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#in-one-shot"><i class="fa fa-check"></i><b>11.4.5</b> In one shot</a></li>
+<li class="chapter" data-level="11.4.6" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#and-a-special-case-from-a-standalone-function"><i class="fa fa-check"></i><b>11.4.6</b> and a special case, from a standalone function</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#known-limits-1"><i class="fa fa-check"></i><b>11.5</b> Known-limits</a></li>
+<li class="chapter" data-level="11.6" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#opportunities"><i class="fa fa-check"></i><b>11.6</b> Opportunities</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="implementation-figures.html"><a href="implementation-figures.html"><i class="fa fa-check"></i><b>12</b> Implementation figures</a><ul>
+<li class="chapter" data-level="12.1" data-path="implementation-figures.html"><a href="implementation-figures.html#file-statistics"><i class="fa fa-check"></i><b>12.1</b> File statistics</a></li>
+<li class="chapter" data-level="12.2" data-path="implementation-figures.html"><a href="implementation-figures.html#code-statistics"><i class="fa fa-check"></i><b>12.2</b> Code statistics</a></li>
+<li class="chapter" data-level="12.3" data-path="implementation-figures.html"><a href="implementation-figures.html#test-and-coverage"><i class="fa fa-check"></i><b>12.3</b> Test and coverage</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>13</b> Conclusion</a><ul>
+<li class="chapter" data-level="13.1" data-path="conclusion.html"><a href="conclusion.html#benefits-of-offensive-programming"><i class="fa fa-check"></i><b>13.1</b> Benefits of offensive programming</a></li>
+<li class="chapter" data-level="13.2" data-path="conclusion.html"><a href="conclusion.html#concerns-of-offensive-programming"><i class="fa fa-check"></i><b>13.2</b> Concerns of offensive programming</a></li>
+<li class="chapter" data-level="13.3" data-path="conclusion.html"><a href="conclusion.html#your-feedback-is-welcome"><i class="fa fa-check"></i><b>13.3</b> Your feedback is welcome</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="explicit-lege-feliciter.html"><a href="explicit-lege-feliciter.html"><i class="fa fa-check"></i>Explicit - Lege feliciter</a></li>
+<li class="divider"></li>
+<li><a href="https://www.linkedin.com/in/fabiengelineau" target="blank">instigator Fabien GELINEAU</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Offensive Programming Book</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="meta-testing" class="section level1">
+<h1><span class="header-section-number"> 10</span> Meta-testing</h1>
+<p>Meta-testing is the activity aiming to test a function while providing no data to test it.</p>
+<p>In a <cite class='it'>R</cite> context, it means being able to</p>
+<ol style="list-style-type: decimal">
+<li>discover function signature</li>
+<li>infer data type for each argument</li>
+<li>generate data set to be used for each argument</li>
+<li>run the function with generated data sets</li>
+<li>give back some summary statistics about discoveries of various test run achieved</li>
+</ol>
+<p>If you try it by hand, you will probably succeed, because the second point will be managed directly by your brain. If you try it by a program, type inference is much trickier, because any argument in <cite class='it'>R</cite> could be of any type. Generally, you need the documentation and explanations to restrict the scope of possible types. That’s where using <cite class='it'>wyz.code.meta-testing</cite> will ease your work and bring instrumentation to get results in a more reliable and quicker way.</p>
+<div id="wrapper-function-creation" class="section level2">
+<h2><span class="header-section-number">10.1</span> Wrapper function creation</h2>
+<p>Any <cite class='it'>R</cite> function can be classified as offensive programming compliant or not.
+Second case is indeed much more common and will be encountered more often.</p>
+<p>In such a case, use <cite class='kw'>offensiveProgrammingWrapFunction</cite> or function <cite class='kw'>opwf</cite> to generate a new <cite class='it'>R</cite> function that will be offensive programming compliant.</p>
+<p>You have to provide semantic argument names to this function to be able to generate correctly the wrapping function. Once done, type inference is now driven by semantic
+argument names.</p>
+<p>Let’s see a trivial example, considering function <cite class='kw'>cos</cite> from base package.</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" title="1"><span class="kw">library</span>(wyz.code.metaTesting)</a>
+<a class="sourceLine" id="cb41-2" title="2"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb41-3" title="3"><span class="co">#&gt; Attaching package: &#39;wyz.code.metaTesting&#39;</span></a>
+<a class="sourceLine" id="cb41-4" title="4"><span class="co">#&gt; The following object is masked from &#39;package:wyz.code.offensiveProgramming&#39;:</span></a>
+<a class="sourceLine" id="cb41-5" title="5"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb41-6" title="6"><span class="co">#&gt;     packageFunctionsInformation</span></a>
+<a class="sourceLine" id="cb41-7" title="7">op_cos &lt;-<span class="st"> </span><span class="kw">opwf</span>(cos, <span class="st">&#39;radianAngleOrComplex_&#39;</span>)</a>
+<a class="sourceLine" id="cb41-8" title="8">op_cos              </a>
+<a class="sourceLine" id="cb41-9" title="9"><span class="co">#&gt; function (radianAngleOrComplex_) </span></a>
+<a class="sourceLine" id="cb41-10" title="10"><span class="co">#&gt; {</span></a>
+<a class="sourceLine" id="cb41-11" title="11"><span class="co">#&gt;     cos(radianAngleOrComplex_)</span></a>
+<a class="sourceLine" id="cb41-12" title="12"><span class="co">#&gt; }</span></a>
+<a class="sourceLine" id="cb41-13" title="13"><span class="co">#&gt; &lt;environment: 0x00000000197a1fa8&gt;</span></a></code></pre></div>
+<p>You may wonder what are the difference between the two signatures? They share same
+number of arguments, just the name changed. Yes, but as the name is now a semantic name, it can be managed by a factory <cite class='comment'>See FunctionParameterTypeFactory in wyz.code.offensiveProgramming for more details</cite>.</p>
+</div>
+<div id="exploration-function" class="section level2">
+<h2><span class="header-section-number">10.2</span> Exploration function</h2>
+<p>Let’s test base function <cite class='kw'>cos</cite> in a traditional way.</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" title="1">rt &lt;-<span class="st"> </span><span class="kw">tryCatch</span>( <span class="kw">lapply</span>(<span class="kw">list</span>(<span class="dv">2</span> <span class="op">*</span><span class="st"> </span>pi <span class="op">/</span><span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">9</span>, <span class="ot">NA</span>, <span class="ot">Inf</span>, <span class="dv">1</span><span class="op">+</span>1i, <span class="kw">list</span>(), letters[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]), cos),</a>
+<a class="sourceLine" id="cb42-2" title="2">                <span class="dt">error =</span> <span class="cf">function</span>(e) { <span class="kw">print</span>(e); <span class="ot">NaN</span> } )</a>
+<a class="sourceLine" id="cb42-3" title="3"><span class="co">#&gt; Warning in FUN(X[[i]], ...): production de NaN</span></a>
+<a class="sourceLine" id="cb42-4" title="4"><span class="co">#&gt; &lt;simpleError in FUN(X[[i]], ...): argument non numérique pour une fonction mathématique&gt;</span></a></code></pre></div>
+<p>And now, we have to unravel the arguments to find which ones are generating warnings or errors, to identify the ones that are accepted. Note that this trial is a gentle trial. It does not try for example to provide raw type or data frame or matrix or a function as argument. If you opt for a more traditionnal approach, then you will have to type as many lines as value types you want to test. This could become really boring very fast, as it disturbates you from the analysis of the results.</p>
+<p>Let’s test it using <cite class='it'>wyz.code.meta-testing</cite>.</p>
+<p>First thing do achieve is to get some knowlegde about the function signature complexity.
+This is easily achieved using function <cite class='kw'>computeArgumentsCombination</cite>.</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" title="1"><span class="kw">computeArgumentsCombination</span>(op_cos)</a>
+<a class="sourceLine" id="cb43-2" title="2"><span class="co">#&gt; $names</span></a>
+<a class="sourceLine" id="cb43-3" title="3"><span class="co">#&gt; $names$argument</span></a>
+<a class="sourceLine" id="cb43-4" title="4"><span class="co">#&gt; [1] &quot;radianAngleOrComplex_&quot;</span></a>
+<a class="sourceLine" id="cb43-5" title="5"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb43-6" title="6"><span class="co">#&gt; $names$ellipsis</span></a>
+<a class="sourceLine" id="cb43-7" title="7"><span class="co">#&gt; $names$ellipsis[[1]]</span></a>
+<a class="sourceLine" id="cb43-8" title="8"><span class="co">#&gt; character(0)</span></a>
+<a class="sourceLine" id="cb43-9" title="9"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb43-10" title="10"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb43-11" title="11"><span class="co">#&gt; $names$default</span></a>
+<a class="sourceLine" id="cb43-12" title="12"><span class="co">#&gt; $names$default[[1]]</span></a>
+<a class="sourceLine" id="cb43-13" title="13"><span class="co">#&gt; character(0)</span></a>
+<a class="sourceLine" id="cb43-14" title="14"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb43-15" title="15"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb43-16" title="16"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb43-17" title="17"><span class="co">#&gt; $number</span></a>
+<a class="sourceLine" id="cb43-18" title="18"><span class="co">#&gt; $number$argument</span></a>
+<a class="sourceLine" id="cb43-19" title="19"><span class="co">#&gt; [1] 1</span></a>
+<a class="sourceLine" id="cb43-20" title="20"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb43-21" title="21"><span class="co">#&gt; $number$ellipsis</span></a>
+<a class="sourceLine" id="cb43-22" title="22"><span class="co">#&gt; [1] 0</span></a>
+<a class="sourceLine" id="cb43-23" title="23"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb43-24" title="24"><span class="co">#&gt; $number$default</span></a>
+<a class="sourceLine" id="cb43-25" title="25"><span class="co">#&gt; [1] 0</span></a>
+<a class="sourceLine" id="cb43-26" title="26"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb43-27" title="27"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb43-28" title="28"><span class="co">#&gt; $signatures</span></a>
+<a class="sourceLine" id="cb43-29" title="29"><span class="co">#&gt; $signatures[[1]]</span></a>
+<a class="sourceLine" id="cb43-30" title="30"><span class="co">#&gt; [1] &quot;radianAngleOrComplex_&quot;</span></a>
+<a class="sourceLine" id="cb43-31" title="31"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb43-32" title="32"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb43-33" title="33"><span class="co">#&gt; $theoritical_signature_number</span></a>
+<a class="sourceLine" id="cb43-34" title="34"><span class="co">#&gt; [1] 1</span></a></code></pre></div>
+<p>The number of signatures is given by the <cite class='kw'>signatures</cite> name. Here there exist only one signature for function <cite class='kw'>op_cos</cite> and so for function <cite class='kw'>cos</cite>.</p>
+<p>Note that function <cite class='kw'>computeArgumentsCombination</cite> can be used with any <cite class='it'>R</cite> function. It does not requires offensive programming instrumentated function as argument.</p>
+<p>Let’s test function <cite class='kw'>op_cos</cite>.</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" title="1">es &lt;-<span class="st"> </span><span class="kw">exploreSignatures</span>(op_cos, <span class="kw">list</span>(<span class="dt">radianAngleOrComplex_ =</span> <span class="kw">c</span>(<span class="st">&#39;im&#39;</span>, <span class="st">&#39;r&#39;</span>, <span class="st">&#39;cm&#39;</span>)))</a>
+<a class="sourceLine" id="cb44-2" title="2"></a>
+<a class="sourceLine" id="cb44-3" title="3"><span class="kw">print</span>(es<span class="op">$</span>success<span class="op">$</span>synthesis)</a>
+<a class="sourceLine" id="cb44-4" title="4"><span class="co">#&gt; $number_sucessfull_tests</span></a>
+<a class="sourceLine" id="cb44-5" title="5"><span class="co">#&gt; [1] 6</span></a>
+<a class="sourceLine" id="cb44-6" title="6"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb44-7" title="7"><span class="co">#&gt; $signatures</span></a>
+<a class="sourceLine" id="cb44-8" title="8"><span class="co">#&gt; [1] &quot;radianAngleOrComplex_&quot;</span></a>
+<a class="sourceLine" id="cb44-9" title="9"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb44-10" title="10"><span class="co">#&gt; $imperative</span></a>
+<a class="sourceLine" id="cb44-11" title="11"><span class="co">#&gt; [1] &quot;{homo,hetero}_{vector}_{one,two,three}&quot;</span></a>
+<a class="sourceLine" id="cb44-12" title="12"><span class="kw">print</span>(es<span class="op">$</span>failure<span class="op">$</span>synthesis)</a>
+<a class="sourceLine" id="cb44-13" title="13"><span class="co">#&gt; $number_erroneous_tests</span></a>
+<a class="sourceLine" id="cb44-14" title="14"><span class="co">#&gt; [1] 6</span></a>
+<a class="sourceLine" id="cb44-15" title="15"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb44-16" title="16"><span class="co">#&gt; $error</span></a>
+<a class="sourceLine" id="cb44-17" title="17"><span class="co">#&gt; [1] &quot;Error in cos(radianAngleOrComplex_): argument non numérique pour une fonction mathématique\n&quot;</span></a>
+<a class="sourceLine" id="cb44-18" title="18"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb44-19" title="19"><span class="co">#&gt; $signatures</span></a>
+<a class="sourceLine" id="cb44-20" title="20"><span class="co">#&gt; [1] &quot;radianAngleOrComplex_&quot;</span></a>
+<a class="sourceLine" id="cb44-21" title="21"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb44-22" title="22"><span class="co">#&gt; $imperative</span></a>
+<a class="sourceLine" id="cb44-23" title="23"><span class="co">#&gt; [1] &quot;{homo,hetero}_{list}_{one,two,three}&quot;</span></a></code></pre></div>
+<p>The second argument is just type restriction to be enforced. Here I asked for
+integer real and complex mathematical types <cite class='comment'>these are different from <cite class='it'>R</cite> integer, double and complex as they cannot take value NA</cite>. Type restrictions are only considered for polymorphic arguments <cite class='comment'>reminder: the ones that ends with an underscore</cite>.</p>
+<p>Results tell you that same signature brings various results. Here, 6 tests succeeded and 6 failed. It is clear that the issue is tied to using a list as value to an imperative argument <cite class='comment'>you will have to learn how to interpret the synthesis indeed</cite>. All execution errors provided the same error message. Looking closer, on success, you see that only vectors provided results.</p>
+<p>Now, you can conclude that <cite class='kw'>cos</cite> functions</p>
+<ol style="list-style-type: decimal">
+<li>accepts as input vectors of integers, reals and complex</li>
+<li>passing a list as argument brings an error with the shown message.</li>
+</ol>
+<p>To be complete, note that</p>
+<ol style="list-style-type: lower-alpha">
+<li>as I enforced mathematical arguments, values NA, NaN and Inf are no more possible values for test. This match the mathematic function cosinus and not the <cite class='it'>R</cite> function cos. This is an important point, know what scope you want to test, not just what function you want to test</li>
+<li>I do not understand the results when using complex numbers. I was expecting the cosinus of a complex number to compute the cosinus of the argument of the complex number, normalized by its modulus. Was expecting a <strong><cite class='rt'>ℂ</cite></strong> to <strong><cite class='rt'>ℝ</cite></strong> function. That is clearly not the case as output are complex numbers. That is a <strong><cite class='rt'>ℂ</cite></strong> to <strong><cite class='rt'>ℂ</cite></strong> function. I am still a taker of any explanation about this.</li>
+</ol>
+</div>
+<div id="a-more-complex-example" class="section level2">
+<h2><span class="header-section-number">10.3</span> A more complex example</h2>
+<p>Let’s now use function <cite class='kw'>append</cite> from base package.</p>
+<p>As you know, we need first to create the offensive programming wrapper function.</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" title="1">op_append &lt;-<span class="st"> </span><span class="kw">opwf</span>(append, <span class="kw">c</span>(<span class="st">&#39;originalValues_&#39;</span>, <span class="st">&#39;valuesToInsert_&#39;</span>, <span class="st">&#39;afterIndex_ui_1&#39;</span>))</a>
+<a class="sourceLine" id="cb45-2" title="2">op_append              </a>
+<a class="sourceLine" id="cb45-3" title="3"><span class="co">#&gt; function (originalValues_, valuesToInsert_, afterIndex_ui_1 = length(originalValues_)) </span></a>
+<a class="sourceLine" id="cb45-4" title="4"><span class="co">#&gt; {</span></a>
+<a class="sourceLine" id="cb45-5" title="5"><span class="co">#&gt;     append(originalValues_, valuesToInsert_, after = afterIndex_ui_1)</span></a>
+<a class="sourceLine" id="cb45-6" title="6"><span class="co">#&gt; }</span></a>
+<a class="sourceLine" id="cb45-7" title="7"><span class="co">#&gt; &lt;environment: 0x000000001a465408&gt;</span></a></code></pre></div>
+<p>As you can see, parameter substitution is also achieved in code for default arguments.</p>
+<p>How complex is it to test this function?</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" title="1"><span class="kw">computeArgumentsCombination</span>(op_append)</a>
+<a class="sourceLine" id="cb46-2" title="2"><span class="co">#&gt; $names</span></a>
+<a class="sourceLine" id="cb46-3" title="3"><span class="co">#&gt; $names$argument</span></a>
+<a class="sourceLine" id="cb46-4" title="4"><span class="co">#&gt; [1] &quot;originalValues_&quot; &quot;valuesToInsert_&quot;</span></a>
+<a class="sourceLine" id="cb46-5" title="5"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb46-6" title="6"><span class="co">#&gt; $names$ellipsis</span></a>
+<a class="sourceLine" id="cb46-7" title="7"><span class="co">#&gt; $names$ellipsis[[1]]</span></a>
+<a class="sourceLine" id="cb46-8" title="8"><span class="co">#&gt; character(0)</span></a>
+<a class="sourceLine" id="cb46-9" title="9"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb46-10" title="10"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb46-11" title="11"><span class="co">#&gt; $names$default</span></a>
+<a class="sourceLine" id="cb46-12" title="12"><span class="co">#&gt; $names$default[[1]]</span></a>
+<a class="sourceLine" id="cb46-13" title="13"><span class="co">#&gt; character(0)</span></a>
+<a class="sourceLine" id="cb46-14" title="14"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb46-15" title="15"><span class="co">#&gt; $names$default[[2]]</span></a>
+<a class="sourceLine" id="cb46-16" title="16"><span class="co">#&gt; [1] &quot;afterIndex_ui_1&quot;</span></a>
+<a class="sourceLine" id="cb46-17" title="17"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb46-18" title="18"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb46-19" title="19"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb46-20" title="20"><span class="co">#&gt; $number</span></a>
+<a class="sourceLine" id="cb46-21" title="21"><span class="co">#&gt; $number$argument</span></a>
+<a class="sourceLine" id="cb46-22" title="22"><span class="co">#&gt; [1] 2</span></a>
+<a class="sourceLine" id="cb46-23" title="23"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb46-24" title="24"><span class="co">#&gt; $number$ellipsis</span></a>
+<a class="sourceLine" id="cb46-25" title="25"><span class="co">#&gt; [1] 0</span></a>
+<a class="sourceLine" id="cb46-26" title="26"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb46-27" title="27"><span class="co">#&gt; $number$default</span></a>
+<a class="sourceLine" id="cb46-28" title="28"><span class="co">#&gt; [1] 0 1</span></a>
+<a class="sourceLine" id="cb46-29" title="29"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb46-30" title="30"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb46-31" title="31"><span class="co">#&gt; $signatures</span></a>
+<a class="sourceLine" id="cb46-32" title="32"><span class="co">#&gt; $signatures[[1]]</span></a>
+<a class="sourceLine" id="cb46-33" title="33"><span class="co">#&gt; [1] &quot;originalValues_, valuesToInsert_&quot;</span></a>
+<a class="sourceLine" id="cb46-34" title="34"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb46-35" title="35"><span class="co">#&gt; $signatures[[2]]</span></a>
+<a class="sourceLine" id="cb46-36" title="36"><span class="co">#&gt; [1] &quot;originalValues_, valuesToInsert_, afterIndex_ui_1&quot;</span></a>
+<a class="sourceLine" id="cb46-37" title="37"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb46-38" title="38"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb46-39" title="39"><span class="co">#&gt; $theoritical_signature_number</span></a>
+<a class="sourceLine" id="cb46-40" title="40"><span class="co">#&gt; [1] 2</span></a></code></pre></div>
+<p>There are two call signatures, one without default parameter, one with. Let’s test them.</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" title="1">es &lt;-<span class="st"> </span><span class="kw">exploreSignatures</span>(op_append)</a>
+<a class="sourceLine" id="cb47-2" title="2"></a>
+<a class="sourceLine" id="cb47-3" title="3"><span class="kw">print</span>(es<span class="op">$</span>success<span class="op">$</span>synthesis)</a>
+<a class="sourceLine" id="cb47-4" title="4"><span class="co">#&gt; $number_sucessfull_tests</span></a>
+<a class="sourceLine" id="cb47-5" title="5"><span class="co">#&gt; [1] 24</span></a>
+<a class="sourceLine" id="cb47-6" title="6"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb47-7" title="7"><span class="co">#&gt; $signatures</span></a>
+<a class="sourceLine" id="cb47-8" title="8"><span class="co">#&gt; [1] &quot;originalValues_, valuesToInsert_&quot;                 </span></a>
+<a class="sourceLine" id="cb47-9" title="9"><span class="co">#&gt; [2] &quot;originalValues_, valuesToInsert_, afterIndex_ui_1&quot;</span></a>
+<a class="sourceLine" id="cb47-10" title="10"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb47-11" title="11"><span class="co">#&gt; $imperative</span></a>
+<a class="sourceLine" id="cb47-12" title="12"><span class="co">#&gt; [1] &quot;{homo,hetero}_{vector,list}_{one,two,three}&quot;</span></a>
+<a class="sourceLine" id="cb47-13" title="13"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb47-14" title="14"><span class="co">#&gt; $default</span></a>
+<a class="sourceLine" id="cb47-15" title="15"><span class="co">#&gt; [1] &quot;{none,full}&quot;</span></a>
+<a class="sourceLine" id="cb47-16" title="16"><span class="kw">print</span>(es<span class="op">$</span>failure<span class="op">$</span>synthesis)</a>
+<a class="sourceLine" id="cb47-17" title="17"><span class="co">#&gt; [1] NA</span></a></code></pre></div>
+<p>From the 24 test runs, no errors where generated. If you are curious about a particular test call, let’s say number 22, just introspect returned values as below. You will see the code use to call the function during the test.</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" title="1"><span class="kw">print</span>(es<span class="op">$</span>success<span class="op">$</span>code[<span class="dv">22</span>]<span class="op">$</span>call_string)</a>
+<a class="sourceLine" id="cb48-2" title="2"><span class="co">#&gt; [1] &quot;op_append(originalValues_ = list(c(-8+3i, 5+6i, -13+3i, 8+1i), ---    c(-8-6i, 15+5i, 5+8i, 12-5i)), valuesToInsert_ = list(c(17L, ---11L), list(data = list(list(data = list(as.raw(0x6e), list(data = list(---    list(data = list(c(8+12i, -2-8i), structure(16384, class = \&quot;Date\&quot;), ---        list(data = list(4+15i, list(data = list(list(data = list(---            6L, list(data = list(list(data = list(list(data = list(---                c(FALSE, NA, FALSE, NA), list(data = list(-5:-4, ---                  c(FALSE, NA, NA))), structure(c(972864000, ---                972864000), class = c(\&quot;POSIXct\&quot;, \&quot;POSIXt\&quot;)), ---                c(NA, 1.00412152381614, 1.00412152381614))))), ---                list(data = list(c(17L, 14L, 7L, 5L, 2L, 11L), ---                  list(data = list(list(data = list(2.69039925839752, ---                    c(-3+9i, -9-16i, 2-15i), c(13.2084962166846, ---                    13.3436268009245, 2.62213358655572, 6.90973385795951, ---                    7.19652696698904), c(10L, -17L))))), c(8.62264013290405, ---                  10.4135163128376, 8.36220926046371, 1.94969380274415, ---                  2.62334731966257, 8.64920395612717))))), TRUE, ---            list(data = list(list(data = list(TRUE, 7.38372031599283, ---                c(-13L, -4L, -9L))), c(-12L, -3L, -2L), list(---                data = list(NA)))), c(7.27329816808924, 3.28533956455067, ---            -11.548649426084, -5.39954257849604, -0.158040850423276---            ), c(6L, 9L, 4L))))), list(data = list(8.27031458774582, ---            list(data = list(list(data = list(integer(0))))))))), ---        c(\&quot;oxmblc\&quot;, \&quot;ppyed\&quot;, \&quot;zwiiktp\&quot;, \&quot;ppmzgz\&quot;, \&quot;roaodslbtts\&quot;, ---        \&quot;avxw\&quot;), -15.2460190393031, list(data = list(list(data = list(---            numeric(0), integer(0))), list(data = list(c(\&quot;wst\&quot;, ---        \&quot;mvfbyevtob\&quot;, \&quot;lmkhwocpf\&quot;), as.raw(c(0x78, 0x64, 0x68, ---        0x69, 0x77, 0x68)), c(11.9735112781636, -8.66431576246396, ---        -15.858928845264), 2L, list(data = list(8L, list(data = list(---            c(\&quot;viszsesun\&quot;, \&quot;flgv\&quot;, \&quot;iqpzh\&quot;, \&quot;isziiphi\&quot;, \&quot;aco\&quot;, ---            \&quot;vqrufyq\&quot;), c(NA, 2.33606173284352, -16.2792672854848, ---            -16.2792672854848, -2.4392126603052), numeric(0), ---            list(data = list(-11.1560563221574)), TRUE, -2.62471943721175)))), ---            list(data = list(list(data = list(c(-9.52451307699084, ---            -11.9914163388312))), FALSE)))), list(data = list(---            c(-4L, 11L, -1L, -12L, 3L), c(-16L, 17L, -16L, -1L, ---            7L), \&quot;mfkmdh\&quot;, numeric(0), list(data = list(list(---                data = list(c(4.92849926324561, 13.471843149513, ---                -0.60454114805907), c(10.7167961113155, 7.43848054483533---                ))), c(\&quot;rxoxh\&quot;, \&quot;sihls\&quot;), complex(0), c(6.67615007981658, ---            8.0937023460865, 13.4478220082819, 13.1799479089677---            ))), list(data = list(c(-4L, 3L), TRUE, list(data = list(---                structure(1466035200, class = c(\&quot;POSIXct\&quot;, \&quot;POSIXt\&quot;---                )), NA)), list(data = list(list(data = list(c(NA, ---            \&quot;eljucvwdth\&quot;), FALSE, complex(0), c(11L, 2L, 16L, ---            2L, -15L))), c(-9.51196666806936, -4.35927340388298, ---            -7.8687717653811), list(data = list(list(data = list(---                c(4L, 6L, 3L, 7L, 4L), c(TRUE, TRUE), c(1.069873646833, ---                -8.54819805454463, -11.9553949269466, -14.8211299027316, ---                -8.02534481231123))), c(14L, -5L, 4L, -15L), ---                structure(20694, class = \&quot;Date\&quot;), c(4.46488302946091, ---                -14.9756830153055, -14.9756830153055, -14.9756830153055---                ), c(3.96209045872092, 5.82415194809437, 2.05197109282017---                ))), list(data = list(c(TRUE, FALSE, FALSE, FALSE, ---            TRUE), integer(0))))), list(data = list(c(17L, 10L, ---            6L, 13L))))), FALSE)))), c(\&quot;ifkho\&quot;, \&quot;ltts\&quot;, \&quot;dazpi\&quot;, ---        \&quot;ojmli\&quot;, \&quot;uuomdhcrm\&quot;))))))), list(data = list(c(3L, 12L, ---11L))), c(-7+10i, 10-10i, -10+6i, 8-2i), list(data = list(c(-5.65178386494517, ----13.7241868562996, -15.842213910073), FALSE, TRUE, c(-7L, -5L, ----9L, -9L)))))), afterIndex_ui_1 = 17L)&quot;</span></a></code></pre></div>
+<p>If you desire to introspect the call results, use this approach.</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" title="1"><span class="kw">print</span>(es<span class="op">$</span>success<span class="op">$</span>code[<span class="dv">22</span>]<span class="op">$</span>result)</a>
+<a class="sourceLine" id="cb49-2" title="2"><span class="co">#&gt; [[1]]</span></a>
+<a class="sourceLine" id="cb49-3" title="3"><span class="co">#&gt; [[1]][[1]]</span></a>
+<a class="sourceLine" id="cb49-4" title="4"><span class="co">#&gt; [1]  -8+3i   5+6i -13+3i   8+1i</span></a>
+<a class="sourceLine" id="cb49-5" title="5"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-6" title="6"><span class="co">#&gt; [[1]][[2]]</span></a>
+<a class="sourceLine" id="cb49-7" title="7"><span class="co">#&gt; [1] -8-6i 15+5i  5+8i 12-5i</span></a>
+<a class="sourceLine" id="cb49-8" title="8"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-9" title="9"><span class="co">#&gt; [[1]][[3]]</span></a>
+<a class="sourceLine" id="cb49-10" title="10"><span class="co">#&gt; [1] 17 11</span></a>
+<a class="sourceLine" id="cb49-11" title="11"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-12" title="12"><span class="co">#&gt; [[1]][[4]]</span></a>
+<a class="sourceLine" id="cb49-13" title="13"><span class="co">#&gt; [[1]][[4]]$data</span></a>
+<a class="sourceLine" id="cb49-14" title="14"><span class="co">#&gt; [[1]][[4]]$data[[1]]</span></a>
+<a class="sourceLine" id="cb49-15" title="15"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data</span></a>
+<a class="sourceLine" id="cb49-16" title="16"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[1]]</span></a>
+<a class="sourceLine" id="cb49-17" title="17"><span class="co">#&gt; [1] 6e</span></a>
+<a class="sourceLine" id="cb49-18" title="18"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-19" title="19"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]</span></a>
+<a class="sourceLine" id="cb49-20" title="20"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data</span></a>
+<a class="sourceLine" id="cb49-21" title="21"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]</span></a>
+<a class="sourceLine" id="cb49-22" title="22"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data</span></a>
+<a class="sourceLine" id="cb49-23" title="23"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[1]]</span></a>
+<a class="sourceLine" id="cb49-24" title="24"><span class="co">#&gt; [1]  8+12i -2- 8i</span></a>
+<a class="sourceLine" id="cb49-25" title="25"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-26" title="26"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[2]]</span></a>
+<a class="sourceLine" id="cb49-27" title="27"><span class="co">#&gt; [1] &quot;2014-11-10&quot;</span></a>
+<a class="sourceLine" id="cb49-28" title="28"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-29" title="29"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]</span></a>
+<a class="sourceLine" id="cb49-30" title="30"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data</span></a>
+<a class="sourceLine" id="cb49-31" title="31"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[1]]</span></a>
+<a class="sourceLine" id="cb49-32" title="32"><span class="co">#&gt; [1] 4+15i</span></a>
+<a class="sourceLine" id="cb49-33" title="33"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-34" title="34"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[2]]</span></a>
+<a class="sourceLine" id="cb49-35" title="35"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[2]]$data</span></a>
+<a class="sourceLine" id="cb49-36" title="36"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[2]]$data[[1]]</span></a>
+<a class="sourceLine" id="cb49-37" title="37"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[2]]$data[[1]]$data</span></a>
+<a class="sourceLine" id="cb49-38" title="38"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[2]]$data[[1]]$data[[1]]</span></a>
+<a class="sourceLine" id="cb49-39" title="39"><span class="co">#&gt; [1] 6</span></a>
+<a class="sourceLine" id="cb49-40" title="40"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-41" title="41"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[2]]$data[[1]]$data[[2]]</span></a>
+<a class="sourceLine" id="cb49-42" title="42"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[2]]$data[[1]]$data[[2]]$data</span></a>
+<a class="sourceLine" id="cb49-43" title="43"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[2]]$data[[1]]$data[[2]]$data[[1]]</span></a>
+<a class="sourceLine" id="cb49-44" title="44"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[2]]$data[[1]]$data[[2]]$data[[1]]$data</span></a>
+<a class="sourceLine" id="cb49-45" title="45"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[2]]$data[[1]]$data[[2]]$data[[1]]$data[[1]]</span></a>
+<a class="sourceLine" id="cb49-46" title="46"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[2]]$data[[1]]$data[[2]]$data[[1]]$data[[1]]$data</span></a>
+<a class="sourceLine" id="cb49-47" title="47"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[2]]$data[[1]]$data[[2]]$data[[1]]$data[[1]]$data[[1]]</span></a>
+<a class="sourceLine" id="cb49-48" title="48"><span class="co">#&gt; [1] FALSE    NA FALSE    NA</span></a>
+<a class="sourceLine" id="cb49-49" title="49"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-50" title="50"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[2]]$data[[1]]$data[[2]]$data[[1]]$data[[1]]$data[[2]]</span></a>
+<a class="sourceLine" id="cb49-51" title="51"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[2]]$data[[1]]$data[[2]]$data[[1]]$data[[1]]$data[[2]]$data</span></a>
+<a class="sourceLine" id="cb49-52" title="52"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[2]]$data[[1]]$data[[2]]$data[[1]]$data[[1]]$data[[2]]$data[[1]]</span></a>
+<a class="sourceLine" id="cb49-53" title="53"><span class="co">#&gt; [1] -5 -4</span></a>
+<a class="sourceLine" id="cb49-54" title="54"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-55" title="55"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[2]]$data[[1]]$data[[2]]$data[[1]]$data[[1]]$data[[2]]$data[[2]]</span></a>
+<a class="sourceLine" id="cb49-56" title="56"><span class="co">#&gt; [1] FALSE    NA    NA</span></a>
+<a class="sourceLine" id="cb49-57" title="57"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-58" title="58"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-59" title="59"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-60" title="60"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[2]]$data[[1]]$data[[2]]$data[[1]]$data[[1]]$data[[3]]</span></a>
+<a class="sourceLine" id="cb49-61" title="61"><span class="co">#&gt; [1] &quot;2000-10-30 01:00:00 CET&quot; &quot;2000-10-30 01:00:00 CET&quot;</span></a>
+<a class="sourceLine" id="cb49-62" title="62"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-63" title="63"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[2]]$data[[1]]$data[[2]]$data[[1]]$data[[1]]$data[[4]]</span></a>
+<a class="sourceLine" id="cb49-64" title="64"><span class="co">#&gt; [1]       NA 1.004122 1.004122</span></a>
+<a class="sourceLine" id="cb49-65" title="65"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-66" title="66"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-67" title="67"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-68" title="68"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-69" title="69"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-70" title="70"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[2]]$data[[1]]$data[[2]]$data[[2]]</span></a>
+<a class="sourceLine" id="cb49-71" title="71"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[2]]$data[[1]]$data[[2]]$data[[2]]$data</span></a>
+<a class="sourceLine" id="cb49-72" title="72"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[2]]$data[[1]]$data[[2]]$data[[2]]$data[[1]]</span></a>
+<a class="sourceLine" id="cb49-73" title="73"><span class="co">#&gt; [1] 17 14  7  5  2 11</span></a>
+<a class="sourceLine" id="cb49-74" title="74"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-75" title="75"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[2]]$data[[1]]$data[[2]]$data[[2]]$data[[2]]</span></a>
+<a class="sourceLine" id="cb49-76" title="76"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[2]]$data[[1]]$data[[2]]$data[[2]]$data[[2]]$data</span></a>
+<a class="sourceLine" id="cb49-77" title="77"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[2]]$data[[1]]$data[[2]]$data[[2]]$data[[2]]$data[[1]]</span></a>
+<a class="sourceLine" id="cb49-78" title="78"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[2]]$data[[1]]$data[[2]]$data[[2]]$data[[2]]$data[[1]]$data</span></a>
+<a class="sourceLine" id="cb49-79" title="79"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[2]]$data[[1]]$data[[2]]$data[[2]]$data[[2]]$data[[1]]$data[[1]]</span></a>
+<a class="sourceLine" id="cb49-80" title="80"><span class="co">#&gt; [1] 2.690399</span></a>
+<a class="sourceLine" id="cb49-81" title="81"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-82" title="82"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[2]]$data[[1]]$data[[2]]$data[[2]]$data[[2]]$data[[1]]$data[[2]]</span></a>
+<a class="sourceLine" id="cb49-83" title="83"><span class="co">#&gt; [1] -3+ 9i -9-16i  2-15i</span></a>
+<a class="sourceLine" id="cb49-84" title="84"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-85" title="85"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[2]]$data[[1]]$data[[2]]$data[[2]]$data[[2]]$data[[1]]$data[[3]]</span></a>
+<a class="sourceLine" id="cb49-86" title="86"><span class="co">#&gt; [1] 13.208496 13.343627  2.622134  6.909734  7.196527</span></a>
+<a class="sourceLine" id="cb49-87" title="87"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-88" title="88"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[2]]$data[[1]]$data[[2]]$data[[2]]$data[[2]]$data[[1]]$data[[4]]</span></a>
+<a class="sourceLine" id="cb49-89" title="89"><span class="co">#&gt; [1]  10 -17</span></a>
+<a class="sourceLine" id="cb49-90" title="90"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-91" title="91"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-92" title="92"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-93" title="93"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-94" title="94"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-95" title="95"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[2]]$data[[1]]$data[[2]]$data[[2]]$data[[3]]</span></a>
+<a class="sourceLine" id="cb49-96" title="96"><span class="co">#&gt; [1]  8.622640 10.413516  8.362209  1.949694  2.623347  8.649204</span></a>
+<a class="sourceLine" id="cb49-97" title="97"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-98" title="98"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-99" title="99"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-100" title="100"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-101" title="101"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-102" title="102"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[2]]$data[[1]]$data[[3]]</span></a>
+<a class="sourceLine" id="cb49-103" title="103"><span class="co">#&gt; [1] TRUE</span></a>
+<a class="sourceLine" id="cb49-104" title="104"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-105" title="105"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[2]]$data[[1]]$data[[4]]</span></a>
+<a class="sourceLine" id="cb49-106" title="106"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[2]]$data[[1]]$data[[4]]$data</span></a>
+<a class="sourceLine" id="cb49-107" title="107"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[2]]$data[[1]]$data[[4]]$data[[1]]</span></a>
+<a class="sourceLine" id="cb49-108" title="108"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[2]]$data[[1]]$data[[4]]$data[[1]]$data</span></a>
+<a class="sourceLine" id="cb49-109" title="109"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[2]]$data[[1]]$data[[4]]$data[[1]]$data[[1]]</span></a>
+<a class="sourceLine" id="cb49-110" title="110"><span class="co">#&gt; [1] TRUE</span></a>
+<a class="sourceLine" id="cb49-111" title="111"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-112" title="112"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[2]]$data[[1]]$data[[4]]$data[[1]]$data[[2]]</span></a>
+<a class="sourceLine" id="cb49-113" title="113"><span class="co">#&gt; [1] 7.38372</span></a>
+<a class="sourceLine" id="cb49-114" title="114"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-115" title="115"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[2]]$data[[1]]$data[[4]]$data[[1]]$data[[3]]</span></a>
+<a class="sourceLine" id="cb49-116" title="116"><span class="co">#&gt; [1] -13  -4  -9</span></a>
+<a class="sourceLine" id="cb49-117" title="117"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-118" title="118"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-119" title="119"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-120" title="120"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[2]]$data[[1]]$data[[4]]$data[[2]]</span></a>
+<a class="sourceLine" id="cb49-121" title="121"><span class="co">#&gt; [1] -12  -3  -2</span></a>
+<a class="sourceLine" id="cb49-122" title="122"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-123" title="123"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[2]]$data[[1]]$data[[4]]$data[[3]]</span></a>
+<a class="sourceLine" id="cb49-124" title="124"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[2]]$data[[1]]$data[[4]]$data[[3]]$data</span></a>
+<a class="sourceLine" id="cb49-125" title="125"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[2]]$data[[1]]$data[[4]]$data[[3]]$data[[1]]</span></a>
+<a class="sourceLine" id="cb49-126" title="126"><span class="co">#&gt; [1] NA</span></a>
+<a class="sourceLine" id="cb49-127" title="127"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-128" title="128"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-129" title="129"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-130" title="130"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-131" title="131"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-132" title="132"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[2]]$data[[1]]$data[[5]]</span></a>
+<a class="sourceLine" id="cb49-133" title="133"><span class="co">#&gt; [1]   7.2732982   3.2853396 -11.5486494  -5.3995426  -0.1580409</span></a>
+<a class="sourceLine" id="cb49-134" title="134"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-135" title="135"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[2]]$data[[1]]$data[[6]]</span></a>
+<a class="sourceLine" id="cb49-136" title="136"><span class="co">#&gt; [1] 6 9 4</span></a>
+<a class="sourceLine" id="cb49-137" title="137"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-138" title="138"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-139" title="139"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-140" title="140"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-141" title="141"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-142" title="142"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[3]]</span></a>
+<a class="sourceLine" id="cb49-143" title="143"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[3]]$data</span></a>
+<a class="sourceLine" id="cb49-144" title="144"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[3]]$data[[1]]</span></a>
+<a class="sourceLine" id="cb49-145" title="145"><span class="co">#&gt; [1] 8.270315</span></a>
+<a class="sourceLine" id="cb49-146" title="146"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-147" title="147"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[3]]$data[[2]]</span></a>
+<a class="sourceLine" id="cb49-148" title="148"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[3]]$data[[2]]$data</span></a>
+<a class="sourceLine" id="cb49-149" title="149"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[3]]$data[[2]]$data[[1]]</span></a>
+<a class="sourceLine" id="cb49-150" title="150"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[3]]$data[[2]]$data[[1]]$data</span></a>
+<a class="sourceLine" id="cb49-151" title="151"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[3]]$data[[3]]$data[[2]]$data[[1]]$data[[1]]</span></a>
+<a class="sourceLine" id="cb49-152" title="152"><span class="co">#&gt; integer(0)</span></a>
+<a class="sourceLine" id="cb49-153" title="153"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-154" title="154"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-155" title="155"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-156" title="156"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-157" title="157"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-158" title="158"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-159" title="159"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-160" title="160"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-161" title="161"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-162" title="162"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[4]]</span></a>
+<a class="sourceLine" id="cb49-163" title="163"><span class="co">#&gt; [1] &quot;oxmblc&quot;      &quot;ppyed&quot;       &quot;zwiiktp&quot;     &quot;ppmzgz&quot;      &quot;roaodslbtts&quot;</span></a>
+<a class="sourceLine" id="cb49-164" title="164"><span class="co">#&gt; [6] &quot;avxw&quot;       </span></a>
+<a class="sourceLine" id="cb49-165" title="165"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-166" title="166"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[5]]</span></a>
+<a class="sourceLine" id="cb49-167" title="167"><span class="co">#&gt; [1] -15.24602</span></a>
+<a class="sourceLine" id="cb49-168" title="168"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-169" title="169"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]</span></a>
+<a class="sourceLine" id="cb49-170" title="170"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data</span></a>
+<a class="sourceLine" id="cb49-171" title="171"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[1]]</span></a>
+<a class="sourceLine" id="cb49-172" title="172"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[1]]$data</span></a>
+<a class="sourceLine" id="cb49-173" title="173"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[1]]$data[[1]]</span></a>
+<a class="sourceLine" id="cb49-174" title="174"><span class="co">#&gt; numeric(0)</span></a>
+<a class="sourceLine" id="cb49-175" title="175"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-176" title="176"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[1]]$data[[2]]</span></a>
+<a class="sourceLine" id="cb49-177" title="177"><span class="co">#&gt; integer(0)</span></a>
+<a class="sourceLine" id="cb49-178" title="178"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-179" title="179"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-180" title="180"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-181" title="181"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[2]]</span></a>
+<a class="sourceLine" id="cb49-182" title="182"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[2]]$data</span></a>
+<a class="sourceLine" id="cb49-183" title="183"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[2]]$data[[1]]</span></a>
+<a class="sourceLine" id="cb49-184" title="184"><span class="co">#&gt; [1] &quot;wst&quot;        &quot;mvfbyevtob&quot; &quot;lmkhwocpf&quot; </span></a>
+<a class="sourceLine" id="cb49-185" title="185"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-186" title="186"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[2]]$data[[2]]</span></a>
+<a class="sourceLine" id="cb49-187" title="187"><span class="co">#&gt; [1] 78 64 68 69 77 68</span></a>
+<a class="sourceLine" id="cb49-188" title="188"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-189" title="189"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[2]]$data[[3]]</span></a>
+<a class="sourceLine" id="cb49-190" title="190"><span class="co">#&gt; [1]  11.973511  -8.664316 -15.858929</span></a>
+<a class="sourceLine" id="cb49-191" title="191"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-192" title="192"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[2]]$data[[4]]</span></a>
+<a class="sourceLine" id="cb49-193" title="193"><span class="co">#&gt; [1] 2</span></a>
+<a class="sourceLine" id="cb49-194" title="194"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-195" title="195"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[2]]$data[[5]]</span></a>
+<a class="sourceLine" id="cb49-196" title="196"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[2]]$data[[5]]$data</span></a>
+<a class="sourceLine" id="cb49-197" title="197"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[2]]$data[[5]]$data[[1]]</span></a>
+<a class="sourceLine" id="cb49-198" title="198"><span class="co">#&gt; [1] 8</span></a>
+<a class="sourceLine" id="cb49-199" title="199"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-200" title="200"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[2]]$data[[5]]$data[[2]]</span></a>
+<a class="sourceLine" id="cb49-201" title="201"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[2]]$data[[5]]$data[[2]]$data</span></a>
+<a class="sourceLine" id="cb49-202" title="202"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[2]]$data[[5]]$data[[2]]$data[[1]]</span></a>
+<a class="sourceLine" id="cb49-203" title="203"><span class="co">#&gt; [1] &quot;viszsesun&quot; &quot;flgv&quot;      &quot;iqpzh&quot;     &quot;isziiphi&quot;  &quot;aco&quot;       &quot;vqrufyq&quot;  </span></a>
+<a class="sourceLine" id="cb49-204" title="204"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-205" title="205"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[2]]$data[[5]]$data[[2]]$data[[2]]</span></a>
+<a class="sourceLine" id="cb49-206" title="206"><span class="co">#&gt; [1]         NA   2.336062 -16.279267 -16.279267  -2.439213</span></a>
+<a class="sourceLine" id="cb49-207" title="207"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-208" title="208"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[2]]$data[[5]]$data[[2]]$data[[3]]</span></a>
+<a class="sourceLine" id="cb49-209" title="209"><span class="co">#&gt; numeric(0)</span></a>
+<a class="sourceLine" id="cb49-210" title="210"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-211" title="211"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[2]]$data[[5]]$data[[2]]$data[[4]]</span></a>
+<a class="sourceLine" id="cb49-212" title="212"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[2]]$data[[5]]$data[[2]]$data[[4]]$data</span></a>
+<a class="sourceLine" id="cb49-213" title="213"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[2]]$data[[5]]$data[[2]]$data[[4]]$data[[1]]</span></a>
+<a class="sourceLine" id="cb49-214" title="214"><span class="co">#&gt; [1] -11.15606</span></a>
+<a class="sourceLine" id="cb49-215" title="215"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-216" title="216"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-217" title="217"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-218" title="218"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[2]]$data[[5]]$data[[2]]$data[[5]]</span></a>
+<a class="sourceLine" id="cb49-219" title="219"><span class="co">#&gt; [1] TRUE</span></a>
+<a class="sourceLine" id="cb49-220" title="220"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-221" title="221"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[2]]$data[[5]]$data[[2]]$data[[6]]</span></a>
+<a class="sourceLine" id="cb49-222" title="222"><span class="co">#&gt; [1] -2.624719</span></a>
+<a class="sourceLine" id="cb49-223" title="223"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-224" title="224"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-225" title="225"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-226" title="226"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-227" title="227"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-228" title="228"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[2]]$data[[6]]</span></a>
+<a class="sourceLine" id="cb49-229" title="229"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[2]]$data[[6]]$data</span></a>
+<a class="sourceLine" id="cb49-230" title="230"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[2]]$data[[6]]$data[[1]]</span></a>
+<a class="sourceLine" id="cb49-231" title="231"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[2]]$data[[6]]$data[[1]]$data</span></a>
+<a class="sourceLine" id="cb49-232" title="232"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[2]]$data[[6]]$data[[1]]$data[[1]]</span></a>
+<a class="sourceLine" id="cb49-233" title="233"><span class="co">#&gt; [1]  -9.524513 -11.991416</span></a>
+<a class="sourceLine" id="cb49-234" title="234"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-235" title="235"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-236" title="236"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-237" title="237"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[2]]$data[[6]]$data[[2]]</span></a>
+<a class="sourceLine" id="cb49-238" title="238"><span class="co">#&gt; [1] FALSE</span></a>
+<a class="sourceLine" id="cb49-239" title="239"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-240" title="240"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-241" title="241"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-242" title="242"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-243" title="243"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-244" title="244"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]</span></a>
+<a class="sourceLine" id="cb49-245" title="245"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data</span></a>
+<a class="sourceLine" id="cb49-246" title="246"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[1]]</span></a>
+<a class="sourceLine" id="cb49-247" title="247"><span class="co">#&gt; [1]  -4  11  -1 -12   3</span></a>
+<a class="sourceLine" id="cb49-248" title="248"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-249" title="249"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[2]]</span></a>
+<a class="sourceLine" id="cb49-250" title="250"><span class="co">#&gt; [1] -16  17 -16  -1   7</span></a>
+<a class="sourceLine" id="cb49-251" title="251"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-252" title="252"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[3]]</span></a>
+<a class="sourceLine" id="cb49-253" title="253"><span class="co">#&gt; [1] &quot;mfkmdh&quot;</span></a>
+<a class="sourceLine" id="cb49-254" title="254"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-255" title="255"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[4]]</span></a>
+<a class="sourceLine" id="cb49-256" title="256"><span class="co">#&gt; numeric(0)</span></a>
+<a class="sourceLine" id="cb49-257" title="257"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-258" title="258"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[5]]</span></a>
+<a class="sourceLine" id="cb49-259" title="259"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[5]]$data</span></a>
+<a class="sourceLine" id="cb49-260" title="260"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[5]]$data[[1]]</span></a>
+<a class="sourceLine" id="cb49-261" title="261"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[5]]$data[[1]]$data</span></a>
+<a class="sourceLine" id="cb49-262" title="262"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[5]]$data[[1]]$data[[1]]</span></a>
+<a class="sourceLine" id="cb49-263" title="263"><span class="co">#&gt; [1]  4.9284993 13.4718431 -0.6045411</span></a>
+<a class="sourceLine" id="cb49-264" title="264"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-265" title="265"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[5]]$data[[1]]$data[[2]]</span></a>
+<a class="sourceLine" id="cb49-266" title="266"><span class="co">#&gt; [1] 10.716796  7.438481</span></a>
+<a class="sourceLine" id="cb49-267" title="267"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-268" title="268"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-269" title="269"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-270" title="270"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[5]]$data[[2]]</span></a>
+<a class="sourceLine" id="cb49-271" title="271"><span class="co">#&gt; [1] &quot;rxoxh&quot; &quot;sihls&quot;</span></a>
+<a class="sourceLine" id="cb49-272" title="272"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-273" title="273"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[5]]$data[[3]]</span></a>
+<a class="sourceLine" id="cb49-274" title="274"><span class="co">#&gt; complex(0)</span></a>
+<a class="sourceLine" id="cb49-275" title="275"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-276" title="276"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[5]]$data[[4]]</span></a>
+<a class="sourceLine" id="cb49-277" title="277"><span class="co">#&gt; [1]  6.676150  8.093702 13.447822 13.179948</span></a>
+<a class="sourceLine" id="cb49-278" title="278"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-279" title="279"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-280" title="280"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-281" title="281"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[6]]</span></a>
+<a class="sourceLine" id="cb49-282" title="282"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[6]]$data</span></a>
+<a class="sourceLine" id="cb49-283" title="283"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[6]]$data[[1]]</span></a>
+<a class="sourceLine" id="cb49-284" title="284"><span class="co">#&gt; [1] -4  3</span></a>
+<a class="sourceLine" id="cb49-285" title="285"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-286" title="286"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[6]]$data[[2]]</span></a>
+<a class="sourceLine" id="cb49-287" title="287"><span class="co">#&gt; [1] TRUE</span></a>
+<a class="sourceLine" id="cb49-288" title="288"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-289" title="289"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[6]]$data[[3]]</span></a>
+<a class="sourceLine" id="cb49-290" title="290"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[6]]$data[[3]]$data</span></a>
+<a class="sourceLine" id="cb49-291" title="291"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[6]]$data[[3]]$data[[1]]</span></a>
+<a class="sourceLine" id="cb49-292" title="292"><span class="co">#&gt; [1] &quot;2016-06-16 02:00:00 CEST&quot;</span></a>
+<a class="sourceLine" id="cb49-293" title="293"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-294" title="294"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[6]]$data[[3]]$data[[2]]</span></a>
+<a class="sourceLine" id="cb49-295" title="295"><span class="co">#&gt; [1] NA</span></a>
+<a class="sourceLine" id="cb49-296" title="296"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-297" title="297"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-298" title="298"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-299" title="299"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[6]]$data[[4]]</span></a>
+<a class="sourceLine" id="cb49-300" title="300"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[6]]$data[[4]]$data</span></a>
+<a class="sourceLine" id="cb49-301" title="301"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[6]]$data[[4]]$data[[1]]</span></a>
+<a class="sourceLine" id="cb49-302" title="302"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[6]]$data[[4]]$data[[1]]$data</span></a>
+<a class="sourceLine" id="cb49-303" title="303"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[6]]$data[[4]]$data[[1]]$data[[1]]</span></a>
+<a class="sourceLine" id="cb49-304" title="304"><span class="co">#&gt; [1] NA           &quot;eljucvwdth&quot;</span></a>
+<a class="sourceLine" id="cb49-305" title="305"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-306" title="306"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[6]]$data[[4]]$data[[1]]$data[[2]]</span></a>
+<a class="sourceLine" id="cb49-307" title="307"><span class="co">#&gt; [1] FALSE</span></a>
+<a class="sourceLine" id="cb49-308" title="308"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-309" title="309"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[6]]$data[[4]]$data[[1]]$data[[3]]</span></a>
+<a class="sourceLine" id="cb49-310" title="310"><span class="co">#&gt; complex(0)</span></a>
+<a class="sourceLine" id="cb49-311" title="311"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-312" title="312"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[6]]$data[[4]]$data[[1]]$data[[4]]</span></a>
+<a class="sourceLine" id="cb49-313" title="313"><span class="co">#&gt; [1]  11   2  16   2 -15</span></a>
+<a class="sourceLine" id="cb49-314" title="314"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-315" title="315"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-316" title="316"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-317" title="317"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[6]]$data[[4]]$data[[2]]</span></a>
+<a class="sourceLine" id="cb49-318" title="318"><span class="co">#&gt; [1] -9.511967 -4.359273 -7.868772</span></a>
+<a class="sourceLine" id="cb49-319" title="319"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-320" title="320"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[6]]$data[[4]]$data[[3]]</span></a>
+<a class="sourceLine" id="cb49-321" title="321"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[6]]$data[[4]]$data[[3]]$data</span></a>
+<a class="sourceLine" id="cb49-322" title="322"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[6]]$data[[4]]$data[[3]]$data[[1]]</span></a>
+<a class="sourceLine" id="cb49-323" title="323"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[6]]$data[[4]]$data[[3]]$data[[1]]$data</span></a>
+<a class="sourceLine" id="cb49-324" title="324"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[6]]$data[[4]]$data[[3]]$data[[1]]$data[[1]]</span></a>
+<a class="sourceLine" id="cb49-325" title="325"><span class="co">#&gt; [1] 4 6 3 7 4</span></a>
+<a class="sourceLine" id="cb49-326" title="326"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-327" title="327"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[6]]$data[[4]]$data[[3]]$data[[1]]$data[[2]]</span></a>
+<a class="sourceLine" id="cb49-328" title="328"><span class="co">#&gt; [1] TRUE TRUE</span></a>
+<a class="sourceLine" id="cb49-329" title="329"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-330" title="330"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[6]]$data[[4]]$data[[3]]$data[[1]]$data[[3]]</span></a>
+<a class="sourceLine" id="cb49-331" title="331"><span class="co">#&gt; [1]   1.069874  -8.548198 -11.955395 -14.821130  -8.025345</span></a>
+<a class="sourceLine" id="cb49-332" title="332"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-333" title="333"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-334" title="334"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-335" title="335"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[6]]$data[[4]]$data[[3]]$data[[2]]</span></a>
+<a class="sourceLine" id="cb49-336" title="336"><span class="co">#&gt; [1]  14  -5   4 -15</span></a>
+<a class="sourceLine" id="cb49-337" title="337"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-338" title="338"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[6]]$data[[4]]$data[[3]]$data[[3]]</span></a>
+<a class="sourceLine" id="cb49-339" title="339"><span class="co">#&gt; [1] &quot;2026-08-29&quot;</span></a>
+<a class="sourceLine" id="cb49-340" title="340"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-341" title="341"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[6]]$data[[4]]$data[[3]]$data[[4]]</span></a>
+<a class="sourceLine" id="cb49-342" title="342"><span class="co">#&gt; [1]   4.464883 -14.975683 -14.975683 -14.975683</span></a>
+<a class="sourceLine" id="cb49-343" title="343"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-344" title="344"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[6]]$data[[4]]$data[[3]]$data[[5]]</span></a>
+<a class="sourceLine" id="cb49-345" title="345"><span class="co">#&gt; [1] 3.962090 5.824152 2.051971</span></a>
+<a class="sourceLine" id="cb49-346" title="346"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-347" title="347"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-348" title="348"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-349" title="349"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[6]]$data[[4]]$data[[4]]</span></a>
+<a class="sourceLine" id="cb49-350" title="350"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[6]]$data[[4]]$data[[4]]$data</span></a>
+<a class="sourceLine" id="cb49-351" title="351"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[6]]$data[[4]]$data[[4]]$data[[1]]</span></a>
+<a class="sourceLine" id="cb49-352" title="352"><span class="co">#&gt; [1]  TRUE FALSE FALSE FALSE  TRUE</span></a>
+<a class="sourceLine" id="cb49-353" title="353"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-354" title="354"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[6]]$data[[4]]$data[[4]]$data[[2]]</span></a>
+<a class="sourceLine" id="cb49-355" title="355"><span class="co">#&gt; integer(0)</span></a>
+<a class="sourceLine" id="cb49-356" title="356"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-357" title="357"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-358" title="358"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-359" title="359"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-360" title="360"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-361" title="361"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[6]]$data[[5]]</span></a>
+<a class="sourceLine" id="cb49-362" title="362"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[6]]$data[[5]]$data</span></a>
+<a class="sourceLine" id="cb49-363" title="363"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[6]]$data[[5]]$data[[1]]</span></a>
+<a class="sourceLine" id="cb49-364" title="364"><span class="co">#&gt; [1] 17 10  6 13</span></a>
+<a class="sourceLine" id="cb49-365" title="365"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-366" title="366"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-367" title="367"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-368" title="368"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-369" title="369"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-370" title="370"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[6]]$data[[3]]$data[[7]]</span></a>
+<a class="sourceLine" id="cb49-371" title="371"><span class="co">#&gt; [1] FALSE</span></a>
+<a class="sourceLine" id="cb49-372" title="372"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-373" title="373"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-374" title="374"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-375" title="375"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-376" title="376"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-377" title="377"><span class="co">#&gt; [[1]][[4]]$data[[1]]$data[[2]]$data[[1]]$data[[7]]</span></a>
+<a class="sourceLine" id="cb49-378" title="378"><span class="co">#&gt; [1] &quot;ifkho&quot;     &quot;ltts&quot;      &quot;dazpi&quot;     &quot;ojmli&quot;     &quot;uuomdhcrm&quot;</span></a>
+<a class="sourceLine" id="cb49-379" title="379"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-380" title="380"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-381" title="381"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-382" title="382"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-383" title="383"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-384" title="384"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-385" title="385"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-386" title="386"><span class="co">#&gt; [[1]][[4]]$data[[2]]</span></a>
+<a class="sourceLine" id="cb49-387" title="387"><span class="co">#&gt; [[1]][[4]]$data[[2]]$data</span></a>
+<a class="sourceLine" id="cb49-388" title="388"><span class="co">#&gt; [[1]][[4]]$data[[2]]$data[[1]]</span></a>
+<a class="sourceLine" id="cb49-389" title="389"><span class="co">#&gt; [1]  3 12 11</span></a>
+<a class="sourceLine" id="cb49-390" title="390"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-391" title="391"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-392" title="392"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-393" title="393"><span class="co">#&gt; [[1]][[4]]$data[[3]]</span></a>
+<a class="sourceLine" id="cb49-394" title="394"><span class="co">#&gt; [1]  -7+10i  10-10i -10+ 6i   8- 2i</span></a>
+<a class="sourceLine" id="cb49-395" title="395"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-396" title="396"><span class="co">#&gt; [[1]][[4]]$data[[4]]</span></a>
+<a class="sourceLine" id="cb49-397" title="397"><span class="co">#&gt; [[1]][[4]]$data[[4]]$data</span></a>
+<a class="sourceLine" id="cb49-398" title="398"><span class="co">#&gt; [[1]][[4]]$data[[4]]$data[[1]]</span></a>
+<a class="sourceLine" id="cb49-399" title="399"><span class="co">#&gt; [1]  -5.651784 -13.724187 -15.842214</span></a>
+<a class="sourceLine" id="cb49-400" title="400"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-401" title="401"><span class="co">#&gt; [[1]][[4]]$data[[4]]$data[[2]]</span></a>
+<a class="sourceLine" id="cb49-402" title="402"><span class="co">#&gt; [1] FALSE</span></a>
+<a class="sourceLine" id="cb49-403" title="403"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-404" title="404"><span class="co">#&gt; [[1]][[4]]$data[[4]]$data[[3]]</span></a>
+<a class="sourceLine" id="cb49-405" title="405"><span class="co">#&gt; [1] TRUE</span></a>
+<a class="sourceLine" id="cb49-406" title="406"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb49-407" title="407"><span class="co">#&gt; [[1]][[4]]$data[[4]]$data[[4]]</span></a>
+<a class="sourceLine" id="cb49-408" title="408"><span class="co">#&gt; [1] -7 -5 -9 -9</span></a></code></pre></div>
+</div>
+<div id="an-example-using-ellipsis" class="section level2">
+<h2><span class="header-section-number">10.4</span> An example using ellipsis</h2>
+<p>Let’s now use function <cite class='kw'>sum</cite> from base package.</p>
+<p>As you know, we need first to create the offensive programming wrapper function.</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" title="1">op_sum &lt;-<span class="st"> </span><span class="kw">opwf</span>(sum, <span class="kw">c</span>(<span class="st">&#39;...&#39;</span>, <span class="st">&#39;removeNAValues_b_1&#39;</span>))</a>
+<a class="sourceLine" id="cb50-2" title="2">op_sum             </a>
+<a class="sourceLine" id="cb50-3" title="3"><span class="co">#&gt; function (..., removeNAValues_b_1 = FALSE) </span></a>
+<a class="sourceLine" id="cb50-4" title="4"><span class="co">#&gt; {</span></a>
+<a class="sourceLine" id="cb50-5" title="5"><span class="co">#&gt;     sum(..., na.rm = removeNAValues_b_1)</span></a>
+<a class="sourceLine" id="cb50-6" title="6"><span class="co">#&gt; }</span></a>
+<a class="sourceLine" id="cb50-7" title="7"><span class="co">#&gt; &lt;environment: 0x0000000019c87408&gt;</span></a></code></pre></div>
+<p>As you can see, parameter substitution is also achieved in code for default arguments.</p>
+<p>How complex is it to test this function?</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" title="1">cac_sum &lt;-<span class="st"> </span><span class="kw">computeArgumentsCombination</span>(op_sum)</a>
+<a class="sourceLine" id="cb51-2" title="2"><span class="kw">print</span>(cac_sum)</a>
+<a class="sourceLine" id="cb51-3" title="3"><span class="co">#&gt; $names</span></a>
+<a class="sourceLine" id="cb51-4" title="4"><span class="co">#&gt; $names$argument</span></a>
+<a class="sourceLine" id="cb51-5" title="5"><span class="co">#&gt; character(0)</span></a>
+<a class="sourceLine" id="cb51-6" title="6"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb51-7" title="7"><span class="co">#&gt; $names$ellipsis</span></a>
+<a class="sourceLine" id="cb51-8" title="8"><span class="co">#&gt; $names$ellipsis[[1]]</span></a>
+<a class="sourceLine" id="cb51-9" title="9"><span class="co">#&gt; character(0)</span></a>
+<a class="sourceLine" id="cb51-10" title="10"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb51-11" title="11"><span class="co">#&gt; $names$ellipsis[[2]]</span></a>
+<a class="sourceLine" id="cb51-12" title="12"><span class="co">#&gt; [1] &quot;ellipsis1_&quot;</span></a>
+<a class="sourceLine" id="cb51-13" title="13"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb51-14" title="14"><span class="co">#&gt; $names$ellipsis[[3]]</span></a>
+<a class="sourceLine" id="cb51-15" title="15"><span class="co">#&gt; [1] &quot;ellipsis1_, ellipsis2_&quot;</span></a>
+<a class="sourceLine" id="cb51-16" title="16"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb51-17" title="17"><span class="co">#&gt; $names$ellipsis[[4]]</span></a>
+<a class="sourceLine" id="cb51-18" title="18"><span class="co">#&gt; [1] &quot;ellipsis1_, ellipsis2_, ellipsis3_&quot;</span></a>
+<a class="sourceLine" id="cb51-19" title="19"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb51-20" title="20"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb51-21" title="21"><span class="co">#&gt; $names$default</span></a>
+<a class="sourceLine" id="cb51-22" title="22"><span class="co">#&gt; $names$default[[1]]</span></a>
+<a class="sourceLine" id="cb51-23" title="23"><span class="co">#&gt; character(0)</span></a>
+<a class="sourceLine" id="cb51-24" title="24"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb51-25" title="25"><span class="co">#&gt; $names$default[[2]]</span></a>
+<a class="sourceLine" id="cb51-26" title="26"><span class="co">#&gt; [1] &quot;removeNAValues_b_1&quot;</span></a>
+<a class="sourceLine" id="cb51-27" title="27"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb51-28" title="28"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb51-29" title="29"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb51-30" title="30"><span class="co">#&gt; $number</span></a>
+<a class="sourceLine" id="cb51-31" title="31"><span class="co">#&gt; $number$argument</span></a>
+<a class="sourceLine" id="cb51-32" title="32"><span class="co">#&gt; [1] 0</span></a>
+<a class="sourceLine" id="cb51-33" title="33"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb51-34" title="34"><span class="co">#&gt; $number$ellipsis</span></a>
+<a class="sourceLine" id="cb51-35" title="35"><span class="co">#&gt; [1] 0 1 2 3</span></a>
+<a class="sourceLine" id="cb51-36" title="36"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb51-37" title="37"><span class="co">#&gt; $number$default</span></a>
+<a class="sourceLine" id="cb51-38" title="38"><span class="co">#&gt; [1] 0 1</span></a>
+<a class="sourceLine" id="cb51-39" title="39"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb51-40" title="40"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb51-41" title="41"><span class="co">#&gt; $signatures</span></a>
+<a class="sourceLine" id="cb51-42" title="42"><span class="co">#&gt; $signatures[[1]]</span></a>
+<a class="sourceLine" id="cb51-43" title="43"><span class="co">#&gt; character(0)</span></a>
+<a class="sourceLine" id="cb51-44" title="44"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb51-45" title="45"><span class="co">#&gt; $signatures[[2]]</span></a>
+<a class="sourceLine" id="cb51-46" title="46"><span class="co">#&gt; [1] &quot;removeNAValues_b_1&quot;</span></a>
+<a class="sourceLine" id="cb51-47" title="47"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb51-48" title="48"><span class="co">#&gt; $signatures[[3]]</span></a>
+<a class="sourceLine" id="cb51-49" title="49"><span class="co">#&gt; [1] &quot;ellipsis1_&quot;</span></a>
+<a class="sourceLine" id="cb51-50" title="50"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb51-51" title="51"><span class="co">#&gt; $signatures[[4]]</span></a>
+<a class="sourceLine" id="cb51-52" title="52"><span class="co">#&gt; [1] &quot;ellipsis1_, removeNAValues_b_1&quot;</span></a>
+<a class="sourceLine" id="cb51-53" title="53"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb51-54" title="54"><span class="co">#&gt; $signatures[[5]]</span></a>
+<a class="sourceLine" id="cb51-55" title="55"><span class="co">#&gt; [1] &quot;ellipsis1_, ellipsis2_&quot;</span></a>
+<a class="sourceLine" id="cb51-56" title="56"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb51-57" title="57"><span class="co">#&gt; $signatures[[6]]</span></a>
+<a class="sourceLine" id="cb51-58" title="58"><span class="co">#&gt; [1] &quot;ellipsis1_, ellipsis2_, removeNAValues_b_1&quot;</span></a>
+<a class="sourceLine" id="cb51-59" title="59"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb51-60" title="60"><span class="co">#&gt; $signatures[[7]]</span></a>
+<a class="sourceLine" id="cb51-61" title="61"><span class="co">#&gt; [1] &quot;ellipsis1_, ellipsis2_, ellipsis3_&quot;</span></a>
+<a class="sourceLine" id="cb51-62" title="62"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb51-63" title="63"><span class="co">#&gt; $signatures[[8]]</span></a>
+<a class="sourceLine" id="cb51-64" title="64"><span class="co">#&gt; [1] &quot;ellipsis1_, ellipsis2_, ellipsis3_, removeNAValues_b_1&quot;</span></a>
+<a class="sourceLine" id="cb51-65" title="65"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb51-66" title="66"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb51-67" title="67"><span class="co">#&gt; $theoritical_signature_number</span></a>
+<a class="sourceLine" id="cb51-68" title="68"><span class="co">#&gt; [1] 8</span></a></code></pre></div>
+<p>There are eight call signatures, four without default parameter, four with.
+By default, ellipsis is replaced by 0 to three arguments. That’s why, first signature
+is empty, and the total is 8. Let’s test them.</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" title="1">es &lt;-<span class="st"> </span><span class="kw">exploreSignatures</span>(op_sum)</a>
+<a class="sourceLine" id="cb52-2" title="2"></a>
+<a class="sourceLine" id="cb52-3" title="3"><span class="kw">print</span>(es<span class="op">$</span>success<span class="op">$</span>synthesis)</a>
+<a class="sourceLine" id="cb52-4" title="4"><span class="co">#&gt; $number_sucessfull_tests</span></a>
+<a class="sourceLine" id="cb52-5" title="5"><span class="co">#&gt; [1] 8</span></a>
+<a class="sourceLine" id="cb52-6" title="6"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb52-7" title="7"><span class="co">#&gt; $signatures</span></a>
+<a class="sourceLine" id="cb52-8" title="8"><span class="co">#&gt; [1] &quot;no argument signature&quot; &quot;removeNAValues_b_1&quot;   </span></a>
+<a class="sourceLine" id="cb52-9" title="9"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb52-10" title="10"><span class="co">#&gt; $ellipsis</span></a>
+<a class="sourceLine" id="cb52-11" title="11"><span class="co">#&gt; [1] &quot;{homo,hetero}_{vector,list}_{none}&quot;</span></a>
+<a class="sourceLine" id="cb52-12" title="12"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb52-13" title="13"><span class="co">#&gt; $default</span></a>
+<a class="sourceLine" id="cb52-14" title="14"><span class="co">#&gt; [1] &quot;{none,full}&quot;</span></a>
+<a class="sourceLine" id="cb52-15" title="15"><span class="kw">print</span>(es<span class="op">$</span>failure<span class="op">$</span>synthesis)</a>
+<a class="sourceLine" id="cb52-16" title="16"><span class="co">#&gt; $number_erroneous_tests</span></a>
+<a class="sourceLine" id="cb52-17" title="17"><span class="co">#&gt; [1] 24</span></a>
+<a class="sourceLine" id="cb52-18" title="18"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb52-19" title="19"><span class="co">#&gt; $error</span></a>
+<a class="sourceLine" id="cb52-20" title="20"><span class="co">#&gt; [1] &quot;Error in sum(..., na.rm = removeNAValues_b_1): &#39;type&#39; (list) de l&#39;argument incorrect\n&quot;</span></a>
+<a class="sourceLine" id="cb52-21" title="21"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb52-22" title="22"><span class="co">#&gt; $signatures</span></a>
+<a class="sourceLine" id="cb52-23" title="23"><span class="co">#&gt; [1] &quot;ellipsis1_&quot;                                            </span></a>
+<a class="sourceLine" id="cb52-24" title="24"><span class="co">#&gt; [2] &quot;ellipsis1_, removeNAValues_b_1&quot;                        </span></a>
+<a class="sourceLine" id="cb52-25" title="25"><span class="co">#&gt; [3] &quot;ellipsis1_, ellipsis2_&quot;                                </span></a>
+<a class="sourceLine" id="cb52-26" title="26"><span class="co">#&gt; [4] &quot;ellipsis1_, ellipsis2_, removeNAValues_b_1&quot;            </span></a>
+<a class="sourceLine" id="cb52-27" title="27"><span class="co">#&gt; [5] &quot;ellipsis1_, ellipsis2_, ellipsis3_&quot;                    </span></a>
+<a class="sourceLine" id="cb52-28" title="28"><span class="co">#&gt; [6] &quot;ellipsis1_, ellipsis2_, ellipsis3_, removeNAValues_b_1&quot;</span></a>
+<a class="sourceLine" id="cb52-29" title="29"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb52-30" title="30"><span class="co">#&gt; $ellipsis</span></a>
+<a class="sourceLine" id="cb52-31" title="31"><span class="co">#&gt; [1] &quot;{homo,hetero}_{vector,list}_{one,two,three}&quot;</span></a>
+<a class="sourceLine" id="cb52-32" title="32"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb52-33" title="33"><span class="co">#&gt; $default</span></a>
+<a class="sourceLine" id="cb52-34" title="34"><span class="co">#&gt; [1] &quot;{none,full}&quot;</span></a></code></pre></div>
+<p>From the 32 test runs, 8 passed, 24 failed. As we gave no restriction types for ellipsis,
+it has been replaced by any kind of characters, and in particular some that cannot fit a sum. Let’s restrict the types to uses and run again same kind of test.</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" title="1">es2 &lt;-<span class="st"> </span><span class="kw">exploreSignatures</span>(op_sum, <span class="kw">list</span>(<span class="st">&#39;...&#39;</span> =<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;im&#39;</span>, <span class="st">&#39;rm&#39;</span>, <span class="st">&#39;cm&#39;</span>)))</a></code></pre></div>
+<p>Much better. Still 32 tests, now 20 passed, 12 failed. Why?</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" title="1"><span class="kw">print</span>(es2<span class="op">$</span>failure<span class="op">$</span>synthesis)</a>
+<a class="sourceLine" id="cb54-2" title="2"><span class="co">#&gt; $number_erroneous_tests</span></a>
+<a class="sourceLine" id="cb54-3" title="3"><span class="co">#&gt; [1] 12</span></a>
+<a class="sourceLine" id="cb54-4" title="4"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb54-5" title="5"><span class="co">#&gt; $error</span></a>
+<a class="sourceLine" id="cb54-6" title="6"><span class="co">#&gt; [1] &quot;Error in sum(..., na.rm = removeNAValues_b_1): &#39;type&#39; (list) de l&#39;argument incorrect\n&quot;</span></a>
+<a class="sourceLine" id="cb54-7" title="7"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb54-8" title="8"><span class="co">#&gt; $signatures</span></a>
+<a class="sourceLine" id="cb54-9" title="9"><span class="co">#&gt; [1] &quot;ellipsis1_&quot;                                            </span></a>
+<a class="sourceLine" id="cb54-10" title="10"><span class="co">#&gt; [2] &quot;ellipsis1_, removeNAValues_b_1&quot;                        </span></a>
+<a class="sourceLine" id="cb54-11" title="11"><span class="co">#&gt; [3] &quot;ellipsis1_, ellipsis2_&quot;                                </span></a>
+<a class="sourceLine" id="cb54-12" title="12"><span class="co">#&gt; [4] &quot;ellipsis1_, ellipsis2_, removeNAValues_b_1&quot;            </span></a>
+<a class="sourceLine" id="cb54-13" title="13"><span class="co">#&gt; [5] &quot;ellipsis1_, ellipsis2_, ellipsis3_&quot;                    </span></a>
+<a class="sourceLine" id="cb54-14" title="14"><span class="co">#&gt; [6] &quot;ellipsis1_, ellipsis2_, ellipsis3_, removeNAValues_b_1&quot;</span></a>
+<a class="sourceLine" id="cb54-15" title="15"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb54-16" title="16"><span class="co">#&gt; $ellipsis</span></a>
+<a class="sourceLine" id="cb54-17" title="17"><span class="co">#&gt; [1] &quot;{homo,hetero}_{list}_{one,two,three}&quot;</span></a>
+<a class="sourceLine" id="cb54-18" title="18"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb54-19" title="19"><span class="co">#&gt; $default</span></a>
+<a class="sourceLine" id="cb54-20" title="20"><span class="co">#&gt; [1] &quot;{none,full}&quot;</span></a></code></pre></div>
+<p>All failures seems to be related to arguments passed as list.</p>
+</div>
+<div id="an-example-with-imperative-default-and-ellipsis-arguments" class="section level2">
+<h2><span class="header-section-number">10.5</span> An example with imperative, default and ellipsis arguments</h2>
+<p>Let’s now use function <cite class='kw'>kronecker</cite> from base package.</p>
+<p>As you know, we need first to create the offensive programming wrapper function.</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" title="1">op_kronecker &lt;-<span class="st"> </span><span class="kw">opwf</span>(kronecker, <span class="kw">c</span>(<span class="st">&#39;arrayA_a_1&#39;</span>, <span class="st">&#39;arrayB_a_1&#39;</span>, <span class="st">&#39;function_f_1&#39;</span>, <span class="st">&#39;computeDimensionNames_b_1&#39;</span>, <span class="st">&#39;...&#39;</span>))</a>
+<a class="sourceLine" id="cb55-2" title="2">op_kronecker             </a>
+<a class="sourceLine" id="cb55-3" title="3"><span class="co">#&gt; function (arrayA_a_1, arrayB_a_1, function_f_1 = &quot;*&quot;, computeDimensionNames_b_1 = FALSE, </span></a>
+<a class="sourceLine" id="cb55-4" title="4"><span class="co">#&gt;     ...) </span></a>
+<a class="sourceLine" id="cb55-5" title="5"><span class="co">#&gt; {</span></a>
+<a class="sourceLine" id="cb55-6" title="6"><span class="co">#&gt;     kronecker(arrayA_a_1, arrayB_a_1, FUN = function_f_1, make.dimnames = computeDimensionNames_b_1, </span></a>
+<a class="sourceLine" id="cb55-7" title="7"><span class="co">#&gt;         ...)</span></a>
+<a class="sourceLine" id="cb55-8" title="8"><span class="co">#&gt; }</span></a>
+<a class="sourceLine" id="cb55-9" title="9"><span class="co">#&gt; &lt;environment: 0x00000000177c2b90&gt;</span></a></code></pre></div>
+<p>How complex is it to test this function?</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" title="1">cac_kronecker &lt;-<span class="st"> </span><span class="kw">computeArgumentsCombination</span>(op_kronecker)</a>
+<a class="sourceLine" id="cb56-2" title="2"><span class="kw">print</span>(cac_kronecker)</a>
+<a class="sourceLine" id="cb56-3" title="3"><span class="co">#&gt; $names</span></a>
+<a class="sourceLine" id="cb56-4" title="4"><span class="co">#&gt; $names$argument</span></a>
+<a class="sourceLine" id="cb56-5" title="5"><span class="co">#&gt; [1] &quot;arrayA_a_1&quot; &quot;arrayB_a_1&quot;</span></a>
+<a class="sourceLine" id="cb56-6" title="6"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb56-7" title="7"><span class="co">#&gt; $names$ellipsis</span></a>
+<a class="sourceLine" id="cb56-8" title="8"><span class="co">#&gt; $names$ellipsis[[1]]</span></a>
+<a class="sourceLine" id="cb56-9" title="9"><span class="co">#&gt; character(0)</span></a>
+<a class="sourceLine" id="cb56-10" title="10"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb56-11" title="11"><span class="co">#&gt; $names$ellipsis[[2]]</span></a>
+<a class="sourceLine" id="cb56-12" title="12"><span class="co">#&gt; [1] &quot;ellipsis1_&quot;</span></a>
+<a class="sourceLine" id="cb56-13" title="13"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb56-14" title="14"><span class="co">#&gt; $names$ellipsis[[3]]</span></a>
+<a class="sourceLine" id="cb56-15" title="15"><span class="co">#&gt; [1] &quot;ellipsis1_, ellipsis2_&quot;</span></a>
+<a class="sourceLine" id="cb56-16" title="16"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb56-17" title="17"><span class="co">#&gt; $names$ellipsis[[4]]</span></a>
+<a class="sourceLine" id="cb56-18" title="18"><span class="co">#&gt; [1] &quot;ellipsis1_, ellipsis2_, ellipsis3_&quot;</span></a>
+<a class="sourceLine" id="cb56-19" title="19"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb56-20" title="20"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb56-21" title="21"><span class="co">#&gt; $names$default</span></a>
+<a class="sourceLine" id="cb56-22" title="22"><span class="co">#&gt; $names$default[[1]]</span></a>
+<a class="sourceLine" id="cb56-23" title="23"><span class="co">#&gt; character(0)</span></a>
+<a class="sourceLine" id="cb56-24" title="24"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb56-25" title="25"><span class="co">#&gt; $names$default[[2]]</span></a>
+<a class="sourceLine" id="cb56-26" title="26"><span class="co">#&gt; [1] &quot;function_f_1&quot;</span></a>
+<a class="sourceLine" id="cb56-27" title="27"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb56-28" title="28"><span class="co">#&gt; $names$default[[3]]</span></a>
+<a class="sourceLine" id="cb56-29" title="29"><span class="co">#&gt; [1] &quot;computeDimensionNames_b_1&quot;</span></a>
+<a class="sourceLine" id="cb56-30" title="30"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb56-31" title="31"><span class="co">#&gt; $names$default[[4]]</span></a>
+<a class="sourceLine" id="cb56-32" title="32"><span class="co">#&gt; [1] &quot;function_f_1, computeDimensionNames_b_1&quot;</span></a>
+<a class="sourceLine" id="cb56-33" title="33"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb56-34" title="34"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb56-35" title="35"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb56-36" title="36"><span class="co">#&gt; $number</span></a>
+<a class="sourceLine" id="cb56-37" title="37"><span class="co">#&gt; $number$argument</span></a>
+<a class="sourceLine" id="cb56-38" title="38"><span class="co">#&gt; [1] 2</span></a>
+<a class="sourceLine" id="cb56-39" title="39"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb56-40" title="40"><span class="co">#&gt; $number$ellipsis</span></a>
+<a class="sourceLine" id="cb56-41" title="41"><span class="co">#&gt; [1] 0 1 2 3</span></a>
+<a class="sourceLine" id="cb56-42" title="42"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb56-43" title="43"><span class="co">#&gt; $number$default</span></a>
+<a class="sourceLine" id="cb56-44" title="44"><span class="co">#&gt; [1] 0 1 2</span></a>
+<a class="sourceLine" id="cb56-45" title="45"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb56-46" title="46"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb56-47" title="47"><span class="co">#&gt; $signatures</span></a>
+<a class="sourceLine" id="cb56-48" title="48"><span class="co">#&gt; $signatures[[1]]</span></a>
+<a class="sourceLine" id="cb56-49" title="49"><span class="co">#&gt; [1] &quot;arrayA_a_1, arrayB_a_1&quot;</span></a>
+<a class="sourceLine" id="cb56-50" title="50"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb56-51" title="51"><span class="co">#&gt; $signatures[[2]]</span></a>
+<a class="sourceLine" id="cb56-52" title="52"><span class="co">#&gt; [1] &quot;arrayA_a_1, arrayB_a_1, ellipsis1_&quot;</span></a>
+<a class="sourceLine" id="cb56-53" title="53"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb56-54" title="54"><span class="co">#&gt; $signatures[[3]]</span></a>
+<a class="sourceLine" id="cb56-55" title="55"><span class="co">#&gt; [1] &quot;arrayA_a_1, arrayB_a_1, ellipsis1_, ellipsis2_&quot;</span></a>
+<a class="sourceLine" id="cb56-56" title="56"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb56-57" title="57"><span class="co">#&gt; $signatures[[4]]</span></a>
+<a class="sourceLine" id="cb56-58" title="58"><span class="co">#&gt; [1] &quot;arrayA_a_1, arrayB_a_1, ellipsis1_, ellipsis2_, ellipsis3_&quot;</span></a>
+<a class="sourceLine" id="cb56-59" title="59"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb56-60" title="60"><span class="co">#&gt; $signatures[[5]]</span></a>
+<a class="sourceLine" id="cb56-61" title="61"><span class="co">#&gt; [1] &quot;arrayA_a_1, arrayB_a_1, computeDimensionNames_b_1&quot;</span></a>
+<a class="sourceLine" id="cb56-62" title="62"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb56-63" title="63"><span class="co">#&gt; $signatures[[6]]</span></a>
+<a class="sourceLine" id="cb56-64" title="64"><span class="co">#&gt; [1] &quot;arrayA_a_1, arrayB_a_1, computeDimensionNames_b_1, ellipsis1_&quot;</span></a>
+<a class="sourceLine" id="cb56-65" title="65"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb56-66" title="66"><span class="co">#&gt; $signatures[[7]]</span></a>
+<a class="sourceLine" id="cb56-67" title="67"><span class="co">#&gt; [1] &quot;arrayA_a_1, arrayB_a_1, computeDimensionNames_b_1, ellipsis1_, ellipsis2_&quot;</span></a>
+<a class="sourceLine" id="cb56-68" title="68"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb56-69" title="69"><span class="co">#&gt; $signatures[[8]]</span></a>
+<a class="sourceLine" id="cb56-70" title="70"><span class="co">#&gt; [1] &quot;arrayA_a_1, arrayB_a_1, computeDimensionNames_b_1, ellipsis1_, ellipsis2_, ellipsis3_&quot;</span></a>
+<a class="sourceLine" id="cb56-71" title="71"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb56-72" title="72"><span class="co">#&gt; $signatures[[9]]</span></a>
+<a class="sourceLine" id="cb56-73" title="73"><span class="co">#&gt; [1] &quot;arrayA_a_1, arrayB_a_1, function_f_1&quot;</span></a>
+<a class="sourceLine" id="cb56-74" title="74"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb56-75" title="75"><span class="co">#&gt; $signatures[[10]]</span></a>
+<a class="sourceLine" id="cb56-76" title="76"><span class="co">#&gt; [1] &quot;arrayA_a_1, arrayB_a_1, function_f_1, ellipsis1_&quot;</span></a>
+<a class="sourceLine" id="cb56-77" title="77"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb56-78" title="78"><span class="co">#&gt; $signatures[[11]]</span></a>
+<a class="sourceLine" id="cb56-79" title="79"><span class="co">#&gt; [1] &quot;arrayA_a_1, arrayB_a_1, function_f_1, ellipsis1_, ellipsis2_&quot;</span></a>
+<a class="sourceLine" id="cb56-80" title="80"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb56-81" title="81"><span class="co">#&gt; $signatures[[12]]</span></a>
+<a class="sourceLine" id="cb56-82" title="82"><span class="co">#&gt; [1] &quot;arrayA_a_1, arrayB_a_1, function_f_1, ellipsis1_, ellipsis2_, ellipsis3_&quot;</span></a>
+<a class="sourceLine" id="cb56-83" title="83"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb56-84" title="84"><span class="co">#&gt; $signatures[[13]]</span></a>
+<a class="sourceLine" id="cb56-85" title="85"><span class="co">#&gt; [1] &quot;arrayA_a_1, arrayB_a_1, function_f_1, computeDimensionNames_b_1&quot;</span></a>
+<a class="sourceLine" id="cb56-86" title="86"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb56-87" title="87"><span class="co">#&gt; $signatures[[14]]</span></a>
+<a class="sourceLine" id="cb56-88" title="88"><span class="co">#&gt; [1] &quot;arrayA_a_1, arrayB_a_1, function_f_1, computeDimensionNames_b_1, ellipsis1_&quot;</span></a>
+<a class="sourceLine" id="cb56-89" title="89"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb56-90" title="90"><span class="co">#&gt; $signatures[[15]]</span></a>
+<a class="sourceLine" id="cb56-91" title="91"><span class="co">#&gt; [1] &quot;arrayA_a_1, arrayB_a_1, function_f_1, computeDimensionNames_b_1, ellipsis1_, ellipsis2_&quot;</span></a>
+<a class="sourceLine" id="cb56-92" title="92"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb56-93" title="93"><span class="co">#&gt; $signatures[[16]]</span></a>
+<a class="sourceLine" id="cb56-94" title="94"><span class="co">#&gt; [1] &quot;arrayA_a_1, arrayB_a_1, function_f_1, computeDimensionNames_b_1, ellipsis1_, ellipsis2_, ellipsis3_&quot;</span></a>
+<a class="sourceLine" id="cb56-95" title="95"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb56-96" title="96"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb56-97" title="97"><span class="co">#&gt; $theoritical_signature_number</span></a>
+<a class="sourceLine" id="cb56-98" title="98"><span class="co">#&gt; [1] 16</span></a></code></pre></div>
+<p>There are sixteen call signatures.</p>
+<p>Let’s try brut force analysis first.</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" title="1"><span class="kw">tryCatch</span>(es &lt;-<span class="st"> </span><span class="kw">exploreSignatures</span>(op_kronecker),</a>
+<a class="sourceLine" id="cb57-2" title="2">         <span class="dt">error =</span> <span class="cf">function</span>(e) <span class="kw">print</span>(e) )</a>
+<a class="sourceLine" id="cb57-3" title="3"><span class="co">#&gt; &lt;simpleError in abort(&quot;no draw function associated with&quot;, strBracket(value_s_1[1])): no draw function associated with [a]&gt;</span></a></code></pre></div>
+<p>This fails as there exist no data generation function provided for array.
+We have to provide one.</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" title="1">wrong_draw_integer_array &lt;-<span class="st"> </span><span class="cf">function</span>(n, <span class="dt">replace_b_1 =</span> <span class="ot">TRUE</span>) {</a>
+<a class="sourceLine" id="cb58-2" title="2">  m &lt;-<span class="st"> </span>n <span class="op">+</span><span class="st"> </span><span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">3</span>, <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb58-3" title="3">  <span class="kw">matrix</span>(<span class="kw">seq</span>(<span class="dv">1</span>, n <span class="op">*</span><span class="st"> </span>m), <span class="dt">byrow =</span> <span class="ot">TRUE</span>, <span class="dt">nrow =</span> n, </a>
+<a class="sourceLine" id="cb58-4" title="4">         <span class="dt">dimnames =</span> <span class="kw">list</span>(<span class="kw">paste</span>(<span class="st">&#39;row_&#39;</span>, <span class="dv">1</span><span class="op">:</span>n), <span class="kw">paste</span>(<span class="st">&#39;col_&#39;</span>, <span class="dv">1</span><span class="op">:</span>m)))</a>
+<a class="sourceLine" id="cb58-5" title="5">} </a>
+<a class="sourceLine" id="cb58-6" title="6"><span class="co"># wrong because it does not respect argument names that must be</span></a>
+<a class="sourceLine" id="cb58-7" title="7"><span class="co"># n_i_1 and replace_b_1</span></a>
+<a class="sourceLine" id="cb58-8" title="8"></a>
+<a class="sourceLine" id="cb58-9" title="9">df &lt;-<span class="st"> </span><span class="kw">DataFactory</span>()</a>
+<a class="sourceLine" id="cb58-10" title="10">df<span class="op">$</span><span class="kw">addSuffix</span>(<span class="st">&#39;a&#39;</span>, <span class="st">&#39;array&#39;</span>, wrong_draw_integer_array)</a>
+<a class="sourceLine" id="cb58-11" title="11"><span class="co">#&gt; [1] FALSE</span></a>
+<a class="sourceLine" id="cb58-12" title="12"></a>
+<a class="sourceLine" id="cb58-13" title="13">draw_integer_array &lt;-<span class="st"> </span><span class="cf">function</span>(n_i_<span class="dv">1</span>, <span class="dt">replace_b_1 =</span> <span class="ot">TRUE</span>) {</a>
+<a class="sourceLine" id="cb58-14" title="14">  m &lt;-<span class="st"> </span>n_i_<span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">3</span>, <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb58-15" title="15">  <span class="kw">matrix</span>(<span class="kw">seq</span>(<span class="dv">1</span>, n_i_<span class="dv">1</span> <span class="op">*</span><span class="st"> </span>m), <span class="dt">byrow =</span> <span class="ot">TRUE</span>, <span class="dt">nrow =</span> n_i_<span class="dv">1</span>, </a>
+<a class="sourceLine" id="cb58-16" title="16">         <span class="dt">dimnames =</span> <span class="kw">list</span>(<span class="kw">paste</span>(<span class="st">&#39;row_&#39;</span>, <span class="dv">1</span><span class="op">:</span>n_i_<span class="dv">1</span>), <span class="kw">paste</span>(<span class="st">&#39;col_&#39;</span>, <span class="dv">1</span><span class="op">:</span>m)))</a>
+<a class="sourceLine" id="cb58-17" title="17">}</a>
+<a class="sourceLine" id="cb58-18" title="18"></a>
+<a class="sourceLine" id="cb58-19" title="19">draw_function &lt;-<span class="st"> </span><span class="cf">function</span>(n_i_<span class="dv">1</span>, <span class="dt">replace_b_1 =</span> <span class="ot">TRUE</span>) { <span class="kw">list</span>(<span class="st">`</span><span class="dt">*</span><span class="st">`</span>, <span class="st">`</span><span class="dt">+</span><span class="st">`</span>, <span class="st">`</span><span class="dt">-</span><span class="st">`</span>)[[<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dv">1</span>)]]}</a>
+<a class="sourceLine" id="cb58-20" title="20"></a>
+<a class="sourceLine" id="cb58-21" title="21"><span class="co"># good practice verifies your functions behave correctly on a single example</span></a>
+<a class="sourceLine" id="cb58-22" title="22">a1 &lt;-<span class="st"> </span><span class="kw">draw_integer_array</span>(<span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb58-23" title="23">a2 &lt;-<span class="st"> </span><span class="kw">draw_integer_array</span>(<span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb58-24" title="24">f &lt;-<span class="st"> </span><span class="kw">draw_function</span>(<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb58-25" title="25"><span class="kw">kronecker</span>(a1, a2, f, <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb58-26" title="26"><span class="co">#&gt;               col_ 1:col_ 1 col_ 1:col_ 2 col_ 1:col_ 3 col_ 1:col_ 4</span></a>
+<a class="sourceLine" id="cb58-27" title="27"><span class="co">#&gt; row_ 1:row_ 1             2             3             4             5</span></a>
+<a class="sourceLine" id="cb58-28" title="28"><span class="co">#&gt; row_ 1:row_ 2             6             7             8             9</span></a>
+<a class="sourceLine" id="cb58-29" title="29"><span class="co">#&gt; row_ 1:row_ 3            10            11            12            13</span></a>
+<a class="sourceLine" id="cb58-30" title="30"><span class="co">#&gt; row_ 2:row_ 1             5             6             7             8</span></a>
+<a class="sourceLine" id="cb58-31" title="31"><span class="co">#&gt; row_ 2:row_ 2             9            10            11            12</span></a>
+<a class="sourceLine" id="cb58-32" title="32"><span class="co">#&gt; row_ 2:row_ 3            13            14            15            16</span></a>
+<a class="sourceLine" id="cb58-33" title="33"><span class="co">#&gt;               col_ 2:col_ 1 col_ 2:col_ 2 col_ 2:col_ 3 col_ 2:col_ 4</span></a>
+<a class="sourceLine" id="cb58-34" title="34"><span class="co">#&gt; row_ 1:row_ 1             3             4             5             6</span></a>
+<a class="sourceLine" id="cb58-35" title="35"><span class="co">#&gt; row_ 1:row_ 2             7             8             9            10</span></a>
+<a class="sourceLine" id="cb58-36" title="36"><span class="co">#&gt; row_ 1:row_ 3            11            12            13            14</span></a>
+<a class="sourceLine" id="cb58-37" title="37"><span class="co">#&gt; row_ 2:row_ 1             6             7             8             9</span></a>
+<a class="sourceLine" id="cb58-38" title="38"><span class="co">#&gt; row_ 2:row_ 2            10            11            12            13</span></a>
+<a class="sourceLine" id="cb58-39" title="39"><span class="co">#&gt; row_ 2:row_ 3            14            15            16            17</span></a>
+<a class="sourceLine" id="cb58-40" title="40"><span class="co">#&gt;               col_ 3:col_ 1 col_ 3:col_ 2 col_ 3:col_ 3 col_ 3:col_ 4</span></a>
+<a class="sourceLine" id="cb58-41" title="41"><span class="co">#&gt; row_ 1:row_ 1             4             5             6             7</span></a>
+<a class="sourceLine" id="cb58-42" title="42"><span class="co">#&gt; row_ 1:row_ 2             8             9            10            11</span></a>
+<a class="sourceLine" id="cb58-43" title="43"><span class="co">#&gt; row_ 1:row_ 3            12            13            14            15</span></a>
+<a class="sourceLine" id="cb58-44" title="44"><span class="co">#&gt; row_ 2:row_ 1             7             8             9            10</span></a>
+<a class="sourceLine" id="cb58-45" title="45"><span class="co">#&gt; row_ 2:row_ 2            11            12            13            14</span></a>
+<a class="sourceLine" id="cb58-46" title="46"><span class="co">#&gt; row_ 2:row_ 3            15            16            17            18</span></a>
+<a class="sourceLine" id="cb58-47" title="47"></a>
+<a class="sourceLine" id="cb58-48" title="48"><span class="co"># register functions</span></a>
+<a class="sourceLine" id="cb58-49" title="49">df<span class="op">$</span><span class="kw">addSuffix</span>(<span class="st">&#39;a&#39;</span>, <span class="st">&#39;array&#39;</span>, draw_integer_array)</a>
+<a class="sourceLine" id="cb58-50" title="50"><span class="co">#&gt; [1] TRUE</span></a>
+<a class="sourceLine" id="cb58-51" title="51">df<span class="op">$</span><span class="kw">addSuffix</span>(<span class="st">&#39;f&#39;</span>, <span class="st">&#39;function&#39;</span>, draw_function)</a>
+<a class="sourceLine" id="cb58-52" title="52"><span class="co">#&gt; [1] TRUE</span></a>
+<a class="sourceLine" id="cb58-53" title="53"></a>
+<a class="sourceLine" id="cb58-54" title="54"><span class="co"># make your factory findable</span></a>
+<a class="sourceLine" id="cb58-55" title="55"><span class="kw">Sys.setenv</span>(<span class="st">&quot;OP_DATA_FACTORY&quot;</span> =<span class="st"> &quot;df&quot;</span>)</a>
+<a class="sourceLine" id="cb58-56" title="56"></a>
+<a class="sourceLine" id="cb58-57" title="57"><span class="co"># fire tests - up to 768 contexts managed in one shot</span></a>
+<a class="sourceLine" id="cb58-58" title="58">es &lt;-<span class="st"> </span><span class="kw">exploreSignatures</span>(op_kronecker)</a>
+<a class="sourceLine" id="cb58-59" title="59"></a>
+<a class="sourceLine" id="cb58-60" title="60"><span class="kw">print</span>(es<span class="op">$</span>success<span class="op">$</span>synthesis)</a>
+<a class="sourceLine" id="cb58-61" title="61"><span class="co">#&gt; $number_sucessfull_tests</span></a>
+<a class="sourceLine" id="cb58-62" title="62"><span class="co">#&gt; [1] 144</span></a>
+<a class="sourceLine" id="cb58-63" title="63"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb58-64" title="64"><span class="co">#&gt; $signatures</span></a>
+<a class="sourceLine" id="cb58-65" title="65"><span class="co">#&gt; [1] &quot;arrayA_a_1, arrayB_a_1&quot;                                         </span></a>
+<a class="sourceLine" id="cb58-66" title="66"><span class="co">#&gt; [2] &quot;arrayA_a_1, arrayB_a_1, function_f_1, computeDimensionNames_b_1&quot;</span></a>
+<a class="sourceLine" id="cb58-67" title="67"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb58-68" title="68"><span class="co">#&gt; $imperative</span></a>
+<a class="sourceLine" id="cb58-69" title="69"><span class="co">#&gt; [1] &quot;{homo,hetero}_{vector,list}_{one,two,three}&quot;</span></a>
+<a class="sourceLine" id="cb58-70" title="70"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb58-71" title="71"><span class="co">#&gt; $ellipsis</span></a>
+<a class="sourceLine" id="cb58-72" title="72"><span class="co">#&gt; [1] &quot;{homo,hetero}_{vector,list}_{none}&quot;</span></a>
+<a class="sourceLine" id="cb58-73" title="73"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb58-74" title="74"><span class="co">#&gt; $default</span></a>
+<a class="sourceLine" id="cb58-75" title="75"><span class="co">#&gt; [1] &quot;{none,partial,full}&quot;</span></a>
+<a class="sourceLine" id="cb58-76" title="76"><span class="kw">print</span>(es<span class="op">$</span>failure<span class="op">$</span>synthesis)</a>
+<a class="sourceLine" id="cb58-77" title="77"><span class="co">#&gt; $number_erroneous_tests</span></a>
+<a class="sourceLine" id="cb58-78" title="78"><span class="co">#&gt; [1] 432</span></a>
+<a class="sourceLine" id="cb58-79" title="79"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb58-80" title="80"><span class="co">#&gt; $error</span></a>
+<a class="sourceLine" id="cb58-81" title="81"><span class="co">#&gt; [1] &quot;Error in outer(X, Y, FUN, ...): using ... with FUN = \&quot;*\&quot; is an error\n&quot; </span></a>
+<a class="sourceLine" id="cb58-82" title="82"><span class="co">#&gt; [2] &quot;Error in FUN(X, Y, ...): l&#39;opérateur a besoin d&#39;un ou de deux arguments\n&quot;</span></a>
+<a class="sourceLine" id="cb58-83" title="83"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb58-84" title="84"><span class="co">#&gt; $signatures</span></a>
+<a class="sourceLine" id="cb58-85" title="85"><span class="co">#&gt; [1] &quot;arrayA_a_1, arrayB_a_1, ellipsis1_&quot;                                                                 </span></a>
+<a class="sourceLine" id="cb58-86" title="86"><span class="co">#&gt; [2] &quot;arrayA_a_1, arrayB_a_1, function_f_1, computeDimensionNames_b_1, ellipsis1_&quot;                        </span></a>
+<a class="sourceLine" id="cb58-87" title="87"><span class="co">#&gt; [3] &quot;arrayA_a_1, arrayB_a_1, ellipsis1_, ellipsis2_&quot;                                                     </span></a>
+<a class="sourceLine" id="cb58-88" title="88"><span class="co">#&gt; [4] &quot;arrayA_a_1, arrayB_a_1, function_f_1, computeDimensionNames_b_1, ellipsis1_, ellipsis2_&quot;            </span></a>
+<a class="sourceLine" id="cb58-89" title="89"><span class="co">#&gt; [5] &quot;arrayA_a_1, arrayB_a_1, ellipsis1_, ellipsis2_, ellipsis3_&quot;                                         </span></a>
+<a class="sourceLine" id="cb58-90" title="90"><span class="co">#&gt; [6] &quot;arrayA_a_1, arrayB_a_1, function_f_1, computeDimensionNames_b_1, ellipsis1_, ellipsis2_, ellipsis3_&quot;</span></a>
+<a class="sourceLine" id="cb58-91" title="91"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb58-92" title="92"><span class="co">#&gt; $imperative</span></a>
+<a class="sourceLine" id="cb58-93" title="93"><span class="co">#&gt; [1] &quot;{homo,hetero}_{vector,list}_{one,two,three}&quot;</span></a>
+<a class="sourceLine" id="cb58-94" title="94"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb58-95" title="95"><span class="co">#&gt; $ellipsis</span></a>
+<a class="sourceLine" id="cb58-96" title="96"><span class="co">#&gt; [1] &quot;{homo,hetero}_{vector,list}_{one,two,three}&quot;</span></a>
+<a class="sourceLine" id="cb58-97" title="97"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb58-98" title="98"><span class="co">#&gt; $default</span></a>
+<a class="sourceLine" id="cb58-99" title="99"><span class="co">#&gt; [1] &quot;{none,partial,full}&quot;</span></a></code></pre></div>
+</div>
+<div id="pitfalls-to-avoid" class="section level2">
+<h2><span class="header-section-number">10.6</span> Pitfalls to avoid</h2>
+<ol style="list-style-type: decimal">
+<li>When using <cite class='kw'>opwf</cite> function, make sure you provide the argument names in the right order. Examine created function signature prior going further. Make sure it fits the desired definition you look for.</li>
+<li><cite class='kw'>DataFactory</cite> changes remain invisible to processing as long as you do not set the environment variable <cite class='kw'>OP_DATA_FACTORY</cite> with the name of the <cite class='it'>R</cite> variable that holds the <cite class='kw'>DataFactory</cite> you want to use. This is often forgotten.</li>
+</ol>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="generating-testthat-test-files.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="generating-r-documentation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "night",
+"family": "serif",
+"size": 2
+},
+"edit": null,
+"history": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+},
+"toolbar": {
+"position": "fixed"
+},
+"search": true
+});
+});
+</script>
+
+</body>
+
+</html>

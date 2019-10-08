@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title> 11 Generating R documentation | Offensive Programming Book</title>
+  <meta name="description" content="wyz.code.offensiveProgramming package related documentation" />
+  <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
+
+  <meta property="og:title" content=" 11 Generating R documentation | Offensive Programming Book" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:image" content="figures/op.png" />
+  <meta property="og:description" content="wyz.code.offensiveProgramming package related documentation" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content=" 11 Generating R documentation | Offensive Programming Book" />
+  
+  <meta name="twitter:description" content="wyz.code.offensiveProgramming package related documentation" />
+  <meta name="twitter:image" content="figures/op.png" />
+
+<meta name="author" content="Fabien GELINEAU neonira@gmail.com" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="meta-testing.html"/>
+<link rel="next" href="implementation-figures.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Offensive Programming Book</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#book-version"><i class="fa fa-check"></i>Book version</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#book-production"><i class="fa fa-check"></i>Book production</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="preamble.html"><a href="preamble.html"><i class="fa fa-check"></i>Preamble</a></li>
+<li class="chapter" data-level="1" data-path="programming-styles.html"><a href="programming-styles.html"><i class="fa fa-check"></i><b>1</b> Programming styles</a><ul>
+<li class="chapter" data-level="1.1" data-path="programming-styles.html"><a href="programming-styles.html#defensive-programming-style"><i class="fa fa-check"></i><b>1.1</b> Defensive programming style</a></li>
+<li class="chapter" data-level="1.2" data-path="programming-styles.html"><a href="programming-styles.html#offensive-programming-style"><i class="fa fa-check"></i><b>1.2</b> Offensive programming style</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="application-in-r-language.html"><a href="application-in-r-language.html"><i class="fa fa-check"></i><b>2</b> Application in R language</a><ul>
+<li class="chapter" data-level="2.1" data-path="application-in-r-language.html"><a href="application-in-r-language.html#a-simple-case"><i class="fa fa-check"></i><b>2.1</b> A simple case</a></li>
+<li class="chapter" data-level="2.2" data-path="application-in-r-language.html"><a href="application-in-r-language.html#defensive-programming"><i class="fa fa-check"></i><b>2.2</b> Defensive programming</a></li>
+<li class="chapter" data-level="2.3" data-path="application-in-r-language.html"><a href="application-in-r-language.html#offensive-programming"><i class="fa fa-check"></i><b>2.3</b> Offensive programming</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="application-in-r-language.html"><a href="application-in-r-language.html#what-is-different"><i class="fa fa-check"></i><b>2.3.1</b> What is different?</a></li>
+<li class="chapter" data-level="2.3.2" data-path="application-in-r-language.html"><a href="application-in-r-language.html#semantic-argument-naming"><i class="fa fa-check"></i><b>2.3.2</b> Semantic argument naming</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="application-in-r-language.html"><a href="application-in-r-language.html#back-to-definition"><i class="fa fa-check"></i><b>2.4</b> Back to definition</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="putting-in-action-wyz-code-offensiveprogramming.html"><a href="putting-in-action-wyz-code-offensiveprogramming.html"><i class="fa fa-check"></i><b>3</b> Putting in action wyz.code.offensiveProgramming</a><ul>
+<li class="chapter" data-level="3.1" data-path="putting-in-action-wyz-code-offensiveprogramming.html"><a href="putting-in-action-wyz-code-offensiveprogramming.html#package-overview"><i class="fa fa-check"></i><b>3.1</b> Package overview</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="the-type-factory.html"><a href="the-type-factory.html"><i class="fa fa-check"></i><b>4</b> The type factory</a><ul>
+<li class="chapter" data-level="4.1" data-path="the-type-factory.html"><a href="the-type-factory.html#get-recorded-types-inventory"><i class="fa fa-check"></i><b>4.1</b> Get recorded types inventory</a></li>
+<li class="chapter" data-level="4.2" data-path="the-type-factory.html"><a href="the-type-factory.html#understanding-the-model"><i class="fa fa-check"></i><b>4.2</b> Understanding the model</a></li>
+<li class="chapter" data-level="4.3" data-path="the-type-factory.html"><a href="the-type-factory.html#register-your-own-type"><i class="fa fa-check"></i><b>4.3</b> Register your own type</a></li>
+<li class="chapter" data-level="4.4" data-path="the-type-factory.html"><a href="the-type-factory.html#get-access-to-verification-functions"><i class="fa fa-check"></i><b>4.4</b> Get access to verification functions</a></li>
+<li class="chapter" data-level="4.5" data-path="the-type-factory.html"><a href="the-type-factory.html#some-hints"><i class="fa fa-check"></i><b>4.5</b> Some hints</a></li>
+<li class="chapter" data-level="4.6" data-path="the-type-factory.html"><a href="the-type-factory.html#enforcing-use-of-your-own-type-factory"><i class="fa fa-check"></i><b>4.6</b> Enforcing use of your own type factory</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="semantic-names.html"><a href="semantic-names.html"><i class="fa fa-check"></i><b>5</b> Semantic names</a><ul>
+<li class="chapter" data-level="5.1" data-path="semantic-names.html"><a href="semantic-names.html#what-is-semantic-naming"><i class="fa fa-check"></i><b>5.1</b> What is semantic naming?</a></li>
+<li class="chapter" data-level="5.2" data-path="semantic-names.html"><a href="semantic-names.html#verifying-a-function-parameter-or-return-type-declaration"><i class="fa fa-check"></i><b>5.2</b> Verifying a function parameter or return type declaration</a></li>
+<li class="chapter" data-level="5.3" data-path="semantic-names.html"><a href="semantic-names.html#verifying-a-class-name"><i class="fa fa-check"></i><b>5.3</b> Verifying a class name</a></li>
+<li class="chapter" data-level="5.4" data-path="semantic-names.html"><a href="semantic-names.html#verifying-a-function-name"><i class="fa fa-check"></i><b>5.4</b> Verifying a function name</a></li>
+<li class="chapter" data-level="5.5" data-path="semantic-names.html"><a href="semantic-names.html#get-naming-balance-from-an-r-object"><i class="fa fa-check"></i><b>5.5</b> Get naming balance from an R object</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="evaluation-modes.html"><a href="evaluation-modes.html"><i class="fa fa-check"></i><b>6</b> Evaluation modes</a><ul>
+<li class="chapter" data-level="6.1" data-path="evaluation-modes.html"><a href="evaluation-modes.html#understanding-evaluation-modes"><i class="fa fa-check"></i><b>6.1</b> Understanding evaluation modes</a></li>
+<li class="chapter" data-level="6.2" data-path="evaluation-modes.html"><a href="evaluation-modes.html#instantiating-evaluation-mode"><i class="fa fa-check"></i><b>6.2</b> Instantiating evaluation mode</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="running-functions.html"><a href="running-functions.html"><i class="fa fa-check"></i><b>7</b> Running functions</a><ul>
+<li class="chapter" data-level="7.1" data-path="running-functions.html"><a href="running-functions.html#prerequisites"><i class="fa fa-check"></i><b>7.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="7.2" data-path="running-functions.html"><a href="running-functions.html#function-return-types-definition-verification"><i class="fa fa-check"></i><b>7.2</b> Function return types definition verification</a></li>
+<li class="chapter" data-level="7.3" data-path="running-functions.html"><a href="running-functions.html#transient-invocations"><i class="fa fa-check"></i><b>7.3</b> Transient invocations</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="running-functions.html"><a href="running-functions.html#nominal-case"><i class="fa fa-check"></i><b>7.3.1</b> Nominal case</a></li>
+<li class="chapter" data-level="7.3.2" data-path="running-functions.html"><a href="running-functions.html#prerequisite-mismatch"><i class="fa fa-check"></i><b>7.3.2</b> Prerequisite mismatch</a></li>
+<li class="chapter" data-level="7.3.3" data-path="running-functions.html"><a href="running-functions.html#object-function-call"><i class="fa fa-check"></i><b>7.3.3</b> Object function call</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="running-functions.html"><a href="running-functions.html#persistent-invocations"><i class="fa fa-check"></i><b>7.4</b> Persistent invocations</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="running-functions.html"><a href="running-functions.html#nominal-persistent-case"><i class="fa fa-check"></i><b>7.4.1</b> Nominal persistent case</a></li>
+<li class="chapter" data-level="7.4.2" data-path="running-functions.html"><a href="running-functions.html#subtile-change"><i class="fa fa-check"></i><b>7.4.2</b> Subtile change</a></li>
+<li class="chapter" data-level="7.4.3" data-path="running-functions.html"><a href="running-functions.html#call-case-with-named-and-positional-parameters"><i class="fa fa-check"></i><b>7.4.3</b> Call case with named and positional parameters</a></li>
+<li class="chapter" data-level="7.4.4" data-path="running-functions.html"><a href="running-functions.html#call-case-with-ellipsis"><i class="fa fa-check"></i><b>7.4.4</b> Call case with ellipsis</a></li>
+<li class="chapter" data-level="7.4.5" data-path="running-functions.html"><a href="running-functions.html#second-call-case-with-ellipsis"><i class="fa fa-check"></i><b>7.4.5</b> Second call case with ellipsis</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="running-test-cases.html"><a href="running-test-cases.html"><i class="fa fa-check"></i><b>8</b> Running test cases</a><ul>
+<li class="chapter" data-level="8.1" data-path="running-test-cases.html"><a href="running-test-cases.html#reusing-defined-test-case-definitions"><i class="fa fa-check"></i><b>8.1</b> Reusing defined test case definitions</a></li>
+<li class="chapter" data-level="8.2" data-path="running-test-cases.html"><a href="running-test-cases.html#embedding-test-cases-in-class-definition"><i class="fa fa-check"></i><b>8.2</b> Embedding test cases in class definition</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="running-test-cases.html"><a href="running-test-cases.html#a-simple-case-1"><i class="fa fa-check"></i><b>8.2.1</b> A simple case</a></li>
+<li class="chapter" data-level="8.2.2" data-path="running-test-cases.html"><a href="running-test-cases.html#a-more-complex-case"><i class="fa fa-check"></i><b>8.2.2</b> A more complex case</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="running-test-cases.html"><a href="running-test-cases.html#test-case-definitions-verification"><i class="fa fa-check"></i><b>8.3</b> Test case definitions verification</a></li>
+<li class="chapter" data-level="8.4" data-path="running-test-cases.html"><a href="running-test-cases.html#discovering-test-cases-descriptions"><i class="fa fa-check"></i><b>8.4</b> Discovering test cases descriptions</a></li>
+<li class="chapter" data-level="8.5" data-path="running-test-cases.html"><a href="running-test-cases.html#run-a-test-case"><i class="fa fa-check"></i><b>8.5</b> Run a test case</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="generating-testthat-test-files.html"><a href="generating-testthat-test-files.html"><i class="fa fa-check"></i><b>9</b> Generating <cite class='it'>testthat</cite> test files</a><ul>
+<li class="chapter" data-level="9.1" data-path="generating-testthat-test-files.html"><a href="generating-testthat-test-files.html#package-wyz.code.testthat-in-action"><i class="fa fa-check"></i><b>9.1</b> Package <cite class='it'>wyz.code.testthat</cite> in action</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="generating-testthat-test-files.html"><a href="generating-testthat-test-files.html#setting-up-the-context"><i class="fa fa-check"></i><b>9.1.1</b> Setting up the context</a></li>
+<li class="chapter" data-level="9.1.2" data-path="generating-testthat-test-files.html"><a href="generating-testthat-test-files.html#unit-test-file-generation"><i class="fa fa-check"></i><b>9.1.2</b> Unit test file generation</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="generating-testthat-test-files.html"><a href="generating-testthat-test-files.html#generated-unit-test-file-content"><i class="fa fa-check"></i><b>9.2</b> Generated unit test file content</a></li>
+<li class="chapter" data-level="9.3" data-path="generating-testthat-test-files.html"><a href="generating-testthat-test-files.html#known-limits"><i class="fa fa-check"></i><b>9.3</b> Known-limits</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="meta-testing.html"><a href="meta-testing.html"><i class="fa fa-check"></i><b>10</b> Meta-testing</a><ul>
+<li class="chapter" data-level="10.1" data-path="meta-testing.html"><a href="meta-testing.html#wrapper-function-creation"><i class="fa fa-check"></i><b>10.1</b> Wrapper function creation</a></li>
+<li class="chapter" data-level="10.2" data-path="meta-testing.html"><a href="meta-testing.html#exploration-function"><i class="fa fa-check"></i><b>10.2</b> Exploration function</a></li>
+<li class="chapter" data-level="10.3" data-path="meta-testing.html"><a href="meta-testing.html#a-more-complex-example"><i class="fa fa-check"></i><b>10.3</b> A more complex example</a></li>
+<li class="chapter" data-level="10.4" data-path="meta-testing.html"><a href="meta-testing.html#an-example-using-ellipsis"><i class="fa fa-check"></i><b>10.4</b> An example using ellipsis</a></li>
+<li class="chapter" data-level="10.5" data-path="meta-testing.html"><a href="meta-testing.html#an-example-with-imperative-default-and-ellipsis-arguments"><i class="fa fa-check"></i><b>10.5</b> An example with imperative, default and ellipsis arguments</a></li>
+<li class="chapter" data-level="10.6" data-path="meta-testing.html"><a href="meta-testing.html#pitfalls-to-avoid"><i class="fa fa-check"></i><b>10.6</b> Pitfalls to avoid</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html"><i class="fa fa-check"></i><b>11</b> Generating <cite class='it'>R</cite> documentation</a><ul>
+<li class="chapter" data-level="11.1" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#automated-r-documentation-generation"><i class="fa fa-check"></i><b>11.1</b> Automated <cite class='it'>R</cite> documentation generation</a></li>
+<li class="chapter" data-level="11.2" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#focus-on-r-documentation-generation"><i class="fa fa-check"></i><b>11.2</b> Focus on <cite class='kw'>R</cite> documentation generation</a></li>
+<li class="chapter" data-level="11.3" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#package-wyz.code.rdoc-utilities"><i class="fa fa-check"></i><b>11.3</b> package <cite class='it'>wyz.code.rdoc</cite> utilities</a><ul>
+<li class="chapter" data-level="11.3.1" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#generate-a-r-documentation-section"><i class="fa fa-check"></i><b>11.3.1</b> Generate a <cite class='it'>R</cite> documentation section</a></li>
+<li class="chapter" data-level="11.3.2" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#format-an-english-sentence"><i class="fa fa-check"></i><b>11.3.2</b> Format an English sentence</a></li>
+<li class="chapter" data-level="11.3.3" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#generate-some-r-documentation-content"><i class="fa fa-check"></i><b>11.3.3</b> Generate some <cite class='it'>R</cite> documentation content</a></li>
+<li class="chapter" data-level="11.3.4" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#generate-cross-ref-to-other-r-package"><i class="fa fa-check"></i><b>11.3.4</b> Generate cross-ref to other <cite class='it'>R</cite> package</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#manual-pages-generation"><i class="fa fa-check"></i><b>11.4</b> Manual pages generation</a><ul>
+<li class="chapter" data-level="11.4.1" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#context-setup"><i class="fa fa-check"></i><b>11.4.1</b> Context setup</a></li>
+<li class="chapter" data-level="11.4.2" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#method-manual-page"><i class="fa fa-check"></i><b>11.4.2</b> Method manual page</a></li>
+<li class="chapter" data-level="11.4.3" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#class-manual-page"><i class="fa fa-check"></i><b>11.4.3</b> Class manual page</a></li>
+<li class="chapter" data-level="11.4.4" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#package-manual-page"><i class="fa fa-check"></i><b>11.4.4</b> Package manual page</a></li>
+<li class="chapter" data-level="11.4.5" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#in-one-shot"><i class="fa fa-check"></i><b>11.4.5</b> In one shot</a></li>
+<li class="chapter" data-level="11.4.6" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#and-a-special-case-from-a-standalone-function"><i class="fa fa-check"></i><b>11.4.6</b> and a special case, from a standalone function</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#known-limits-1"><i class="fa fa-check"></i><b>11.5</b> Known-limits</a></li>
+<li class="chapter" data-level="11.6" data-path="generating-r-documentation.html"><a href="generating-r-documentation.html#opportunities"><i class="fa fa-check"></i><b>11.6</b> Opportunities</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="implementation-figures.html"><a href="implementation-figures.html"><i class="fa fa-check"></i><b>12</b> Implementation figures</a><ul>
+<li class="chapter" data-level="12.1" data-path="implementation-figures.html"><a href="implementation-figures.html#file-statistics"><i class="fa fa-check"></i><b>12.1</b> File statistics</a></li>
+<li class="chapter" data-level="12.2" data-path="implementation-figures.html"><a href="implementation-figures.html#code-statistics"><i class="fa fa-check"></i><b>12.2</b> Code statistics</a></li>
+<li class="chapter" data-level="12.3" data-path="implementation-figures.html"><a href="implementation-figures.html#test-and-coverage"><i class="fa fa-check"></i><b>12.3</b> Test and coverage</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>13</b> Conclusion</a><ul>
+<li class="chapter" data-level="13.1" data-path="conclusion.html"><a href="conclusion.html#benefits-of-offensive-programming"><i class="fa fa-check"></i><b>13.1</b> Benefits of offensive programming</a></li>
+<li class="chapter" data-level="13.2" data-path="conclusion.html"><a href="conclusion.html#concerns-of-offensive-programming"><i class="fa fa-check"></i><b>13.2</b> Concerns of offensive programming</a></li>
+<li class="chapter" data-level="13.3" data-path="conclusion.html"><a href="conclusion.html#your-feedback-is-welcome"><i class="fa fa-check"></i><b>13.3</b> Your feedback is welcome</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="explicit-lege-feliciter.html"><a href="explicit-lege-feliciter.html"><i class="fa fa-check"></i>Explicit - Lege feliciter</a></li>
+<li class="divider"></li>
+<li><a href="https://www.linkedin.com/in/fabiengelineau" target="blank">instigator Fabien GELINEAU</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Offensive Programming Book</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="generating-r-documentation" class="section level1">
+<h1><span class="header-section-number"> 11</span> Generating <cite class='it'>R</cite> documentation</h1>
+<p>When your code uses offensive programming features, it becomes much easier to
+generate <cite class='it'>R</cite> documentation, as now, several information might be deduced and reused
+for manual pages composition. Let’s see how.</p>
+<div id="automated-r-documentation-generation" class="section level2">
+<h2><span class="header-section-number">11.1</span> Automated <cite class='it'>R</cite> documentation generation</h2>
+<p>Using package <cite class='it'>wyz.code.rdoc</cite>, manual pages <cite class='comment'><cite class='kw'>.Rd</cite> files stored in <cite class='fd'>man</cite> folder in a package context</cite> can be automatically created and filled up nearly to completion, depending on the level of offensive programming instrumentation of your code.</p>
+<p>Generated manual pages uses English language. Feel free to modify produced English, to
+match your own English flavor, if needed.</p>
+<p>The level of your <cite class='it'>R</cite> code instrumentation will impact the quality of the generation and your review work depth and time. When using both function return type instrumentation and test case instrumentation, expects produced manual page content to be fully generated and ready for review.</p>
+<p>No automated generation of manual page is possible when your code is not offensive programming instrumented. In such a case, rely either on standard <cite class='it'>R</cite> tools to generate documentation or use package <cite class='it'>wyz.code.rdoc</cite> to create the artifact program that will reduce the burden of documentation generation.</p>
+</div>
+<div id="focus-on-r-documentation-generation" class="section level2">
+<h2><span class="header-section-number">11.2</span> Focus on <cite class='kw'>R</cite> documentation generation</h2>
+<p>Package <cite class='it'>wyz.code.rdoc</cite> generates manual page sections, presented below with their information source and your remaining duties.</p>
+<table>
+<colgroup>
+<col width="22%" />
+<col width="19%" />
+<col width="57%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">R manual section</th>
+<th align="left">information source</th>
+<th align="left">your duty</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">name</td>
+<td align="left"><cite class='it'>R</cite> code</td>
+<td align="left">none</td>
+</tr>
+<tr class="even">
+<td align="left">alias</td>
+<td align="left"><cite class='it'>R</cite> code</td>
+<td align="left">none, unless you want to add extraneous aliases</td>
+</tr>
+<tr class="odd">
+<td align="left">title</td>
+<td align="left"><cite class='it'>R</cite> code</td>
+<td align="left">none</td>
+</tr>
+<tr class="even">
+<td align="left">usage</td>
+<td align="left"><cite class='it'>R</cite> code</td>
+<td align="left">none</td>
+</tr>
+<tr class="odd">
+<td align="left">arguments</td>
+<td align="left"><cite class='it'>R</cite> code</td>
+<td align="left">none</td>
+</tr>
+<tr class="even">
+<td align="left">value</td>
+<td align="left"><cite class='it'>R</cite> code</td>
+<td align="left">none if your code is function return type instrumented. Otherwise, you will have to write explicitly this part.</td>
+</tr>
+<tr class="odd">
+<td align="left">details</td>
+<td align="left"><cite class='it'>R</cite> code</td>
+<td align="left">you may complete this part that is generated when your code is function test case instrumented.</td>
+</tr>
+<tr class="even">
+<td align="left">references</td>
+<td align="left">your instruction</td>
+<td align="left">Generated from instructions you may provide.</td>
+</tr>
+<tr class="odd">
+<td align="left">author</td>
+<td align="left">package DESCRIPTION</td>
+<td align="left">none</td>
+</tr>
+<tr class="even">
+<td align="left">seealso</td>
+<td align="left">your instruction</td>
+<td align="left">Generated from instructions you may provide.</td>
+</tr>
+<tr class="odd">
+<td align="left">keyword</td>
+<td align="left">your instruction</td>
+<td align="left">Generated from instructions you may provide.</td>
+</tr>
+<tr class="even">
+<td align="left">examples</td>
+<td align="left"><cite class='it'>R</cite> code</td>
+<td align="left">none when your code is function test case instrumented.</td>
+</tr>
+<tr class="odd">
+<td align="left">concept</td>
+<td align="left">your instruction</td>
+<td align="left">Generated from instructions you may provide.</td>
+</tr>
+</tbody>
+</table>
+<p>Missing sections can be added on your instruction when generating manual pages. Package
+<cite class='it'>wyz.code.rdoc</cite> provides a convenient and easy way to do so.</p>
+<p>The generated manual page can be used as-is, and should be immediately viewable and usable. From a format point of view, it complies with <cite class='kw'>.Rd</cite> file syntax. From a content point of view, generated content aims to be reliable and express in human readable English wherever this makes sense. Indeed, you may bring desired enhancements to generated English sentences as you want.</p>
+<p>Generated manual page requires review. You may add extraneous content, modify
+provided content and beautify the result. See known limits section <cite class='comment'><a href="generating-testthat-test-files.html#known-limits">9.3</a></cite> to know more.</p>
+</div>
+<div id="package-wyz.code.rdoc-utilities" class="section level2">
+<h2><span class="header-section-number">11.3</span> package <cite class='it'>wyz.code.rdoc</cite> utilities</h2>
+<p>The package <cite class='it'>wyz.code.rdoc</cite> can be used to produce <cite class='it'>R</cite> documentation parts and <cite class='it'>R</cite> documentation generation programs.</p>
+<p>Here under are presented a few utilities that will greatly help you in producing high quality manual pages. Please, take time to read the full paragraph as it will mind you about some very convenient <cite class='it'>R</cite> functions to produces <cite class='it'>R</cite> code documentation snippets. For more information, refer to respective manual pages.</p>
+<div id="generate-a-r-documentation-section" class="section level3">
+<h3><span class="header-section-number">11.3.1</span> Generate a <cite class='it'>R</cite> documentation section</h3>
+<p>Use function <cite class='kw'>generateSection</cite> to generate a standard manual page section. Provide section name as first argument, and content as second.</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" title="1"><span class="kw">library</span>(wyz.code.rdoc)</a>
+<a class="sourceLine" id="cb59-2" title="2"></a>
+<a class="sourceLine" id="cb59-3" title="3"><span class="kw">print</span>(<span class="kw">generateSection</span>(<span class="st">&#39;note&#39;</span>, <span class="st">&#39;A note text.&#39;</span>))</a>
+<a class="sourceLine" id="cb59-4" title="4"><span class="co">#&gt; [1] &quot;\\note{\nA note text.\n}&quot;</span></a></code></pre></div>
+<p>This function does not allow you to generate a customized <cite class='comment'>non standard</cite> manual page section. To do so, use <cite class='kw'>generateContent</cite>.</p>
+</div>
+<div id="format-an-english-sentence" class="section level3">
+<h3><span class="header-section-number">11.3.2</span> Format an English sentence</h3>
+<p>Use function <cite class='kw'>sentensize</cite> to format a sentence.</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" title="1"><span class="kw">sentensize</span>(<span class="st">&#39;some text </span><span class="ch">\t\b</span><span class="st">  will  </span><span class="ch">\n\b</span><span class="st"> be generated&#39;</span>)</a>
+<a class="sourceLine" id="cb60-2" title="2"><span class="co">#&gt; [1] &quot;Some text will be generated.&quot;</span></a></code></pre></div>
+<p>This functions ensures sentence starts with an upper-cased letter, adds a final dot if missing, and normalizes spaces, to ease readability.</p>
+</div>
+<div id="generate-some-r-documentation-content" class="section level3">
+<h3><span class="header-section-number">11.3.3</span> Generate some <cite class='it'>R</cite> documentation content</h3>
+<p>Use function <cite class='kw'>generateContent</cite> to generate some <cite class='it'>R</cite> documentation content. Beware, as argument order is opposite to the one used for <cite class='kw'>generateSection</cite>.</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" title="1"><span class="kw">print</span>(<span class="kw">generateContent</span>(<span class="st">&#39;a title&#39;</span>, <span class="st">&#39;title&#39;</span>))</a>
+<a class="sourceLine" id="cb61-2" title="2"><span class="co">#&gt; [1] &quot;\\title{a title}&quot;</span></a>
+<a class="sourceLine" id="cb61-3" title="3"><span class="kw">print</span>(<span class="kw">generateContent</span>(<span class="st">&#39;https://neonira.github.io/offensiveProgrammingBook/&#39;</span>, <span class="st">&#39;href&#39;</span>,</a>
+<a class="sourceLine" id="cb61-4" title="4">                      <span class="st">&#39;Offensive Programming Book&#39;</span>))</a>
+<a class="sourceLine" id="cb61-5" title="5"><span class="co">#&gt; [1] &quot;\\href{https://neonira.github.io/offensiveProgrammingBook/}{Offensive Programming Book}&quot;</span></a>
+<a class="sourceLine" id="cb61-6" title="6"><span class="kw">print</span>(<span class="kw">generateContent</span>(<span class="st">&#39;warning&#39;</span>, <span class="st">&#39;section&#39;</span>, <span class="st">&#39;Warning section content ...&#39;</span>))</a>
+<a class="sourceLine" id="cb61-7" title="7"><span class="co">#&gt; [1] &quot;\\section{warning}{\nWarning section content ...\n}&quot;</span></a>
+<a class="sourceLine" id="cb61-8" title="8"><span class="kw">print</span>(<span class="kw">generateContent</span>(<span class="st">&#39;a&#39;</span>, <span class="st">&#39;item&#39;</span>, <span class="st">&#39;description of a&#39;</span>, <span class="dt">useSpace_b_1 =</span> <span class="ot">TRUE</span>))</a>
+<a class="sourceLine" id="cb61-9" title="9"><span class="co">#&gt; [1] &quot;\\item{a} {description of a}&quot;</span></a>
+<a class="sourceLine" id="cb61-10" title="10"><span class="kw">print</span>(<span class="kw">generateContent</span>(<span class="st">&#39;a&#39;</span>, <span class="st">&#39;item&#39;</span>, <span class="st">&#39;description of a&#39;</span>, <span class="dt">useSpace_b_1 =</span> <span class="ot">FALSE</span>))</a>
+<a class="sourceLine" id="cb61-11" title="11"><span class="co">#&gt; [1] &quot;\\item{a}{description of a}&quot;</span></a></code></pre></div>
+</div>
+<div id="generate-cross-ref-to-other-r-package" class="section level3">
+<h3><span class="header-section-number">11.3.4</span> Generate cross-ref to other <cite class='it'>R</cite> package</h3>
+<p>Use function <cite class='kw'>generateSpecialLink</cite> to generate a <cite class='it'>R</cite> documentation cross-ref to any other <cite class='it'>R</cite> package.</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" title="1"><span class="kw">print</span>(<span class="kw">generateSpecialLink</span>(<span class="st">&#39;wyz.code.offensiveProgramming&#39;</span>, <span class="st">&#39;runTransientFunction&#39;</span>))</a>
+<a class="sourceLine" id="cb62-2" title="2"><span class="co">#&gt; [1] &quot;\\link[wyz.code.offensiveProgramming:runTransientFunction]{wyz.code.offensiveProgramming:runTransientFunction}&quot;</span></a></code></pre></div>
+</div>
+</div>
+<div id="manual-pages-generation" class="section level2">
+<h2><span class="header-section-number">11.4</span> Manual pages generation</h2>
+<p>Simply use <cite class='kw'>generateDocumentationContent</cite> to do so.</p>
+<div id="context-setup" class="section level3">
+<h3><span class="header-section-number">11.4.1</span> Context setup</h3>
+<p>I will reuse some classes delivered with <cite class='it'>wyz.code.offensiveProgramming</cite> to ease demonstration of <cite class='it'>R</cite> documentation generation.</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" title="1"></a>
+<a class="sourceLine" id="cb63-2" title="2">target_folder &lt;-<span class="st"> &#39;man&#39;</span> <span class="co">#&quot;~/tmp/generated-doc&quot;</span></a>
+<a class="sourceLine" id="cb63-3" title="3"><span class="cf">if</span> (<span class="op">!</span><span class="kw">dir.exists</span>(target_folder)) <span class="kw">dir.create</span>(target_folder)</a>
+<a class="sourceLine" id="cb63-4" title="4"></a>
+<a class="sourceLine" id="cb63-5" title="5">source_package &lt;-<span class="st"> &#39;wyz.code.offensiveProgramming&#39;</span></a>
+<a class="sourceLine" id="cb63-6" title="6"></a>
+<a class="sourceLine" id="cb63-7" title="7">source_files &lt;-<span class="st"> </span><span class="kw">c</span>(</a>
+<a class="sourceLine" id="cb63-8" title="8">  <span class="st">&#39;code-samples/both-defs/good/full/AdditionTCFIG1.R&#39;</span>,</a>
+<a class="sourceLine" id="cb63-9" title="9">  <span class="st">&#39;code-samples/no-defs/Addition.R&#39;</span>,</a>
+<a class="sourceLine" id="cb63-10" title="10">  <span class="st">&#39;code-samples/frt-defs/good/partial/AdditionFIPartial.R&#39;</span>,</a>
+<a class="sourceLine" id="cb63-11" title="11">  <span class="st">&#39;code-samples/tcd-defs/good/partial/AdditionTCPartial.R&#39;</span></a>
+<a class="sourceLine" id="cb63-12" title="12">)</a>
+<a class="sourceLine" id="cb63-13" title="13"></a>
+<a class="sourceLine" id="cb63-14" title="14"><span class="kw">invisible</span>(<span class="kw">sapply</span>(source_files, <span class="cf">function</span>(e) {</a>
+<a class="sourceLine" id="cb63-15" title="15">  <span class="kw">source</span>(<span class="kw">system.file</span>(e, <span class="dt">package =</span> source_package))</a>
+<a class="sourceLine" id="cb63-16" title="16">}))</a></code></pre></div>
+</div>
+<div id="method-manual-page" class="section level3">
+<h3><span class="header-section-number">11.4.2</span> Method manual page</h3>
+<p>Use keyword <strong>method</strong> to generate a dedicated manual page for an S3 method.</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" title="1">object &lt;-<span class="st"> </span><span class="kw">AdditionTCFIG1</span>()</a>
+<a class="sourceLine" id="cb64-2" title="2">package_name &lt;-<span class="st"> &#39;zorg&#39;</span></a>
+<a class="sourceLine" id="cb64-3" title="3"></a>
+<a class="sourceLine" id="cb64-4" title="4">refs &lt;-<span class="st"> </span><span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb64-5" title="5">  <span class="kw">list</span>(<span class="dt">url =</span> <span class="st">&#39;https://cran.r-project.org/doc/manuals/R-exts.html&#39;</span>,</a>
+<a class="sourceLine" id="cb64-6" title="6">       <span class="dt">label =</span> <span class="st">&#39;Writing R extensions&#39;</span>,</a>
+<a class="sourceLine" id="cb64-7" title="7">       <span class="dt">comment =</span> <span class="st">&#39;to know more about R documentation requirements&#39;</span>),</a>
+<a class="sourceLine" id="cb64-8" title="8">  <span class="kw">list</span>(<span class="dt">url =</span> <span class="st">&#39;https://www.burns-stat.com/pages/Tutor/R_inferno.pdf&#39;</span>,</a>
+<a class="sourceLine" id="cb64-9" title="9">       <span class="dt">label =</span> <span class="st">&#39;The R Inferno&#39;</span>,</a>
+<a class="sourceLine" id="cb64-10" title="10">       <span class="dt">comment =</span> <span class="st">&#39;to discover some well-known R weirdness&#39;</span>)</a>
+<a class="sourceLine" id="cb64-11" title="11">)</a>
+<a class="sourceLine" id="cb64-12" title="12"></a>
+<a class="sourceLine" id="cb64-13" title="13">extra_method &lt;-<span class="st"> </span><span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb64-14" title="14">  <span class="dt">keyword =</span> <span class="kw">c</span>(<span class="st">&#39;classes&#39;</span>, <span class="st">&#39;environment&#39;</span>, <span class="st">&#39;utilities&#39;</span>, <span class="st">&#39;misc&#39;</span>),</a>
+<a class="sourceLine" id="cb64-15" title="15">  <span class="dt">concept =</span> <span class="kw">c</span>(<span class="st">&#39;evaluation mode&#39;</span>, <span class="st">&#39;standard evaluation&#39;</span>,</a>
+<a class="sourceLine" id="cb64-16" title="16">              <span class="st">&#39;function return type evaluation&#39;</span>, <span class="st">&#39;parameter check evaluation&#39;</span>),</a>
+<a class="sourceLine" id="cb64-17" title="17">  <span class="dt">references =</span> <span class="kw">c</span>(<span class="kw">sentensize</span>(<span class="kw">paste</span>(<span class="st">&#39;see&#39;</span>,</a>
+<a class="sourceLine" id="cb64-18" title="18">                                  <span class="kw">generateContent</span>(<span class="st">&#39;wyz.code.offensiveProgramming&#39;</span>, <span class="st">&#39;code&#39;</span>),</a>
+<a class="sourceLine" id="cb64-19" title="19">                                  <span class="st">&#39;package documentation&#39;</span>)),</a>
+<a class="sourceLine" id="cb64-20" title="20">                 <span class="st">&#39;&#39;</span>,</a>
+<a class="sourceLine" id="cb64-21" title="21">                 <span class="kw">sentensize</span>(<span class="kw">paste</span>(<span class="st">&#39;You may read&#39;</span>,</a>
+<a class="sourceLine" id="cb64-22" title="22">                                  <span class="kw">generateContent</span>(<span class="st">&#39;https://neonira.github.io/offensiveProgrammingBook/&#39;</span>,</a>
+<a class="sourceLine" id="cb64-23" title="23">                                                  <span class="st">&#39;href&#39;</span>, <span class="st">&#39;Offensive Programming Book&#39;</span>),</a>
+<a class="sourceLine" id="cb64-24" title="24">                                  <span class="st">&#39;to get introduction and expert advices on offensive programming&#39;</span>)),</a>
+<a class="sourceLine" id="cb64-25" title="25">                 <span class="st">&#39;&#39;</span>,</a>
+<a class="sourceLine" id="cb64-26" title="26">                 <span class="kw">generateReference</span>(refs[[<span class="dv">1</span>]])</a>
+<a class="sourceLine" id="cb64-27" title="27">  ),</a>
+<a class="sourceLine" id="cb64-28" title="28">  <span class="dt">seealso =</span> <span class="kw">c</span>(<span class="kw">sentensize</span>(<span class="kw">paste</span>(<span class="st">&#39;see&#39;</span>,</a>
+<a class="sourceLine" id="cb64-29" title="29">                               <span class="kw">generateContent</span>(<span class="kw">generateSpecialLink</span>(<span class="st">&#39;wyz.code.offensiveProgramming&#39;</span>,</a>
+<a class="sourceLine" id="cb64-30" title="30">                                                                   <span class="st">&#39;runTransientFunction&#39;</span>),</a>
+<a class="sourceLine" id="cb64-31" title="31">                                               <span class="st">&#39;code&#39;</span>),</a>
+<a class="sourceLine" id="cb64-32" title="32">                               <span class="st">&#39;to call interactively an offensive programming function, whether instrumented or not.&#39;</span>)),</a>
+<a class="sourceLine" id="cb64-33" title="33">              <span class="st">&#39;&#39;</span>,</a>
+<a class="sourceLine" id="cb64-34" title="34">              <span class="kw">sentensize</span>(<span class="kw">paste</span>(<span class="st">&#39;see&#39;</span>,</a>
+<a class="sourceLine" id="cb64-35" title="35">                               <span class="kw">generateContent</span>(<span class="kw">generateSpecialLink</span>(<span class="st">&#39;wyz.code.offensiveProgramming&#39;</span>,</a>
+<a class="sourceLine" id="cb64-36" title="36">                                                                   <span class="st">&#39;runTestCase&#39;</span>),</a>
+<a class="sourceLine" id="cb64-37" title="37">                                               <span class="st">&#39;code&#39;</span>),</a>
+<a class="sourceLine" id="cb64-38" title="38">                               <span class="st">&#39;to reuse on-demand instrumented offensive programming function tests&#39;</span>))</a>
+<a class="sourceLine" id="cb64-39" title="39">  )</a>
+<a class="sourceLine" id="cb64-40" title="40">)</a>
+<a class="sourceLine" id="cb64-41" title="41"></a>
+<a class="sourceLine" id="cb64-42" title="42"><span class="co"># explicit invocation for method</span></a>
+<a class="sourceLine" id="cb64-43" title="43"><span class="kw">generateDocumentationContent</span>(target_folder, <span class="st">&#39;method&#39;</span>, <span class="st">&#39;addMultiDouble&#39;</span>,</a>
+<a class="sourceLine" id="cb64-44" title="44">                             object, package_name,</a>
+<a class="sourceLine" id="cb64-45" title="45">                             extra_method, <span class="dt">overwrite_b_1 =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<p>Note how parameter <cite class='oc'>extra_method</cite> allows you to provide specific content as instruction to be considered for manual page generation. The extraneous content must be a <cite class='oc'>list</cite>, where names are manual page sections, and where content is <cite class='it'>R</cite> documentation content.</p>
+<p>You may use function <cite class='kw'>generateDocumentationContent</cite> to generate your own <cite class='it'>R</cite> documentation generation scripts. This allows you to generate programmatically your manual pages, in a customized way.</p>
+<p>Note that parameter <cite class='oc'>package_name</cite> is the name of the target package you want to generate documentation for. Here, files are taken from the <cite class='it'>wyz.code.offensiveProgramming</cite> package, and documentation is generated for package <cite class='it'>zorg</cite>. Really useful when programming, not so useful when used interactively.</p>
+</div>
+<div id="class-manual-page" class="section level3">
+<h3><span class="header-section-number">11.4.3</span> Class manual page</h3>
+<p>Use keyword <strong>class</strong> to create a manual page for a class. Provide the class name.</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" title="1">extra_class &lt;-<span class="st"> </span>extra_method</a>
+<a class="sourceLine" id="cb65-2" title="2">extra_class<span class="op">$</span>references &lt;-<span class="st"> </span>extra_method<span class="op">$</span>references[[<span class="dv">5</span>]]</a>
+<a class="sourceLine" id="cb65-3" title="3">extra_class<span class="op">$</span>seealso &lt;-<span class="st"> </span><span class="ot">NULL</span></a>
+<a class="sourceLine" id="cb65-4" title="4"><span class="kw">generateDocumentationContent</span>(target_folder, <span class="st">&#39;class&#39;</span>, <span class="st">&#39;AdditionTCFIG1&#39;</span>,</a>
+<a class="sourceLine" id="cb65-5" title="5">                             object, package_name,</a>
+<a class="sourceLine" id="cb65-6" title="6">                             extra_class, <span class="dt">overwrite_b_1 =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+</div>
+<div id="package-manual-page" class="section level3">
+<h3><span class="header-section-number">11.4.4</span> Package manual page</h3>
+<p>Use keyword <strong>class</strong> to generate a summary manual page for your package. Provide explicitly, all the class names you desired to emphase over.</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" title="1">extra_package &lt;-<span class="st"> </span>extra_method</a>
+<a class="sourceLine" id="cb66-2" title="2">extra_package<span class="op">$</span>seealso &lt;-<span class="st"> </span><span class="ot">NULL</span></a>
+<a class="sourceLine" id="cb66-3" title="3">extra_package<span class="op">$</span>content &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;AdditionTCFIG1&#39;</span>, <span class="st">&#39;AdditionTCFIP&#39;</span>, <span class="st">&#39;Addition&#39;</span>)</a>
+<a class="sourceLine" id="cb66-4" title="4">z &lt;-<span class="st"> </span><span class="kw">generateDocumentationContent</span>(target_folder, <span class="st">&#39;package&#39;</span>, package_name,</a>
+<a class="sourceLine" id="cb66-5" title="5">                                  object, package_name, extra_package, <span class="dt">overwrite_b_1 =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+Result is
+<pre>
+\name{zorg-package}
+\alias{zorg-package}
+\alias{zorg}
+\docType{package}
+\title{\packageTitle{zorg}}
+\description{
+\packageDescription{zorg}
+}
+\details{
+Most important package entries are
+\itemize{
+\item{\code{\link{AdditionTCFIG1}}}{}
+\item{\code{\link{AdditionTCFIP}}}{}
+\item{\code{\link{Addition}}}{}
+}
+}
+\references{
+See \code{wyz.code.offensiveProgramming} package documentation.
+
+You may read \href{https://neonira.github.io/offensiveProgrammingBook/}{Offensive Programming Book} to get introduction and expert advices on offensive programming.
+
+Refer to \href{https://cran.r-project.org/doc/manuals/R-exts.html}{Writing R extensions} to know more about R documentation requirements.
+}
+\author{
+\packageAuthor{zorg}
+
+Maintainer: \packageMaintainer{zorg}
+}
+\keyword{classes}
+\keyword{environment}
+\keyword{utilities}
+\keyword{misc}
+\concept{evaluation mode}
+\concept{standard evaluation}
+\concept{function return type evaluation}
+\concept{parameter check evaluation}
+</pre>
+</div>
+<div id="in-one-shot" class="section level3">
+<h3><span class="header-section-number">11.4.5</span> In one shot</h3>
+<p>To simplify your life, you can create in one shot all the manual pages related to
+methods of a class. Simply pass <cite class='bo'>NA</cite> as value for the name.</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" title="1"><span class="kw">generateDocumentationContent</span>(target_folder, <span class="st">&#39;method&#39;</span>, <span class="ot">NA</span>,</a>
+<a class="sourceLine" id="cb67-2" title="2">                             <span class="kw">AdditionTCPartial</span>(), package_name,</a>
+<a class="sourceLine" id="cb67-3" title="3">                             extra_method, <span class="dt">overwrite_b_1 =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb67-4" title="4"><span class="co">#&gt; $addDouble</span></a>
+<a class="sourceLine" id="cb67-5" title="5"><span class="co">#&gt; $addDouble$filename</span></a>
+<a class="sourceLine" id="cb67-6" title="6"><span class="co">#&gt; [1] &quot;man/addDouble.AdditionTCPartial.Rd&quot;</span></a>
+<a class="sourceLine" id="cb67-7" title="7"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb67-8" title="8"><span class="co">#&gt; $addDouble$overwritten</span></a>
+<a class="sourceLine" id="cb67-9" title="9"><span class="co">#&gt; [1] TRUE</span></a>
+<a class="sourceLine" id="cb67-10" title="10"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb67-11" title="11"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb67-12" title="12"><span class="co">#&gt; $addInteger</span></a>
+<a class="sourceLine" id="cb67-13" title="13"><span class="co">#&gt; $addInteger$filename</span></a>
+<a class="sourceLine" id="cb67-14" title="14"><span class="co">#&gt; [1] &quot;man/addInteger.AdditionTCPartial.Rd&quot;</span></a>
+<a class="sourceLine" id="cb67-15" title="15"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb67-16" title="16"><span class="co">#&gt; $addInteger$overwritten</span></a>
+<a class="sourceLine" id="cb67-17" title="17"><span class="co">#&gt; [1] TRUE</span></a>
+<a class="sourceLine" id="cb67-18" title="18"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb67-19" title="19"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb67-20" title="20"><span class="co">#&gt; $addNumeric</span></a>
+<a class="sourceLine" id="cb67-21" title="21"><span class="co">#&gt; $addNumeric$filename</span></a>
+<a class="sourceLine" id="cb67-22" title="22"><span class="co">#&gt; [1] &quot;man/addNumeric.AdditionTCPartial.Rd&quot;</span></a>
+<a class="sourceLine" id="cb67-23" title="23"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb67-24" title="24"><span class="co">#&gt; $addNumeric$overwritten</span></a>
+<a class="sourceLine" id="cb67-25" title="25"><span class="co">#&gt; [1] TRUE</span></a>
+<a class="sourceLine" id="cb67-26" title="26"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb67-27" title="27"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb67-28" title="28"><span class="co">#&gt; $divideByZero</span></a>
+<a class="sourceLine" id="cb67-29" title="29"><span class="co">#&gt; $divideByZero$filename</span></a>
+<a class="sourceLine" id="cb67-30" title="30"><span class="co">#&gt; [1] &quot;man/divideByZero.AdditionTCPartial.Rd&quot;</span></a>
+<a class="sourceLine" id="cb67-31" title="31"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb67-32" title="32"><span class="co">#&gt; $divideByZero$overwritten</span></a>
+<a class="sourceLine" id="cb67-33" title="33"><span class="co">#&gt; [1] TRUE</span></a>
+<a class="sourceLine" id="cb67-34" title="34"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb67-35" title="35"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb67-36" title="36"><span class="co">#&gt; $generateError</span></a>
+<a class="sourceLine" id="cb67-37" title="37"><span class="co">#&gt; $generateError$filename</span></a>
+<a class="sourceLine" id="cb67-38" title="38"><span class="co">#&gt; [1] &quot;man/generateError.AdditionTCPartial.Rd&quot;</span></a>
+<a class="sourceLine" id="cb67-39" title="39"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb67-40" title="40"><span class="co">#&gt; $generateError$overwritten</span></a>
+<a class="sourceLine" id="cb67-41" title="41"><span class="co">#&gt; [1] TRUE</span></a>
+<a class="sourceLine" id="cb67-42" title="42"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb67-43" title="43"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb67-44" title="44"><span class="co">#&gt; $generateWarning</span></a>
+<a class="sourceLine" id="cb67-45" title="45"><span class="co">#&gt; $generateWarning$filename</span></a>
+<a class="sourceLine" id="cb67-46" title="46"><span class="co">#&gt; [1] &quot;man/generateWarning.AdditionTCPartial.Rd&quot;</span></a>
+<a class="sourceLine" id="cb67-47" title="47"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb67-48" title="48"><span class="co">#&gt; $generateWarning$overwritten</span></a>
+<a class="sourceLine" id="cb67-49" title="49"><span class="co">#&gt; [1] TRUE</span></a></code></pre></div>
+</div>
+<div id="and-a-special-case-from-a-standalone-function" class="section level3">
+<h3><span class="header-section-number">11.4.6</span> and a special case, from a standalone function</h3>
+<p>When you own an offensive programming instrumented function, it is quite easy to get a pre-filled <cite class='it'>R</cite> documentation file from it. Be sure to pass NULL as value for parameter <cite class='kw'>object_o_1</cite>.</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" title="1">sumValues &lt;-<span class="st"> </span><span class="cf">function</span>(x_i, y_i) <span class="kw">sum</span>(x_i, y_i, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb68-2" title="2">gmf &lt;-<span class="st"> </span><span class="kw">generateDocumentationContent</span>(target_folder, <span class="st">&#39;method&#39;</span>, <span class="st">&#39;sumValues&#39;</span>,</a>
+<a class="sourceLine" id="cb68-3" title="3">                                    <span class="ot">NULL</span>, package_name,</a>
+<a class="sourceLine" id="cb68-4" title="4">                                    extra_method, <span class="dt">overwrite_b_1 =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb68-5" title="5"><span class="kw">print</span>(gmf)</a>
+<a class="sourceLine" id="cb68-6" title="6"><span class="co">#&gt; $filename</span></a>
+<a class="sourceLine" id="cb68-7" title="7"><span class="co">#&gt; [1] &quot;man/sumValues.Rd&quot;</span></a>
+<a class="sourceLine" id="cb68-8" title="8"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb68-9" title="9"><span class="co">#&gt; $overwritten</span></a>
+<a class="sourceLine" id="cb68-10" title="10"><span class="co">#&gt; [1] TRUE</span></a></code></pre></div>
+<p>Indeed, this convenience suffers from two drawbacks</p>
+<ol style="list-style-type: decimal">
+<li>As the return type of the function is unknown, <cite class='kw'>value</cite> section cannot be documented,</li>
+<li>As they are no test case definitions, <cite class='kw'>examples</cite> section cannot be documented</li>
+</ol>
+</div>
+</div>
+<div id="known-limits-1" class="section level2">
+<h2><span class="header-section-number">11.5</span> Known-limits</h2>
+<p>Generation of manual pages can be quite tricky. Whereas package <cite class='it'>wyz.code.rdoc</cite>
+alleviates greatly the burden, some pitfalls remain. Here they are</p>
+<ol style="list-style-type: decimal">
+<li>Generated manual page might not respect the maximum line length required by <strong>R CMD check</strong>, and this tool will provide explicit information about un-compliance. To solve issue, just split the content by adding carriage return wherever required.</li>
+<li>Generated documentation is quite stereotyped. Inject your instruction to customize
+the result.</li>
+</ol>
+</div>
+<div id="opportunities" class="section level2">
+<h2><span class="header-section-number">11.6</span> Opportunities</h2>
+<p>Reuse can be made at several levels depending of your needs. Roughly speeking, you maty aim for one of these 3 levels of customization
+1. just customize some textual information. Generate the pages using package <cite class='it'>wyz.code.rdoc</cite> and modify page contents manually is generally the best way to achieve this goal
+1. customize some manual pages sections. Generate the pages using package <cite class='it'>wyz.code.rdoc</cite> while providing some dedicated context information. Refer to previous examples, and look at variables starting with <cite class='kw'>extra_</cite>. They allow you to inject your customized content in targeted sections.
+1. If you seek for fully customized manual page generation, then you may use package (ref:rd) to create your own <cite class='it'>R</cite> generation scheme. That way you will get the benefit of starting launched, using high-level <cite class='it'>R</cite> documentation generation functions, and also get the ability to reuse and customized provided generation scheme. This package uses only <cite class='it'>R</cite> code, and so you could get insight and reuse any part of it.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="meta-testing.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="implementation-figures.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "night",
+"family": "serif",
+"size": 2
+},
+"edit": null,
+"history": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+},
+"toolbar": {
+"position": "fixed"
+},
+"search": true
+});
+});
+</script>
+
+</body>
+
+</html>
